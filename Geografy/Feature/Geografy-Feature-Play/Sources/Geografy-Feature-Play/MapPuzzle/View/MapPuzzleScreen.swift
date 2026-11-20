@@ -113,10 +113,11 @@ private extension MapPuzzleScreen {
     }
 
     var progressHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: Double(currentIndex) / Double(max(questions.count, 1)))
-            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
-        }
+        SessionProgressView(
+            progress: Double(currentIndex) / Double(max(questions.count, 1)),
+            current: currentIndex + 1,
+            total: questions.count
+        )
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 

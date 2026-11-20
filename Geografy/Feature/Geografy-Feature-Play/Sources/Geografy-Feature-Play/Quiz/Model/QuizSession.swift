@@ -165,12 +165,7 @@ private extension QuizSession {
     }
 
     func accepts(_ input: String, for question: QuizQuestion) -> Bool {
-        let typed = Self.normalized(input)
-        let typedLetters = typed.filter(\.isLetter)
-        return acceptableAnswers(for: question).contains { answer in
-            let normalizedAnswer = Self.normalized(answer)
-            return normalizedAnswer == typed || normalizedAnswer.filter(\.isLetter) == typedLetters
-        }
+        Self.matches(input, anyOf: acceptableAnswers(for: question))
     }
 
     func acceptableAnswers(for question: QuizQuestion) -> [String] {
@@ -191,5 +186,19 @@ private extension QuizSession {
             .trimmingCharacters(in: .whitespaces)
             .lowercased()
             .folding(options: .diacriticInsensitive, locale: .current)
+    }
+}
+
+// MARK: - Typed Answers
+extension QuizSession {
+    /// Whether a typed answer names one of `answers`, ignoring case, accents, spaces, and punctuation.
+    /// Every game that takes a typed answer checks it this way.
+    static func matches(_ input: String, anyOf answers: [String]) -> Bool {
+        let typed = normalized(input)
+        let typedLetters = typed.filter(\.isLetter)
+        return answers.contains { answer in
+            let normalizedAnswer = normalized(answer)
+            return normalizedAnswer == typed || normalizedAnswer.filter(\.isLetter) == typedLetters
+        }
     }
 }

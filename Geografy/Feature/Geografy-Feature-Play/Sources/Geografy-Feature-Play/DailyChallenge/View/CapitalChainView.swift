@@ -3,12 +3,14 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
+/// Today's chain of capitals, one link at a time, asked like a quiz: the capital on top, the countries at the
+/// bottom.
 public struct CapitalChainView: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(FlashcardService.self) private var flashcardService
-    @Environment(\.colorSchemeContrast) private var contrast
 
     public let content: DailyChallenge.CapitalChainContent
 
@@ -17,175 +19,112 @@ public struct CapitalChainView: View {
 
     public let onFinish: () -> Void
 
-    @State private var selectedOption: Country?
+    @State private var questions: [QuizQuestion] = []
     @State private var nextStep = PendingAction()
+    @State private var selectedOptionID: UUID?
     @State private var showFeedback = false
-    @State private var correctCount = 0
+    @State private var showFlagPreview = false
 
     // MARK: - Body
     public var body: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                startSection
-                if currentStep < content.chainSteps.count {
-                    stepView(
-                        step: content.chainSteps[currentStep]
-                    )
-                }
-            }
-            .padding(.vertical, DesignSystem.Spacing.lg)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-        }
-    }
-}
-
-// MARK: - Start Section
-private extension CapitalChainView {
-    var startSection: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Text("Starting Point")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(
-                        countryCode: content.startingCountry.code,
-                        height: DesignSystem.Size.md
-                    )
-                    .accessibilityHidden(true)
-                    VStack(alignment: .leading) {
-                        Text(content.startingCapital)
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text(content.startingCountry.name)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                }
-                .accessibilityElement(children: .combine)
-                progressDots
-            }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    var progressDots: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            // Completed steps are filled dots and upcoming ones are rings, so progress reads without color.
-            ForEach(0..<content.chainSteps.count, id: \.self) { index in
-                Group {
-                    if index < currentStep {
-                        Circle().fill(DesignSystem.Color.accent)
-                    } else {
-                        Circle().strokeBorder(
-                            contrast == .increased
-                                ? DesignSystem.Color.textSecondary
-                                : DesignSystem.Color.cardBackgroundHighlighted,
-                            lineWidth: 1.5
-                        )
-                    }
-                }
-                .frame(
-                    width: DesignSystem.Spacing.xs,
-                    height: DesignSystem.Spacing.xs
-                )
-            }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Progress")
-        .accessibilityValue("Step \(min(currentStep + 1, content.chainSteps.count)) of \(content.chainSteps.count)")
-    }
-}
-
-// MARK: - Step View
-private extension CapitalChainView {
-    func stepView(step: DailyChallenge.ChainStep) -> some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            Text("Find a country in \(step.continent.displayName)")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .multilineTextAlignment(.center)
-                .accessibilityAddTraits(.isHeader)
+            SessionProgressView(
+                progress: progressFraction,
+                current: min(currentStep + 1, content.chainSteps.count),
+                total: content.chainSteps.count
+            )
+            .padding(.horizontal, DesignSystem.Spacing.md)
 
-            Text("with capital: \(step.expectedCountry.capital)")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.accent)
-
-            ForEach(
-                Array(step.options.enumerated()),
-                id: \.element.code
-            ) { index, option in
-                QuizOptionButton(
-                    text: option.name,
-                    flagCode: option.code,
-                    state: optionState(
-                        option: option,
-                        step: step
-                    ),
-                    index: index
-                ) {
-                    selectOption(option, step: step)
-                }
-                .accessibilityLabel(option.name)
+            if let question = currentQuestion {
+                QuizQuestionView(
+                    question: question,
+                    quizType: .reverseCapital,
+                    selectedOptionID: selectedOptionID,
+                    correctOptionID: question.correctOptionID,
+                    showFeedback: showFeedback,
+                    showFlagPreview: $showFlagPreview,
+                    onSelectOption: select
+                )
+                .id(question.id)
+                .transition(questionTransition)
             }
+
+            Spacer(minLength: 0)
         }
-    }
-}
-
-// MARK: - Actions
-private extension CapitalChainView {
-    func selectOption(
-        _ option: Country,
-        step: DailyChallenge.ChainStep
-    ) {
-        guard !showFeedback else { return }
-        selectedOption = option
-
-        let isCorrect = option.code == step.expectedCountry.code
-        flashcardService.recordGameAnswer(
-            countryCode: step.expectedCountry.code,
-            type: .capitalToCountry,
-            isCorrect: isCorrect
-        )
-        if isCorrect {
-            correctCount += 1
-            hapticsService.notification(.success)
-            soundService.play(.correct)
-            AccessibilityNotification.Announcement("Correct.").post()
-        } else {
-            score = max(0, score - 250)
-            hapticsService.impact(.light)
-            soundService.play(.wrong)
-            let announcement = "Incorrect. The answer is \(step.expectedCountry.name)."
-            AccessibilityNotification.Announcement(announcement).post()
-        }
-
-        showFeedback = true
-
-        nextStep.schedule(after: .seconds(1)) { advance() }
-    }
-
-    func advance() {
-        if currentStep + 1 < content.chainSteps.count {
-            currentStep += 1
-            selectedOption = nil
-            showFeedback = false
-        } else {
-            onFinish()
-        }
+        .padding(.top, DesignSystem.Spacing.sm)
+        .task { prepareQuestions() }
+        .onDisappear { nextStep.cancel() }
     }
 }
 
 // MARK: - Helpers
 private extension CapitalChainView {
-    func optionState(
-        option: Country,
-        step: DailyChallenge.ChainStep
-    ) -> QuizOptionButton.OptionState {
-        guard showFeedback else { return .default }
-        if option.code == step.expectedCountry.code { return .correct }
-        if selectedOption?.code == option.code { return .incorrect }
-        return .disabled
+    var currentQuestion: QuizQuestion? {
+        questions.indices.contains(currentStep) ? questions[currentStep] : nil
+    }
+
+    var progressFraction: CGFloat {
+        guard !content.chainSteps.isEmpty else { return 0 }
+        return CGFloat(currentStep) / CGFloat(content.chainSteps.count)
+    }
+
+    var questionTransition: AnyTransition {
+        guard !reduceMotion else { return .opacity }
+        return .asymmetric(
+            insertion: .move(edge: .trailing).combined(with: .opacity),
+            removal: .move(edge: .leading).combined(with: .opacity)
+        )
+    }
+}
+
+// MARK: - Actions
+private extension CapitalChainView {
+    func prepareQuestions() {
+        questions = content.chainSteps.map { step in
+            let options = step.options.map { QuizOption(text: $0.name) }
+            let correctIndex = step.options.firstIndex { $0.code == step.expectedCountry.code } ?? 0
+            return QuizQuestion(
+                promptText: String(
+                    localized: "Which country in \(step.continent.displayName) has this capital?",
+                    bundle: .module
+                ),
+                promptSubject: step.expectedCountry.capital,
+                options: options,
+                correctOptionID: options[correctIndex].id,
+                correctCountry: step.expectedCountry
+            )
+        }
+    }
+
+    func select(_ optionID: UUID) {
+        guard !showFeedback, let question = currentQuestion else { return }
+        selectedOptionID = optionID
+
+        let expected = question.correctCountry
+        let isCorrect = optionID == question.correctOptionID
+        flashcardService.recordGameAnswer(countryCode: expected.code, type: .capitalToCountry, isCorrect: isCorrect)
+        if !isCorrect {
+            score = max(0, score - 250)
+        }
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: isCorrect,
+            announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: expected.name)
+        )
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showFeedback = true
+        }
+        nextStep.schedule(after: AnswerFeedback.revealDuration) { advance() }
+    }
+
+    func advance() {
+        guard currentStep + 1 < content.chainSteps.count else {
+            onFinish()
+            return
+        }
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+            currentStep += 1
+            selectedOptionID = nil
+            showFeedback = false
+        }
     }
 }

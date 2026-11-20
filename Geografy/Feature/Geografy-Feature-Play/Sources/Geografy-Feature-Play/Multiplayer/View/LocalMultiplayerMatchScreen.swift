@@ -151,11 +151,12 @@ private extension LocalMultiplayerMatchScreen {
         guard selectedOptionID == nil, let question = currentQuestion else { return }
         selectedOptionID = optionID
         let isCorrect = optionID == question.correctOptionID
-        hapticsService.notification(isCorrect ? .success : .error)
-        soundService.play(isCorrect ? .correct : .wrong)
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: isCorrect,
+            announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: answerText(for: question))
+        )
         countInReviews(question: question, isCorrect: isCorrect)
         coordinator.submitAnswer(optionID: optionID, timeSpent: Date().timeIntervalSince(answerStartTime))
-        announceAnswer(question: question, isCorrect: isCorrect)
     }
 
     func countInReviews(question: QuizQuestion, isCorrect: Bool) {
@@ -167,16 +168,8 @@ private extension LocalMultiplayerMatchScreen {
         )
     }
 
-    func announceAnswer(question: QuizQuestion, isCorrect: Bool) {
-        let message: String
-        if isCorrect {
-            message = String(localized: "Correct.", bundle: .module)
-        } else {
-            let answer = question.options.first { $0.id == question.correctOptionID }?.text
-                ?? question.correctCountry.name
-            message = String(localized: "Incorrect. The answer is \(answer).", bundle: .module)
-        }
-        AccessibilityNotification.Announcement(message).post()
+    func answerText(for question: QuizQuestion) -> String {
+        question.options.first { $0.id == question.correctOptionID }?.text ?? question.correctCountry.name
     }
 }
 #endif

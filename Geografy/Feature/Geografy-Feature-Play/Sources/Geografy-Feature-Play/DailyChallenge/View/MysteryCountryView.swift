@@ -8,6 +8,7 @@ public struct MysteryCountryView: View {
     @Environment(\.locale) private var locale
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
 
     public let content: DailyChallenge.MysteryCountryContent
 
@@ -17,30 +18,40 @@ public struct MysteryCountryView: View {
     @Binding var guessSubmitted: Bool
 
     @FocusState private var isGuessFocused: Bool
+    @State private var finish = PendingAction()
 
     public let onFinish: () -> Void
 
     // MARK: - Body
     public var body: some View {
-        if horizontalSizeClass == .regular {
-            regularLayout
-        } else {
-            compactLayout
+        Group {
+            if horizontalSizeClass == .regular {
+                regularLayout
+            } else {
+                compactLayout
+            }
         }
+        .onDisappear { finish.cancel() }
     }
 }
 
 // MARK: - Layouts
 private extension MysteryCountryView {
+    /// The guess sits at the bottom, where the other games put their answers, and rises with the keyboard.
     var compactLayout: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 promptSection
                 cluesSection
-                guessSection
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
             .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaBar(edge: .bottom) {
+            guessSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
@@ -225,20 +236,24 @@ private extension MysteryCountryView {
         AccessibilityNotification.Announcement("\(clue.label): \(clueSpokenValue(clue)).").post()
     }
 
+    /// Shows whether the guess was right for as long as a quiz shows its answer, then ends the challenge.
     func submitGuess() {
+        guard !guessSubmitted, !guess.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        isGuessFocused = false
         guessSubmitted = true
         if !isCorrect {
             score = max(0, score - 200)
         }
-        hapticsService.notification(isCorrect ? .success : .error)
-        let announcement = isCorrect ? "Correct! It's \(target.name)." : "Incorrect. The answer was \(target.name)."
-        AccessibilityNotification.Announcement(announcement).post()
-        onFinish()
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: isCorrect,
+            announcement: isCorrect
+                ? String(localized: "Correct. It's \(target.name).", bundle: .module)
+                : AnswerFeedback.incorrectAnnouncement(answer: target.name)
+        )
+        finish.schedule(after: AnswerFeedback.revealDuration) { onFinish() }
     }
 
     var isCorrect: Bool {
-        guess
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .lowercased() == target.name.lowercased()
+        QuizSession.matches(guess, anyOf: [target.name])
     }
 }
