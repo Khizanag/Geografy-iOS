@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            leaveGameButton,
             customQuizCountries,
             flashcardAlignment,
             wordSearchAlignment,
@@ -33,6 +34,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var leaveGameButton: BuildNote {
+        BuildNote(
+            commit: "dbc4042c",
+            title: "Close button in every game",
+            howToTest: """
+                Start any game, such as Map Puzzle. Top left is the standard close button instead of the red flag; \
+                tapping it still asks before you leave.
+                """,
+            systemImage: "xmark",
+            color: DesignSystem.Color.textSecondary
+        ) {
+            go.open(.mapPuzzle)
+        }
+    }
+
     var mapPuzzleQuiz: BuildNote {
         BuildNote(
             commit: "1bbff145",
