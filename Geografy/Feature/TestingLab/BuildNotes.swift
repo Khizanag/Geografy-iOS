@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            searchAlignment,
             labelsToggle,
             pinDropPanning,
             localPlayPinDrop,
@@ -34,6 +35,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var searchAlignment: BuildNote {
+        BuildNote(
+            commit: "62adfaf9",
+            title: "Search lines up with its bar",
+            howToTest: """
+                Open Search, clear Recent if it shows, and check that Popular starts at the search bar's left edge. \
+                Timeline event details with a short description now start at the left too.
+                """,
+            systemImage: "text.alignleft",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.search)
+        }
+    }
+
     var labelsToggle: BuildNote {
         BuildNote(
             commit: "8ad08367",
