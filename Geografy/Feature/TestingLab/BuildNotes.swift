@@ -20,12 +20,35 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [pinDropPanning, localPlayPinDrop, localPlayQuizTypes, localPlayNames, localPlayLeaving, soundEffects]
+        [
+            labelsToggle,
+            pinDropPanning,
+            localPlayPinDrop,
+            localPlayQuizTypes,
+            localPlayNames,
+            localPlayLeaving,
+            soundEffects,
+        ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var labelsToggle: BuildNote {
+        BuildNote(
+            commit: "2673153c",
+            title: "Native labels toggle",
+            howToTest: """
+                Open the World Map and tap Aa. While labels show, it's a green prominent glass button of its own; \
+                tap again and it goes back to a plain bar button next to More.
+                """,
+            systemImage: "textformat",
+            color: DesignSystem.Color.accent
+        ) {
+            go.selectTab(.map)
+        }
+    }
+
     var pinDropPanning: BuildNote {
         BuildNote(
             commit: "35c45d3d",
