@@ -101,14 +101,10 @@ private extension SpeedRunSessionScreen {
         }
     }
 
+    /// The count is in the progress pill below, as in every game.
     var timerSection: some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            SpeedRunClock(startDate: startDate, isComplete: isComplete)
-            Text("\(completedCodes.count) of \(targetCountries.count) countries")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
+        SpeedRunClock(startDate: startDate, isComplete: isComplete)
+            .frame(maxWidth: .infinity)
     }
 
     var progressSection: some View {
