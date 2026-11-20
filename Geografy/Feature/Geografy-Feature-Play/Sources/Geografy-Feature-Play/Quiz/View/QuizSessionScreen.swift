@@ -96,7 +96,7 @@ private extension QuizSessionScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GiveUpButton { showQuitAlert = true }
+            LeaveGameButton { showQuitAlert = true }
         }
         if configuration.difficulty.hasTimer {
             ToolbarItem(placement: .topBarTrailing) {

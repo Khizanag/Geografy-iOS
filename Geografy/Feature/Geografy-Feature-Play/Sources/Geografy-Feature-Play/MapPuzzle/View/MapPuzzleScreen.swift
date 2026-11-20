@@ -83,7 +83,7 @@ private extension MapPuzzleScreen {
     var toolbarContent: some ToolbarContent {
         if isPlaying {
             ToolbarItem(placement: .topBarLeading) {
-                GiveUpButton { showQuitAlert = true }
+                LeaveGameButton { showQuitAlert = true }
             }
         }
     }

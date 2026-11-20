@@ -96,7 +96,7 @@ private extension SpeedRunSessionScreen {
     var toolbarContent: some ToolbarContent {
         if !isFinished {
             ToolbarItem(placement: .topBarLeading) {
-                GiveUpButton { showGiveUpAlert = true }
+                LeaveGameButton { showGiveUpAlert = true }
             }
         }
     }

@@ -72,7 +72,7 @@ private extension WordSearchGameScreen {
     var toolbarContent: some ToolbarContent {
         if puzzle != nil, !gameFinished {
             ToolbarItem(placement: .topBarLeading) {
-                GiveUpButton { showQuitAlert = true }
+                LeaveGameButton { showQuitAlert = true }
             }
         }
         ToolbarItem(placement: .topBarTrailing) {

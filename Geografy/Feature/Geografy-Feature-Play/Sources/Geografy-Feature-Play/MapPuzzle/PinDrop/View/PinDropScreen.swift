@@ -97,7 +97,7 @@ private extension PinDropScreen {
     var giveUpToolbar: some ToolbarContent {
         if match == nil, let game, game.phase != .finished {
             ToolbarItem(placement: .topBarLeading) {
-                GiveUpButton { showQuitAlert = true }
+                LeaveGameButton { showQuitAlert = true }
             }
         }
     }

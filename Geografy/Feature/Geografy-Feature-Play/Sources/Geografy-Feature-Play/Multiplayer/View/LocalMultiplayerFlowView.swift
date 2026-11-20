@@ -62,7 +62,7 @@ private extension LocalMultiplayerFlowView {
             }
         case .countdown, .playing:
             ToolbarItem(placement: .topBarLeading) {
-                GiveUpButton { isConfirmingExit = true }
+                LeaveGameButton { isConfirmingExit = true }
             }
         case .idle, .finished, .disconnected:
             ToolbarItem(placement: .topBarLeading) { EmptyView() }

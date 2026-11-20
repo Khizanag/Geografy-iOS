@@ -32,7 +32,7 @@ public struct DailyChallengeSessionScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    GiveUpButton { showQuitAlert = true }
+                    LeaveGameButton { showQuitAlert = true }
                 }
             }
             .alert("Give Up?", isPresented: $showQuitAlert) {

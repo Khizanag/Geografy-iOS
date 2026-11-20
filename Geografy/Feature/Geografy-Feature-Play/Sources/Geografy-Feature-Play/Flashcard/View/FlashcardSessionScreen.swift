@@ -128,7 +128,7 @@ private extension FlashcardSessionScreen {
     var toolbarContent: some ToolbarContent {
         if !showResults {
             ToolbarItem(placement: .topBarLeading) {
-                GiveUpButton { showQuitAlert = true }
+                LeaveGameButton { showQuitAlert = true }
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
