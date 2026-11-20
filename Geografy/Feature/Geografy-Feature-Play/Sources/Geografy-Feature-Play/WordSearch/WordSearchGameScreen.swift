@@ -30,6 +30,8 @@ public struct WordSearchGameScreen: View {
     @State private var isPaused = false
     @State private var isRevealed = false
     @State private var hintRevealedIDs: Set<UUID> = []
+    @State private var showQuitAlert = false
+    @State private var showRevealAllAlert = false
 
     private let service = WordSearchService()
 
@@ -40,6 +42,19 @@ public struct WordSearchGameScreen: View {
             .navigationTitle("Word Search")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .hideNavigationCloseButton(puzzle != nil)
+            .alert("Give Up?", isPresented: $showQuitAlert) {
+                Button("Give Up", role: .destructive) { dismiss() }
+                Button("Continue", role: .cancel) {}
+            } message: {
+                Text("Your answers so far won't be saved.")
+            }
+            .alert("Reveal All Words?", isPresented: $showRevealAllAlert) {
+                Button("Reveal All") { revealAllWords() }
+                Button("Keep Searching", role: .cancel) {}
+            } message: {
+                Text("This ends the puzzle.")
+            }
             .task { startPuzzle() }
             .onChange(of: isClockRunning) { _, isRunning in
                 if isRunning {
@@ -55,7 +70,12 @@ public struct WordSearchGameScreen: View {
 private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+        if puzzle != nil, !gameFinished {
+            ToolbarItem(placement: .topBarLeading) {
+                GiveUpButton { showQuitAlert = true }
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
             // At its natural width; alone in the item, the bar would otherwise squeeze it into a circle.
             WordSearchClockLabel(stopwatch: stopwatch)
                 .fixedSize()
@@ -116,7 +136,7 @@ private extension WordSearchGameScreen {
                             }
                         }
                         GlassButton("Reveal All", systemImage: "eye.slash", fullWidth: true) {
-                            revealAllWords()
+                            showRevealAllAlert = true
                         }
                     }
                 }
@@ -312,7 +332,8 @@ private extension WordSearchGameScreen {
         for wordItem in puzzle.words where !foundWordIDs.contains(wordItem.id) {
             let wordCells = wordCoversCells(wordItem)
             guard wordCells.count == cells.count else { continue }
-            guard zip(wordCells, cells).allSatisfy({ $0 == $1 }) else { continue }
+            // Either way along the word counts: a drag from its last letter to its first finds it too.
+            guard wordCells == cells || Array(wordCells.reversed()) == cells else { continue }
             foundWordIDs.insert(wordItem.id)
             if allFound(puzzle) {
                 timerActive = false
@@ -336,6 +357,14 @@ private extension WordSearchGameScreen {
             }
             return
         }
+        // A tap on one letter isn't a guess; a drag across letters that spell no word is a wrong answer.
+        guard cells.count > 1 else { return }
+        #if !os(tvOS)
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: false,
+            announcement: String(localized: "Not one of the words.", bundle: .module)
+        )
+        #endif
     }
 
     func nextUnrevealedWord(_ puzzle: WordSearchPuzzle) -> WordSearchWord? {
