@@ -169,14 +169,16 @@ private extension CustomQuizLibraryScreen {
                 selectedQuiz = nil
                 Task {
                     try? await Task.sleep(for: .milliseconds(400))
+                    // Asks about the quiz's own countries at its own difficulty, as a pack level does.
                     let config = QuizConfiguration(
                         type: quiz.questionTypes.first ?? .flagQuiz,
                         region: .world,
-                        difficulty: .medium,
+                        difficulty: quiz.difficulty,
                         questionCount: .ten,
                         answerMode: .multipleChoice,
                         comparisonMetric: .population,
                         gameMode: .standard,
+                        countryCodes: quiz.countryCodes
                     )
                     coordinator.cover(PlayRoute.quizSession(config))
                 }
