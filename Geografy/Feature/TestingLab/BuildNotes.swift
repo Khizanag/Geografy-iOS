@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            mapPuzzleWorld,
             leaveGameButton,
             customQuizCountries,
             flashcardAlignment,
@@ -34,6 +35,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var mapPuzzleWorld: BuildNote {
+        BuildNote(
+            commit: "25dd2708",
+            title: "Map Puzzle on the whole world",
+            howToTest: """
+                Open Map Puzzle. Whole World sits on top of the regions, as in Pin Drop; play it and check that \
+                small countries, such as Sri Lanka, get a ring so you can find them.
+                """,
+            systemImage: "globe.americas.fill",
+            color: DesignSystem.Color.purple
+        ) {
+            go.open(.mapPuzzle)
+        }
+    }
+
     var leaveGameButton: BuildNote {
         BuildNote(
             commit: "dbc4042c",
