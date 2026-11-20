@@ -29,6 +29,7 @@ public struct FlashcardSessionScreen: View {
     @State private var cardExit: FlashcardCardExit?
 
     @State private var showGuide = false
+    @State private var showQuitAlert = false
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
 
@@ -41,9 +42,18 @@ public struct FlashcardSessionScreen: View {
     // MARK: - Body
     public var body: some View {
         sessionContent
+            .navigationTitle(deck.name)
             .navigationBarTitleDisplayMode(.inline)
-            .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
+            // Give Up while studying and Done on the results replace the close and back buttons, as in a quiz.
+            .hideNavigationCloseButton()
+            .navigationBarBackButtonHidden()
+            .alert("Give Up?", isPresented: $showQuitAlert) {
+                Button("Give Up", role: .destructive) { dismiss() }
+                Button("Continue", role: .cancel) {}
+            } message: {
+                Text("Cards you've already rated stay saved.")
+            }
             .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
             .onDisappear { flashcardService.persistPendingChanges() }
     }
@@ -72,19 +82,18 @@ private extension FlashcardSessionScreen {
     }
 
     var resultsContent: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                FlashcardStatsView(
-                    cardsReviewed: cards.count,
-                    correctCount: correctCount,
-                    totalCards: cards.count,
-                    averageThinkingTime: averageThinkingTime
-                )
-                doneButton
-            }
-            .padding(DesignSystem.Spacing.md)
-            .readableContentWidth()
-        }
+        GameResultLayout(
+            title: Text("Session Complete"),
+            message: Text("\(correctCount) of \(cards.count) cards correct"),
+            xpEarned: XPRules.flashcardSession(cardsReviewed: cards.count),
+            primaryAction: GameResultAction("Study Again", systemImage: "arrow.counterclockwise") { restart() },
+            onDone: { dismiss() },
+            hero: {
+                IconBadge(deck.icon, color: DesignSystem.Color.purple, size: .hero)
+                    .accessibilityHidden(true)
+            },
+            stats: { resultStats }
+        )
         .screenBackground()
         .onAppear {
             flashcardService.persistPendingChanges()
@@ -93,8 +102,35 @@ private extension FlashcardSessionScreen {
         }
     }
 
+    @ViewBuilder
+    var resultStats: some View {
+        StatTile(
+            value: "\(correctCount)",
+            label: "Correct",
+            icon: "checkmark.circle.fill",
+            color: DesignSystem.Color.success
+        )
+        StatTile(
+            value: "\(accuracyPercent)%",
+            label: "Accuracy",
+            icon: "chart.bar.fill",
+            color: DesignSystem.Color.indigo
+        )
+        StatTile(
+            value: averageThinkingTime.formatted(.number.precision(.fractionLength(1))) + "s",
+            label: "Avg. Think Time",
+            icon: "brain.fill",
+            color: DesignSystem.Color.purple
+        )
+    }
+
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
+        if !showResults {
+            ToolbarItem(placement: .topBarLeading) {
+                GiveUpButton { showQuitAlert = true }
+            }
+        }
         ToolbarItem(placement: .topBarTrailing) {
             Button { showGuide = true } label: {
                 Label("Guide", systemImage: "questionmark.circle")
@@ -179,24 +215,12 @@ private extension FlashcardSessionScreen {
             .foregroundStyle(result.color)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(
-                result.color.opacity(DesignSystem.Opacity.tint),
-                in: RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-            )
-            .overlay(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-                .strokeBorder(result.color.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
+            .glassEffect(
+                .regular.tint(result.color.opacity(DesignSystem.Opacity.tint)).interactive(),
+                in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
             )
         }
         .buttonStyle(.plain)
-    }
-
-    var doneButton: some View {
-        GlassButton("Done", systemImage: "checkmark", fullWidth: true) { dismiss() }
     }
 }
 
@@ -227,6 +251,7 @@ private extension FlashcardSessionScreen {
             correctCount += 1
         }
 
+        playFeedback(knewIt: result != .again)
         let exitRight = result != .again
         advanceToNext(exitRight: exitRight)
     }
@@ -236,7 +261,7 @@ private extension FlashcardSessionScreen {
     }
 
     func rate(_ feedback: SwipeFeedback) {
-        showSwipeFeedback(feedback)
+        playFeedback(knewIt: feedback != .wrong)
         flyOffAndAdvance(direction: feedback == .wrong ? .left : .right, result: feedback.reviewResult)
     }
 
@@ -276,10 +301,26 @@ private extension FlashcardSessionScreen {
 
     enum SwipeDirection { case left, right }
 
-    func showSwipeFeedback(_ type: SwipeFeedback) {
-        hapticsService.notification(type == .wrong ? .warning : .success)
-        if type != .wrong {
-            soundService.play(.correct)
+    /// The quiz's right-or-wrong feedback, the same for a swipe and a rating button.
+    func playFeedback(knewIt: Bool) {
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: knewIt,
+            announcement: knewIt
+                ? String(localized: "Got it.", bundle: .module)
+                : String(localized: "Again soon.", bundle: .module)
+        )
+    }
+
+    func restart() {
+        nextCard.cancel()
+        currentIndex = 0
+        isFlipped = false
+        correctCount = 0
+        thinkingTimes = []
+        cardShownAt = .now
+        cardExit = nil
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+            showResults = false
         }
     }
 
@@ -306,6 +347,10 @@ private extension FlashcardSessionScreen {
     var progressFraction: CGFloat {
         guard !cards.isEmpty else { return 0 }
         return CGFloat(currentIndex) / CGFloat(cards.count)
+    }
+
+    var accuracyPercent: Int {
+        cards.isEmpty ? 0 : Int((Double(correctCount) / Double(cards.count) * 100).rounded())
     }
 
     var averageThinkingTime: TimeInterval {
