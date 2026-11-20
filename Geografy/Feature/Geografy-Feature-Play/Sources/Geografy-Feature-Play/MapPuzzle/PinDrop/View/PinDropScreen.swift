@@ -295,7 +295,7 @@ private extension PinDropScreen {
                 var moved = start
                 moved.offset.width += value.translation.width
                 moved.offset.height += value.translation.height
-                camera = PinDropCamera.clamped(moved, keeping: configuration.region.mapRect, in: screenSize)
+                camera = clampedToRegion(moved)
                 redrawIfNeeded()
             }
             .onEnded { _ in
@@ -326,7 +326,7 @@ private extension PinDropScreen {
                         height: start.offset.height * ratio - anchor.height * (ratio - 1)
                     )
                 )
-                camera = PinDropCamera.clamped(zoomed, keeping: configuration.region.mapRect, in: screenSize)
+                camera = clampedToRegion(zoomed)
                 redrawIfNeeded()
             }
             .onEnded { _ in
@@ -352,6 +352,10 @@ private extension PinDropScreen {
 private extension PinDropScreen {
     var regionFrame: MapFrame {
         PinDropCamera.frame(fitting: configuration.region.mapRect, in: screenSize, insets: aimingInsets, fill: 0.96)
+    }
+
+    func clampedToRegion(_ frame: MapFrame) -> MapFrame {
+        PinDropCamera.clamped(frame, keeping: configuration.region.mapRect, in: screenSize, insets: aimingInsets)
     }
 
     var scaleLimits: ClosedRange<CGFloat> {

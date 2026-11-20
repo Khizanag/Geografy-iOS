@@ -38,12 +38,18 @@ enum PinDropCamera {
         return MapFrame(scale: scale, offset: offset)
     }
 
-    /// `frame` moved back so the region's center stays on screen, so a pan can't lose the map.
-    static func clamped(_ frame: MapFrame, keeping rect: CGRect, in size: CGSize) -> MapFrame {
-        let center = screenPoint(of: CGPoint(x: rect.midX, y: rect.midY), frame: frame, in: size)
+    /// `frame` moved back so the region still covers the middle of the space between the insets. Zoomed in, a pan
+    /// reaches every edge of the region; it stops once the edge is halfway across, so the map can't be lost.
+    static func clamped(_ frame: MapFrame, keeping rect: CGRect, in size: CGSize, insets: EdgeInsets) -> MapFrame {
+        let focus = CGPoint(
+            x: insets.leading + (size.width - insets.leading - insets.trailing) / 2,
+            y: insets.top + (size.height - insets.top - insets.bottom) / 2
+        )
+        let topLeading = screenPoint(of: CGPoint(x: rect.minX, y: rect.minY), frame: frame, in: size)
+        let bottomTrailing = screenPoint(of: CGPoint(x: rect.maxX, y: rect.maxY), frame: frame, in: size)
         var clamped = frame
-        clamped.offset.width += min(max(center.x, 0), size.width) - center.x
-        clamped.offset.height += min(max(center.y, 0), size.height) - center.y
+        clamped.offset.width += focus.x - min(max(focus.x, topLeading.x), bottomTrailing.x)
+        clamped.offset.height += focus.y - min(max(focus.y, topLeading.y), bottomTrailing.y)
         return clamped
     }
 }
