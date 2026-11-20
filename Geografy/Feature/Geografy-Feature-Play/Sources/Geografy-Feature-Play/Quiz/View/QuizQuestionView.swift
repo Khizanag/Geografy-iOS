@@ -16,7 +16,6 @@ public struct QuizQuestionView: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    @State private var optionsVisible = false
     @State private var promptVisible = false
 
     // MARK: - Body
@@ -49,16 +48,11 @@ private extension QuizQuestionView {
     func triggerEntrance() {
         guard !reduceMotion else {
             promptVisible = true
-            optionsVisible = true
             return
         }
-        optionsVisible = false
         promptVisible = false
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8).delay(0.05)) {
             promptVisible = true
-        }
-        withAnimation(.spring(response: 0.35, dampingFraction: 0.85).delay(0.12)) {
-            optionsVisible = true
         }
     }
 }
@@ -175,93 +169,14 @@ private extension QuizQuestionView {
 
 // MARK: - Options
 private extension QuizQuestionView {
-    @ViewBuilder
     var optionsSection: some View {
-        if quizType == .reverseFlag {
-            flagOptionsGrid
-        } else {
-            textOptionsList
-        }
-    }
-
-    var textOptionsList: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
-                QuizOptionButton(
-                    text: option.text,
-                    flagCode: nil,
-                    state: optionState(for: option),
-                    index: index,
-                    action: { onSelectOption(option.id) }
-                )
-                .opacity(optionsVisible ? 1 : 0)
-                .offset(y: optionsVisible || reduceMotion ? 0 : 18)
-                .animation(
-                    reduceMotion
-                        ? nil
-                        : .spring(response: 0.42, dampingFraction: 0.82).delay(0.06 * Double(index)),
-                    value: optionsVisible
-                )
-                .accessibilityValue(optionAccessibilityValue(for: option))
-            }
-        }
-    }
-
-    var flagOptionsGrid: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-            ],
-            spacing: DesignSystem.Spacing.sm
-        ) {
-            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
-                QuizOptionButton(
-                    text: nil,
-                    flagCode: option.flagCode,
-                    state: optionState(for: option),
-                    index: index,
-                    action: { onSelectOption(option.id) }
-                )
-                .opacity(optionsVisible ? 1 : 0)
-                .scaleEffect(optionsVisible || reduceMotion ? 1 : 0.88)
-                .animation(
-                    reduceMotion
-                        ? nil
-                        : .spring(response: 0.42, dampingFraction: 0.78).delay(0.07 * Double(index)),
-                    value: optionsVisible
-                )
-                .accessibilityLabel("Flag \(index + 1)")
-                .accessibilityValue(optionAccessibilityValue(for: option))
-            }
-        }
-    }
-}
-
-// MARK: - Helpers
-private extension QuizQuestionView {
-    func optionState(for option: QuizOption) -> QuizOptionButton.OptionState {
-        guard showFeedback else {
-            if selectedOptionID == option.id {
-                return .disabled
-            }
-            return .default
-        }
-
-        if option.id == correctOptionID {
-            return .correct
-        }
-        if option.id == selectedOptionID, selectedOptionID != correctOptionID {
-            return .incorrect
-        }
-        return .disabled
-    }
-
-    func optionAccessibilityValue(for option: QuizOption) -> String {
-        switch optionState(for: option) {
-        case .correct: "Correct answer"
-        case .incorrect: "Your answer, incorrect"
-        case .default, .disabled: ""
-        }
+        QuizOptionList(
+            options: question.options,
+            layout: quizType == .reverseFlag ? .flagGrid : .list,
+            selectedOptionID: selectedOptionID,
+            correctOptionID: correctOptionID,
+            showFeedback: showFeedback,
+            onSelect: onSelectOption
+        )
     }
 }

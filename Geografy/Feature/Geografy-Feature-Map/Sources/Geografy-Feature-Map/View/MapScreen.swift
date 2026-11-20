@@ -233,7 +233,7 @@ private extension MapScreen {
         if let continent = filteredContinent {
             ToolbarItem(placement: .secondaryAction) {
                 Button("Play Map Puzzle", systemImage: "puzzlepiece") {
-                    coordinator.push(PlayRoute.mapPuzzleGame(continent: continent))
+                    coordinator.cover(PlayRoute.mapPuzzleGame(continent: continent))
                 }
             }
         }

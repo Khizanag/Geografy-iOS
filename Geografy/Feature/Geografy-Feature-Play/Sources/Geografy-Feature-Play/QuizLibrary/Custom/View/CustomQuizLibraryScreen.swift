@@ -178,7 +178,7 @@ private extension CustomQuizLibraryScreen {
                         comparisonMetric: .population,
                         gameMode: .standard,
                     )
-                    coordinator.push(PlayRoute.quizSession(config))
+                    coordinator.cover(PlayRoute.quizSession(config))
                 }
             },
         )

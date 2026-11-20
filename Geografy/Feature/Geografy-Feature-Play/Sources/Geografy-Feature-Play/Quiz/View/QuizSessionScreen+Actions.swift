@@ -28,7 +28,7 @@ extension QuizSessionScreen {
         stopTimer()
         selectedOptionID = optionID
         let isCorrect = session.answer(option: optionID)
-        showAnswerFeedback(isCorrect: isCorrect, question: question, advanceAfter: .seconds(1.3))
+        showAnswerFeedback(isCorrect: isCorrect, question: question, advanceAfter: AnswerFeedback.revealDuration)
     }
 
     func submitTypingAnswer() {
@@ -143,18 +143,14 @@ extension QuizSessionScreen {
         announcement: String? = nil,
         advanceAfter delay: Duration
     ) {
-        soundService.play(isCorrect ? .correct : .wrong)
-        if isCorrect {
-            hapticsService.notification(.success)
-            if session.streak >= 2 {
-                showStreakBurst = true
-                streakBurstEnd.schedule(after: .seconds(0.3)) { showStreakBurst = false }
-            }
-        } else {
-            hapticsService.impact(.light)
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: isCorrect,
+            announcement: announcement ?? spokenResult(isCorrect: isCorrect, question: question)
+        )
+        if isCorrect, session.streak >= 2 {
+            showStreakBurst = true
+            streakBurstEnd.schedule(after: .seconds(0.3)) { showStreakBurst = false }
         }
-        AccessibilityNotification.Announcement(announcement ?? spokenResult(isCorrect: isCorrect, question: question))
-            .post()
 
         withAnimation(.easeInOut(duration: 0.3)) {
             showFeedback = true
@@ -170,7 +166,9 @@ extension QuizSessionScreen {
     }
 
     func spokenResult(isCorrect: Bool, question: QuizQuestion) -> String {
-        guard isCorrect else { return "Incorrect. The answer is \(session.correctAnswerText(for: question))." }
+        guard isCorrect else {
+            return AnswerFeedback.incorrectAnnouncement(answer: session.correctAnswerText(for: question))
+        }
         return session.streak >= 2 ? "Correct. \(session.streak) in a row." : "Correct."
     }
 }

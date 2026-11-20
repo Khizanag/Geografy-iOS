@@ -1,15 +1,19 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Map
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
+/// Names the highlighted country on a continent's map. It plays like a quiz: the map on top, the answers at the
+/// bottom, the next question a moment after each answer, and Give Up to leave.
 struct MapPuzzleScreen: View {
     // MARK: - Properties
-    #if !os(tvOS)
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
+    #if !os(tvOS)
     @Environment(XPService.self) private var xpService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
@@ -21,12 +25,14 @@ struct MapPuzzleScreen: View {
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
-    @State private var selectedOptionIndex: Int?
-    @State private var showResult = false
+    @State private var selectedOptionID: UUID?
+    @State private var showFeedback = false
     @State private var correctCount = 0
     @State private var showSummary = false
     @State private var outline: ContinentOutline?
     @State private var hasLoaded = false
+    @State private var showQuitAlert = false
+    @State private var transition = PendingAction()
 
     private let gameColor = DesignSystem.Color.purple
 
@@ -38,11 +44,16 @@ struct MapPuzzleScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
+            .toolbar { toolbarContent }
+            .hideNavigationCloseButton(isPlaying || showSummary)
+            .alert("Give Up?", isPresented: $showQuitAlert) {
+                Button("Give Up", role: .destructive) { dismiss() }
+                Button("Continue", role: .cancel) {}
+            } message: {
+                Text("Your answers so far won't be saved.")
             }
-            .task {
-                await loadMap()
-            }
+            .task { await loadMap() }
+            .onDisappear { transition.cancel() }
     }
 }
 
@@ -52,194 +63,110 @@ private extension MapPuzzleScreen {
     var mainContent: some View {
         if showSummary {
             summaryView
-        } else if questions.isEmpty {
-            if hasLoaded {
-                EmptyStateView(
-                    icon: "map",
-                    title: "Map Unavailable",
-                    message: "This region's map couldn't be loaded. Pick another region.",
-                    actionTitle: "Choose a Region"
-                ) {
-                    dismiss()
-                }
-            } else {
-                loadingView
+        } else if let question = currentQuestion {
+            puzzleContent(question)
+        } else if hasLoaded {
+            EmptyStateView(
+                icon: "map",
+                title: "Map Unavailable",
+                message: "This region's map couldn't be loaded. Pick another region.",
+                actionTitle: "Choose a Region"
+            ) {
+                dismiss()
             }
         } else {
-            puzzleContent
+            LoadingView("Building puzzle…")
         }
     }
 
-    var loadingView: some View {
-        LoadingView("Building puzzle…")
-    }
-
-    var puzzleContent: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                progressBar
-                if currentIndex < questions.count {
-                    questionCard
-                    optionsGrid
-                    if selectedOptionIndex != nil {
-                        nextButton
-                    }
-                }
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        if isPlaying {
+            ToolbarItem(placement: .topBarLeading) {
+                GiveUpButton { showQuitAlert = true }
             }
-            .padding(DesignSystem.Spacing.md)
-            .readableContentWidth()
         }
     }
 
-    var progressBar: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            HStack {
-                Text("Question \(currentIndex + 1) of \(questions.count)")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                Spacer()
-                Text("\(correctCount) correct")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+    func puzzleContent(_ question: PuzzleQuestion) -> some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            progressHeader
+            VStack(spacing: 0) {
+                Spacer(minLength: DesignSystem.Spacing.md)
+                mapPrompt(question)
+                Spacer(minLength: DesignSystem.Spacing.lg)
+                QuizOptionList(
+                    options: question.options,
+                    selectedOptionID: selectedOptionID,
+                    correctOptionID: question.correctOptionID,
+                    showFeedback: showFeedback,
+                    onSelect: select
+                )
             }
-            ProgressView(value: Double(currentIndex), total: Double(questions.count))
-                .tint(gameColor)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
+            .id(question.id)
+            .transition(questionTransition)
+        }
+        .padding(.top, DesignSystem.Spacing.sm)
+        .readableContentWidth()
+    }
+
+    var progressHeader: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SessionProgressBar(progress: Double(currentIndex) / Double(max(questions.count, 1)))
+            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    /// The country is shown only by its place on the map; its name and flag appear once it's answered.
+    func mapPrompt(_ question: PuzzleQuestion) -> some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            Text("Which country is highlighted?")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+
+            if let outline {
+                ContinentOutlineView(
+                    outline: outline,
+                    fill: DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.half),
+                    highlight: ContinentOutlineView.Highlight(countryCode: question.country.code, color: gameColor)
+                )
+                .frame(height: mapHeight)
                 .accessibilityHidden(true)
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    /// The country is shown only by its place on the map; its name and flag appear after answering.
-    var questionCard: some View {
-        let question = questions[currentIndex]
-        return CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                EyebrowLabel("Which country is this?")
-
-                if let outline {
-                    ContinentOutlineView(
-                        outline: outline,
-                        fill: DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.half),
-                        highlight: ContinentOutlineView.Highlight(countryCode: question.country.code, color: gameColor)
-                    )
-                    .frame(height: mapHeight)
-                }
-
-                if selectedOptionIndex != nil {
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        FlagView(countryCode: question.country.code, height: DesignSystem.Size.Flag.inline)
-                            .accessibilityHidden(true)
-                        Text(question.country.name)
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                    }
-                    .accessibilityElement(children: .combine)
-                } else {
-                    Text("Pick the highlighted country")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
             }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.md)
+
+            answerReveal(question)
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: showFeedback)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            selectedOptionIndex == nil
-                ? "Which country is highlighted on the map of \(continent.displayName)?"
-                : "The highlighted country is \(question.country.name)."
+            showFeedback
+                ? "The highlighted country is \(question.country.name)."
+                : "Which country is highlighted on the map of \(continent.displayName)?"
         )
     }
 
-    var optionsGrid: some View {
-        let question = questions[currentIndex]
-        return LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
-            spacing: DesignSystem.Spacing.sm
-        ) {
-            ForEach(Array(question.options.enumerated()), id: \.offset) { index, option in
-                optionButton(option: option, index: index, question: question)
-            }
+    /// Holds its height before the answer, so the map doesn't jump when the name appears.
+    func answerReveal(_ question: PuzzleQuestion) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            FlagView(countryCode: question.country.code, height: DesignSystem.Size.Flag.inline)
+            Text(question.country.name)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
-    }
-
-    func optionButton(option: Country, index: Int, question: PuzzleQuestion) -> some View {
-        let isSelected = selectedOptionIndex == index
-        let isCorrect = option.code == question.country.code
-        let revealed = selectedOptionIndex != nil
-
-        return Button {
-            guard selectedOptionIndex == nil else { return }
-            selectedOptionIndex = index
-            if isCorrect {
-                correctCount += 1
-                #if !os(tvOS)
-                hapticsService.notification(.success)
-                #endif
-                soundService.play(.correct)
-                AccessibilityNotification.Announcement("Correct.").post()
-            } else {
-                #if !os(tvOS)
-                hapticsService.notification(.error)
-                #endif
-                soundService.play(.wrong)
-                AccessibilityNotification.Announcement("Incorrect. The answer is \(question.country.name).").post()
-            }
-        } label: {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    // Names only: a flag would turn the map question into a flag question.
-                    Text(option.name)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(
-                            optionTextColor(isSelected: isSelected, isCorrect: isCorrect, revealed: revealed)
-                        )
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                    Spacer()
-                    if revealed {
-                        resultIcon(isSelected: isSelected, isCorrect: isCorrect)
-                    }
-                }
-                .padding(DesignSystem.Spacing.sm)
-                .background(optionBackground(isSelected: isSelected, isCorrect: isCorrect, revealed: revealed))
-            }
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(revealed)
-        .accessibilityLabel(option.name)
-        .accessibilityValue(optionAccessibilityValue(isSelected: isSelected, isCorrect: isCorrect, revealed: revealed))
-    }
-
-    func resultIcon(isSelected: Bool, isCorrect: Bool) -> some View {
-        Group {
-            if isCorrect {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(DesignSystem.Color.success)
-            } else if isSelected {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundStyle(DesignSystem.Color.error)
-            }
-        }
-        .font(DesignSystem.Font.callout)
+        .opacity(showFeedback ? 1 : 0)
         .accessibilityHidden(true)
     }
 
-    var nextButton: some View {
-        GlassButton(currentIndex + 1 < questions.count ? "Next Question" : "See Results", fullWidth: true) {
-            if currentIndex + 1 < questions.count {
-                currentIndex += 1
-                selectedOptionIndex = nil
-            } else {
-                showSummary = true
-                xpService.award(
-                    XPRules.mapPuzzle(questions: questions.count, correct: correctCount),
-                    source: .mapPuzzleCompleted
-                )
-            }
-        }
+    var questionTransition: AnyTransition {
+        guard !reduceMotion else { return .opacity }
+        return .asymmetric(
+            insertion: .move(edge: .trailing).combined(with: .opacity),
+            removal: .move(edge: .leading).combined(with: .opacity)
+        )
     }
 }
 
@@ -294,6 +221,45 @@ private extension MapPuzzleScreen {
 
 // MARK: - Actions
 private extension MapPuzzleScreen {
+    func select(_ optionID: UUID) {
+        guard selectedOptionID == nil, let question = currentQuestion else { return }
+        selectedOptionID = optionID
+        let isCorrect = optionID == question.correctOptionID
+        if isCorrect {
+            correctCount += 1
+        }
+        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+            isCorrect: isCorrect,
+            announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: question.country.name)
+        )
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showFeedback = true
+        }
+        transition.schedule(after: AnswerFeedback.revealDuration) { advance() }
+    }
+
+    func advance() {
+        guard currentIndex + 1 < questions.count else {
+            finish()
+            return
+        }
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+            currentIndex += 1
+            selectedOptionID = nil
+            showFeedback = false
+        }
+    }
+
+    func finish() {
+        #if !os(tvOS)
+        xpService.award(
+            XPRules.mapPuzzle(questions: questions.count, correct: correctCount),
+            source: .mapPuzzleCompleted
+        )
+        #endif
+        showSummary = true
+    }
+
     func loadMap() async {
         if outline == nil {
             let shapes = await geoJSONCache.loadShapes()
@@ -303,7 +269,8 @@ private extension MapPuzzleScreen {
         hasLoaded = true
     }
 
-    /// Only countries drawn on the continent's map can be asked about.
+    /// Only countries drawn on the continent's map can be asked about. The answers are names only: a flag would
+    /// turn the map question into a flag question.
     func buildQuestions() {
         guard let mappedCodes = outline.map({ Set($0.countryPaths.keys) }) else { return }
         let continentCountries = countryDataService.countries.filter {
@@ -312,20 +279,19 @@ private extension MapPuzzleScreen {
         let questionCount = MapPuzzleRules.questionCount(forCountryCount: continentCountries.count)
         guard questionCount > 0 else { return }
 
-        let questionCountries = Array(continentCountries.shuffled().prefix(questionCount))
-
-        questions = questionCountries.map { country in
-            var options = [country]
+        questions = continentCountries.shuffled().prefix(questionCount).map { country in
             let pool = continentCountries.filter { $0.code != country.code }.shuffled()
-            options += Array(pool.prefix(MapPuzzleRules.optionsPerQuestion - 1))
-            options.shuffle()
-            return PuzzleQuestion(country: country, options: options)
+            let others = pool.prefix(MapPuzzleRules.optionsPerQuestion - 1).map { QuizOption(text: $0.name) }
+            let answer = QuizOption(text: country.name)
+            return PuzzleQuestion(country: country, options: (others + [answer]).shuffled(), correctOptionID: answer.id)
         }
     }
 
     func reset() {
+        transition.cancel()
         currentIndex = 0
-        selectedOptionIndex = nil
+        selectedOptionID = nil
+        showFeedback = false
         correctCount = 0
         showSummary = false
         buildQuestions()
@@ -334,39 +300,28 @@ private extension MapPuzzleScreen {
 
 // MARK: - Helpers
 private extension MapPuzzleScreen {
-    struct PuzzleQuestion {
+    struct PuzzleQuestion: Identifiable {
+        let id = UUID()
         let country: Country
-        let options: [Country]
+        let options: [QuizOption]
+        let correctOptionID: UUID
+    }
+
+    var currentQuestion: PuzzleQuestion? {
+        questions.indices.contains(currentIndex) ? questions[currentIndex] : nil
+    }
+
+    var isPlaying: Bool {
+        !showSummary && currentQuestion != nil
     }
 
     var summaryTitle: String {
-        let fraction = Double(correctCount) / Double(questions.count)
+        let fraction = Double(correctCount) / Double(max(questions.count, 1))
         return switch fraction {
         case 0.8...: "Excellent!"
         case 0.6..<0.8: "Well Done!"
         case 0.4..<0.6: "Good Try!"
         default: "Keep Practicing!"
         }
-    }
-
-    func optionTextColor(isSelected: Bool, isCorrect: Bool, revealed: Bool) -> Color {
-        guard revealed else { return DesignSystem.Color.textPrimary }
-        if isCorrect { return DesignSystem.Color.success }
-        if isSelected { return DesignSystem.Color.error }
-        return DesignSystem.Color.textSecondary
-    }
-
-    func optionAccessibilityValue(isSelected: Bool, isCorrect: Bool, revealed: Bool) -> String {
-        guard revealed else { return "" }
-        if isCorrect { return isSelected ? "Your answer, correct" : "Correct answer" }
-        if isSelected { return "Your answer, incorrect" }
-        return ""
-    }
-
-    func optionBackground(isSelected: Bool, isCorrect: Bool, revealed: Bool) -> Color {
-        guard revealed else { return .clear }
-        if isCorrect { return DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint) }
-        if isSelected { return DesignSystem.Color.error.opacity(DesignSystem.Opacity.tint) }
-        return .clear
     }
 }

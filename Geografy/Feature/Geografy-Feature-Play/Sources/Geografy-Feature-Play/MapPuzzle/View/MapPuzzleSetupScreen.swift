@@ -65,7 +65,7 @@ private extension MapPuzzleSetupScreen {
 
     var startButton: some View {
         GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-            coordinator.push(PlayRoute.mapPuzzleGame(continent: selectedContinent))
+            coordinator.cover(PlayRoute.mapPuzzleGame(continent: selectedContinent))
         }
         .disabled(!MapPuzzleRules.isPlayable(countryCount: countryCount(for: selectedContinent)))
         .accessibilityHint("Starts a puzzle in \(selectedContinent.displayName)")
