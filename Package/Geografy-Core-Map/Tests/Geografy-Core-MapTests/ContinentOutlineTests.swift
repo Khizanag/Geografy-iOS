@@ -37,6 +37,21 @@ struct ContinentOutlineTests {
         #expect(outline.path.boundingBoxOfPath == CGRect(x: 1_000, y: 500, width: 70, height: 40))
     }
 
+    @Test("With no continent, joins every country but Antarctica's, framed as the world")
+    func worldJoinsEveryContinent() throws {
+        let shapes = [
+            makeShape(id: "FR", continent: "Europe", rect: CGRect(x: 1_000, y: 500, width: 10, height: 10)),
+            makeShape(id: "EG", continent: "Africa", rect: CGRect(x: 1_000, y: 900, width: 50, height: 50)),
+            makeShape(id: "AQ", continent: "Antarctica", rect: CGRect(x: 1_000, y: 1_900, width: 50, height: 50)),
+        ]
+
+        let outline = try #require(ContinentOutline(continent: nil, shapes: shapes))
+
+        #expect(outline.continent == nil)
+        #expect(Set(outline.countryPaths.keys) == ["FR", "EG"])
+        #expect(outline.viewport.width > ContinentOutline.viewport(for: .asia)?.width ?? .infinity)
+    }
+
     @Test("Keeps each country's own path, only for countries on the continent")
     func keepsCountryPaths() throws {
         let shapes = [

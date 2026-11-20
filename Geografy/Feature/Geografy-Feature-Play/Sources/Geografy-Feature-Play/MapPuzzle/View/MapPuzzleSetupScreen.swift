@@ -9,9 +9,11 @@ public struct MapPuzzleSetupScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
-    @AppStorage("mapPuzzle_selectedContinent") private var selectedContinent: Country.Continent = .europe
+    /// A continent's raw value, or `worldKey` for the whole world.
+    @AppStorage("mapPuzzle_selectedContinent") private var storedRegion = Self.worldKey
 
-    private let continents = Country.Continent.allCases.filter { $0 != .antarctica }
+    /// The whole world on top, then each continent, as in every game's region choice.
+    private let regions: [Country.Continent?] = [nil] + Country.Continent.allCases.filter { $0 != .antarctica }
     private let gameColor = DesignSystem.Color.purple
 
     // MARK: - Init
@@ -55,8 +57,8 @@ private extension MapPuzzleSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
             RegionPicker(
-                selection: $selectedContinent,
-                regions: continents,
+                selection: selectedRegion,
+                regions: regions,
                 color: gameColor,
                 continent: { $0 }
             )
@@ -65,10 +67,10 @@ private extension MapPuzzleSetupScreen {
 
     var startButton: some View {
         GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-            coordinator.cover(PlayRoute.mapPuzzleGame(continent: selectedContinent))
+            coordinator.cover(PlayRoute.mapPuzzleGame(continent: selectedRegion.wrappedValue))
         }
-        .disabled(!MapPuzzleRules.isPlayable(countryCount: countryCount(for: selectedContinent)))
-        .accessibilityHint("Starts a puzzle in \(selectedContinent.displayName)")
+        .disabled(!MapPuzzleRules.isPlayable(countryCount: countryCount(for: selectedRegion.wrappedValue)))
+        .accessibilityHint("Starts a puzzle in \(regionName)")
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }
@@ -77,7 +79,8 @@ private extension MapPuzzleSetupScreen {
 // MARK: - Helpers
 private extension MapPuzzleSetupScreen {
     var headerFacts: [GameIntroHeader.Fact] {
-        let questionCount = MapPuzzleRules.questionCount(forCountryCount: countryCount(for: selectedContinent))
+        let countryCount = countryCount(for: selectedRegion.wrappedValue)
+        let questionCount = MapPuzzleRules.questionCount(forCountryCount: countryCount)
         guard questionCount > 0 else { return [] }
         let minutes = MapPuzzleRules.estimatedMinutes(forQuestionCount: questionCount)
         return [
@@ -87,7 +90,22 @@ private extension MapPuzzleSetupScreen {
         ]
     }
 
-    func countryCount(for continent: Country.Continent) -> Int {
-        countryDataService.countries.count { $0.continent == continent }
+    static let worldKey = "world"
+
+    var selectedRegion: Binding<Country.Continent?> {
+        Binding {
+            Country.Continent(rawValue: storedRegion)
+        } set: { region in
+            storedRegion = region?.rawValue ?? Self.worldKey
+        }
+    }
+
+    var regionName: String {
+        selectedRegion.wrappedValue?.displayName ?? String(localized: "the whole world", bundle: .module)
+    }
+
+    func countryCount(for continent: Country.Continent?) -> Int {
+        guard let continent else { return countryDataService.countries.count { $0.continent != .antarctica } }
+        return countryDataService.countries.count { $0.continent == continent }
     }
 }

@@ -68,8 +68,9 @@ public struct ContinentOutlineView: View {
 // MARK: - Helpers
 private extension ContinentOutlineView {
     static let borderWidth: CGFloat = 0.6
-    /// Countries smaller than this on screen, such as Monaco, get a ring so they can be found.
-    static let tinyCountrySize: CGFloat = 8
+    /// Countries smaller than this on screen get a ring so they can be found: Monaco on a continent, and on the
+    /// whole world anything about Guyana's size.
+    static let tinyCountrySize: CGFloat = 14
     static let markerRadius: CGFloat = 12
 
     func drawMarkerIfTiny(

@@ -1,9 +1,11 @@
 import CoreGraphics
 import Geografy_Core_Common
 
-/// A continent's countries as one path in map space, and the window that frames its mainland.
+/// A continent's countries as one path in map space, and the window that frames its mainland; with no continent,
+/// every country but Antarctica's, framed as the whole world.
 public struct ContinentOutline: @unchecked Sendable {
-    public let continent: Country.Continent
+    /// Nil for the whole world.
+    public let continent: Country.Continent?
     public let path: CGPath
     public let viewport: CGRect
     /// Each country's own path, keyed by country code, so one can be highlighted on the continent.
@@ -20,12 +22,14 @@ extension ContinentOutline {
         case puzzle
     }
 
-    /// Joins the polygons of every shape on `continent`; `nil` when none match or the continent has no framing.
-    public init?(continent: Country.Continent, shapes: [CountryShape], detail: Detail = .puzzle) {
-        guard let viewport = Self.viewport(for: continent) else { return nil }
+    /// Joins the polygons of every shape on `continent`, or of the whole world when it's nil; `nil` when none match
+    /// or the continent has no framing.
+    public init?(continent: Country.Continent?, shapes: [CountryShape], detail: Detail = .puzzle) {
+        let framing: CGRect? = if let continent { Self.viewport(for: continent) } else { Self.worldViewport }
+        guard let viewport = framing else { return nil }
         let path = CGMutablePath()
         var countryPaths: [String: CGPath] = [:]
-        for shape in shapes where shape.continent == continent.displayName {
+        for shape in shapes where Self.shape(shape, isOn: continent) {
             switch detail {
             case .silhouette:
                 Self.add(shape.detailPaths.first, orPolygonsOf: shape, to: path)
@@ -59,10 +63,10 @@ extension ContinentOutline {
         outlines(for: continents, shapes: shapes, detail: .silhouette)
     }
 
-    /// Builds one continent's puzzle map off the main actor.
+    /// Builds one continent's puzzle map, or the whole world's when `continent` is nil, off the main actor.
     @concurrent
     public static func puzzleOutline(
-        for continent: Country.Continent,
+        for continent: Country.Continent?,
         shapes: [CountryShape]
     ) async -> ContinentOutline? {
         ContinentOutline(continent: continent, shapes: shapes, detail: .puzzle)
@@ -105,6 +109,19 @@ private extension ContinentOutline {
         } else {
             shape.polygons.forEach { path.addPath($0) }
         }
+    }
+
+    /// Every inhabited longitude, from the southern tip of South America to the Arctic islands.
+    static let worldViewport = MapProjection.boundingRect(
+        minLongitude: -180,
+        maxLongitude: 180,
+        minLatitude: -56,
+        maxLatitude: 78
+    )
+
+    static func shape(_ shape: CountryShape, isOn continent: Country.Continent?) -> Bool {
+        guard let continent else { return shape.continent != Country.Continent.antarctica.displayName }
+        return shape.continent == continent.displayName
     }
 
     struct GeographicBounds {

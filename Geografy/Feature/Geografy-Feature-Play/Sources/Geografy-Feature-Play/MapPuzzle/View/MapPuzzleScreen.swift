@@ -21,7 +21,8 @@ struct MapPuzzleScreen: View {
 
     @ScaledMetric(relativeTo: .body) private var mapHeight: CGFloat = 220
 
-    let continent: Country.Continent
+    /// Nil for the whole world.
+    let continent: Country.Continent?
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
@@ -40,7 +41,7 @@ struct MapPuzzleScreen: View {
     var body: some View {
         mainContent
             .screenBackground()
-            .navigationTitle("\(continent.displayName) Puzzle")
+            .navigationTitle(title)
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -146,7 +147,7 @@ private extension MapPuzzleScreen {
         .accessibilityLabel(
             showFeedback
                 ? "The highlighted country is \(question.country.name)."
-                : "Which country is highlighted on the map of \(continent.displayName)?"
+                : "Which country is highlighted on the map of \(regionName)?"
         )
     }
 
@@ -274,8 +275,8 @@ private extension MapPuzzleScreen {
     /// turn the map question into a flag question.
     func buildQuestions() {
         guard let mappedCodes = outline.map({ Set($0.countryPaths.keys) }) else { return }
-        let continentCountries = countryDataService.countries.filter {
-            $0.continent == continent && mappedCodes.contains($0.code)
+        let continentCountries = countryDataService.countries.filter { country in
+            mappedCodes.contains(country.code) && (continent.map { country.continent == $0 } ?? true)
         }
         let questionCount = MapPuzzleRules.questionCount(forCountryCount: continentCountries.count)
         guard questionCount > 0 else { return }
@@ -310,6 +311,18 @@ private extension MapPuzzleScreen {
 
     var currentQuestion: PuzzleQuestion? {
         questions.indices.contains(currentIndex) ? questions[currentIndex] : nil
+    }
+
+    var title: LocalizedStringKey {
+        if let continent {
+            "\(continent.displayName) Puzzle"
+        } else {
+            "World Puzzle"
+        }
+    }
+
+    var regionName: String {
+        continent?.displayName ?? String(localized: "the world", bundle: .module)
     }
 
     var isPlaying: Bool {
