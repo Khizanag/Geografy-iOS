@@ -21,142 +21,106 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            searchAlignment,
-            labelsToggle,
-            pinDropPanning,
-            localPlayPinDrop,
-            localPlayQuizTypes,
-            localPlayNames,
-            localPlayLeaving,
-            soundEffects,
+            customQuizCountries,
+            flashcardAlignment,
+            wordSearchAlignment,
+            pinDropGiveUp,
+            dailyChallengeQuiz,
+            mapPuzzleQuiz,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var searchAlignment: BuildNote {
+    var mapPuzzleQuiz: BuildNote {
         BuildNote(
-            commit: "62adfaf9",
-            title: "Search lines up with its bar",
+            commit: "1bbff145",
+            title: "Map Puzzle plays like a quiz",
             howToTest: """
-                Open Search, clear Recent if it shows, and check that Popular starts at the search bar's left edge. \
-                Timeline event details with a short description now start at the left too.
+                Start Map Puzzle. The map sits on top and the answers are glass buttons at the bottom, the next \
+                question comes a moment after each answer, and Give Up asks before leaving.
                 """,
-            systemImage: "text.alignleft",
-            color: DesignSystem.Color.blue
+            systemImage: "puzzlepiece.fill",
+            color: DesignSystem.Color.purple
         ) {
-            go.open(.search)
+            go.open(.mapPuzzle)
         }
     }
 
-    var labelsToggle: BuildNote {
+    var dailyChallengeQuiz: BuildNote {
         BuildNote(
-            commit: "8ad08367",
-            title: "Native labels toggle",
+            commit: "23be5638",
+            title: "Daily challenges ask like a quiz",
             howToTest: """
-                Open the World Map and tap Aa. It stays a glass circle like the bar's other buttons and turns \
-                green while labels show; More next to it doesn't move.
+                Play today's challenge. Capital Chain and Flag Sequence show the quiz's progress bar, prompt, \
+                and answers at the bottom; Mystery Country keeps its guess at the bottom and shows the answer \
+                for a moment before finishing.
                 """,
-            systemImage: "textformat",
-            color: DesignSystem.Color.accent
+            systemImage: "calendar",
+            color: DesignSystem.Color.orange
         ) {
-            go.selectTab(.map)
+            go.open(.dailyChallenge)
         }
     }
 
-    var pinDropPanning: BuildNote {
+    var pinDropGiveUp: BuildNote {
         BuildNote(
-            commit: "35c45d3d",
-            title: "Pan to every edge in Pin Drop",
+            commit: "450bacb6",
+            title: "Pin Drop opens full screen",
             howToTest: """
-                Start Pin Drop on the World, zoom in a lot, and pan all the way left and right. Alaska, New Zealand, \
-                and Japan are now reachable; a pan stops once the region's edge reaches the middle of the screen.
+                Start Pin Drop. It covers the screen like a quiz, Give Up asks before leaving, and the round \
+                shows in the same counter pill as a quiz.
                 """,
-            systemImage: "arrow.left.and.right",
+            systemImage: "mappin.and.ellipse",
             color: DesignSystem.Color.orange
         ) {
             go.open(.pinDrop)
         }
     }
 
-    var localPlayPinDrop: BuildNote {
+    var wordSearchAlignment: BuildNote {
         BuildNote(
-            commit: "c4ae246e",
-            title: "Pin Drop against each other",
+            commit: "ca2ed1e2",
+            title: "Word Search: Give Up and feedback",
             howToTest: """
-                Host, pick Pin Drop, and choose a region. Both of you find the same countries; a chip shows the \
-                other player's points and whether they've locked in, Next Round waits for them, and the result \
-                compares points.
+                Start a puzzle. Give Up is top left and the clock sits beside Pause. Drag across letters that \
+                spell no word and it buzzes; drag a word backwards and it still counts. Reveal All asks first.
                 """,
-            systemImage: "mappin.and.ellipse",
-            color: DesignSystem.Color.orange
+            systemImage: "textformat.abc",
+            color: DesignSystem.Color.indigo
         ) {
-            go.open(.multiplayer)
+            go.open(.wordSearch)
         }
     }
 
-    var localPlayQuizTypes: BuildNote {
+    var flashcardAlignment: BuildNote {
         BuildNote(
-            commit: "8197e05e",
-            title: "Every quiz type in Local Play",
+            commit: "beb9d762",
+            title: "Flashcards: Give Up and results",
             howToTest: """
-                Host any of the eleven quiz types. Capital and reverse capital questions now show the country or \
-                capital, the answers sit at the bottom on glass, and the score bar shows when the other player \
-                has answered.
+                Start a review. Give Up is top left, the rating buttons are glass, a rating or swipe sounds like \
+                a quiz answer, and the end is the shared results screen with Study Again.
                 """,
-            systemImage: "rectangle.grid.2x2.fill",
-            color: DesignSystem.Color.teal
+            systemImage: "brain.fill",
+            color: DesignSystem.Color.purple
         ) {
-            go.open(.multiplayer)
+            go.open(.srsStudy)
         }
     }
 
-    var localPlayNames: BuildNote {
+    var customQuizCountries: BuildNote {
         BuildNote(
-            commit: "38f165fa",
-            title: "Local Play shows your names",
+            commit: "8b6e6319",
+            title: "Custom quizzes use their countries",
             howToTest: """
-                Each of you types a name before Host or Join. The guest sees the host's name under Nearby \
-                Hosts, both see each other's name in the lobby and the match, and the guest sees the host's quiz \
-                settings change live.
+                Build a custom quiz with a few countries and play it. The questions are about those countries, \
+                at the difficulty you chose, and it opens full screen with Give Up.
                 """,
-            systemImage: "person.2.fill",
-            color: DesignSystem.Color.teal
-        ) {
-            go.open(.multiplayer)
-        }
-    }
-
-    var localPlayLeaving: BuildNote {
-        BuildNote(
-            commit: "38f165fa",
-            title: "Leaving a match tells the other player",
-            howToTest: """
-                There's no back button any more. In a match, Give Up asks first, then the other phone shows that \
-                you gave up. Close a lobby with someone in it: they see it closed. A guest leaving keeps the \
-                host's lobby open. After a result, Done leaves and the other result says so.
-                """,
-            systemImage: "flag.fill",
-            color: DesignSystem.Color.orange
-        ) {
-            go.open(.multiplayer)
-        }
-    }
-
-    var soundEffects: BuildNote {
-        BuildNote(
-            commit: "3023329a",
-            title: "Games play sounds",
-            howToTest: """
-                Turn the ring switch on and play a quiz: a right answer chimes, a wrong one plays two low notes, \
-                and the result plays a short tune. A new best in Pin Drop, a level up, or an achievement plays a \
-                longer one. With the switch on silent, nothing plays.
-                """,
-            systemImage: "speaker.wave.2.fill",
+            systemImage: "square.and.pencil",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.quiz)
+            go.open(.quizPacks)
         }
     }
 }
