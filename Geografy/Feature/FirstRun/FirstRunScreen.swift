@@ -34,6 +34,7 @@ struct FirstRunScreen: View {
                 .transition(reduceMotion ? .opacity : .push(from: .trailing))
             Spacer(minLength: 0)
         }
+        .frame(maxWidth: .infinity)
         .padding(DesignSystem.Spacing.lg)
         .readableContentWidth()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

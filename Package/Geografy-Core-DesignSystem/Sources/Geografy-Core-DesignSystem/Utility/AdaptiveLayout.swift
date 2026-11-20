@@ -50,14 +50,16 @@ public struct ReadableContentWidth: ViewModifier {
     }
 
     public func body(content: Content) -> some View {
+        // Leading inside the column, so content narrower than it lines up with the screen's other content
+        // instead of floating in the middle; the column itself stays centered.
         content
-            .frame(maxWidth: horizontalSizeClass == .regular ? maxWidth : .infinity)
+            .frame(maxWidth: horizontalSizeClass == .regular ? maxWidth : .infinity, alignment: .leading)
             .frame(maxWidth: .infinity)
     }
 }
 
 public extension View {
-    /// Constrains content to a readable width on wide screens (iPad/Mac), centered
+    /// Constrains content to a readable width on wide screens (iPad/Mac), centered, with the content leading inside it
     func readableContentWidth(
         _ maxWidth: CGFloat = DesignSystem.AdaptiveLayout.maxContentWidth
     ) -> some View {
