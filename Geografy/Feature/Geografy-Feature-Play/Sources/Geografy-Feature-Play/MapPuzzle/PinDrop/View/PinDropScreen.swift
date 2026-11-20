@@ -1,6 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Map
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -47,6 +48,7 @@ struct PinDropScreen: View {
     @State private var lineProgress: CGFloat = 0
     @State private var bestScore = 0
     @State private var isNewBest = false
+    @State private var showQuitAlert = false
 
     private let records = PinDropRecords()
     /// Room the reveal card takes at the bottom, for framing the answer above it before it's measured.
@@ -76,7 +78,28 @@ struct PinDropScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
         #endif
+        .toolbar { giveUpToolbar }
+        // A match brings its own Give Up; on its own, Give Up replaces the cover's close button once it's playing.
+        .hideNavigationCloseButton(match == nil && game != nil)
+        .alert("Give Up?", isPresented: $showQuitAlert) {
+            Button("Give Up", role: .destructive) { dismiss() }
+            Button("Continue", role: .cancel) {}
+        } message: {
+            Text("Your answers so far won't be saved.")
+        }
         .task { await load() }
+    }
+}
+
+// MARK: - Toolbar
+private extension PinDropScreen {
+    @ToolbarContentBuilder
+    var giveUpToolbar: some ToolbarContent {
+        if match == nil, let game, game.phase != .finished {
+            ToolbarItem(placement: .topBarLeading) {
+                GiveUpButton { showQuitAlert = true }
+            }
+        }
     }
 }
 

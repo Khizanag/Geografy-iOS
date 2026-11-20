@@ -85,7 +85,7 @@ private extension PinDropSetupScreen {
 
     var startButton: some View {
         GlassButton("Start", systemImage: "mappin.and.ellipse", fullWidth: true) {
-            coordinator.push(PlayLocalRoute.pinDropGame(configuration))
+            coordinator.cover(PlayLocalRoute.pinDropGame(configuration))
         }
         .disabled(countryCount(for: region) == 0)
         .padding(.horizontal, DesignSystem.Spacing.md)

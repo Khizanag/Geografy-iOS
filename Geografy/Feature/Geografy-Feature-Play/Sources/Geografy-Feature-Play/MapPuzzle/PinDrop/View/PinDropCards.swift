@@ -18,10 +18,7 @@ struct PinDropPromptCard: View {
             HStack {
                 EyebrowLabel("Find", color: PinDropStyle.gameColor)
                 Spacer()
-                Text("Round \(roundIndex + 1) of \(roundCount)")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                QuestionCounterPill(current: roundIndex + 1, total: roundCount)
             }
             HStack(spacing: DesignSystem.Spacing.sm) {
                 countryName
