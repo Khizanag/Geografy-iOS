@@ -5,7 +5,7 @@ import Geografy_Core_Service
 import Geografy_Feature_Play
 import SwiftUI
 
-/// The Play tab: today's challenge on top, then every quiz, study tool, and game.
+/// The Play tab: today's challenge on top, then the study tools, then every game.
 struct PlayScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
@@ -33,11 +33,11 @@ struct PlayScreen: View {
 // MARK: - Sections
 private extension PlayScreen {
     static let sections = [
+        HubSection(title: "Study", items: [.learningPath, .srsStudy]),
         HubSection(
             title: "Games",
             items: [.quiz, .mapPuzzle, .pinDrop, .speedRun, .wordSearch, .quizPacks, .multiplayer]
         ),
-        HubSection(title: "Study", items: [.learningPath, .srsStudy]),
     ]
 }
 
