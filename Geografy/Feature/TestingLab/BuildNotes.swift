@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            hapticsFromViews,
             resultsInPlace,
             systemGlassButtons,
             questionAtTop,
@@ -50,6 +51,22 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var hapticsFromViews: BuildNote {
+        BuildNote(
+            commit: "ca0a05bc",
+            title: "Haptics only on a change",
+            howToTest: """
+                Tapping a tile, a row, or Start no longer buzzes. A right answer taps success and a wrong one taps \
+                error, in every game. Toggling a favorite, picking a region or an option, swapping a pair, and \
+                saving a journal entry each tap once. Turn Haptics off in Settings: none of them play.
+                """,
+            systemImage: "iphone.radiowaves.left.and.right",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var resultsInPlace: BuildNote {
         BuildNote(
             commit: "eae51c7a",
