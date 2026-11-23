@@ -21,25 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            unclippedChips,
+            pressHaptics,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var unclippedChips: BuildNote {
+    var pressHaptics: BuildNote {
         BuildNote(
-            commit: "d7341ddb",
-            title: "Chips aren't cut when pressed",
+            commit: "01644de9",
+            title: "Presses tap again",
             howToTest: """
-                In Travel, press and hold each status chip: its glass swells without being cut at the top or \
-                bottom. Do the same with the Timeline's filter row.
+                Tap hub tiles, list rows, cards, and Start, Next, or Done: each press taps lightly, cards at half \
+                strength. A right or wrong answer, a favorite, and a Travel filter still play their own haptic. \
+                Turn Haptics off in Settings: none play.
                 """,
-            systemImage: "capsule.on.capsule",
+            systemImage: "hand.tap",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.travel)
+            go.selectTab(.play)
         }
     }
 }
