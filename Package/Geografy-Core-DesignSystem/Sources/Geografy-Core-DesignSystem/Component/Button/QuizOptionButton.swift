@@ -27,36 +27,56 @@ public struct QuizOptionButton: View {
 
     @State private var shakeOffset: CGFloat = 0
 
-    private static let shape = RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-
     // MARK: - Body
     public var body: some View {
-        Button(action: action) {
-            content
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm + 2)
-                .glassEffect(glass, in: Self.shape)
-                .overlay {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                        .strokeBorder(borderColor, lineWidth: 1.5)
+        styledButton
+            .buttonBorderShape(.capsule)
+            .allowsHitTesting(state == .default)
+            .disabled(state == .disabled)
+            .offset(x: shakeOffset)
+            .animation(.easeInOut(duration: 0.2), value: state)
+            #if !os(tvOS)
+            .keyboardShortcut(keyForIndex, modifiers: [])
+            #endif
+            .onChange(of: state) { _, newState in
+                if newState == .incorrect, !reduceMotion {
+                    Task { await shake() }
                 }
-                .background { glowLayer }
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(state != .default)
-        .offset(x: shakeOffset)
-        .animation(.easeInOut(duration: 0.2), value: state)
-        #if !os(tvOS)
-        .keyboardShortcut(keyForIndex, modifiers: [])
-        #endif
-        .onChange(of: state) { _, newState in
-            if newState == .incorrect, !reduceMotion {
-                Task { await shake() }
             }
+            .accessibilityLabel(accessibilityTitle)
+            .accessibilityValue(accessibilityStateValue)
+    }
+}
+
+// MARK: - Button
+private extension QuizOptionButton {
+    /// The system glass button, tinted green or red once the answer shows. Before iOS 26.1 the style takes no
+    /// tint, so the same capsule of glass is drawn directly.
+    @ViewBuilder
+    var styledButton: some View {
+        if #available(iOS 26.1, tvOS 26.1, *) {
+            Button(action: action) { label }
+                .buttonStyle(.glass(glass))
+        } else {
+            Button(action: action) {
+                label
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.vertical, DesignSystem.Spacing.sm)
+                    .glassEffect(glass.interactive(), in: .capsule)
+            }
+            .buttonStyle(.plain)
         }
-        .accessibilityLabel(accessibilityTitle)
-        .accessibilityValue(accessibilityStateValue)
+    }
+
+    var label: some View {
+        content
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.xxs)
+    }
+
+    var glass: Glass {
+        guard let tint else { return .regular }
+        return .regular.tint(tint)
     }
 }
 
@@ -146,10 +166,7 @@ private extension QuizOptionButton {
             .font(DesignSystem.Font.footnote.weight(.black))
             .foregroundStyle(badgeTextColor)
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-            .background(
-                badgeBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-            )
+            .background(badgeBackground, in: .circle)
             .accessibilityHidden(true)
     }
 
@@ -190,68 +207,15 @@ private extension QuizOptionButton {
             EmptyView()
         }
     }
-
-    // The glow sits on a plain shape behind the button: shadowing the whole button would
-    // render its material offscreen, and the default state carries no shadow at all.
-    @ViewBuilder
-    var glowLayer: some View {
-        if let glowTint {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .fill(glowTint.opacity(glowOpacity))
-                .shadow(color: glowTint, radius: glowRadius, y: 3)
-                .transition(.opacity)
-        }
-    }
-
-    /// Liquid Glass, tinted green or red once the answer shows; it falls back to a frosted fill on its own when
-    /// Reduce Transparency is on.
-    var glass: Glass {
-        overlayColor == .clear ? .regular.interactive() : .regular.tint(overlayColor)
-    }
 }
 
 // MARK: - Helpers
 private extension QuizOptionButton {
-    var overlayColor: Color {
-        switch state {
-        case .default:      .clear
-        case .correct:      DesignSystem.Color.success.opacity(DesignSystem.Opacity.soft)
-        case .incorrect:    DesignSystem.Color.error.opacity(DesignSystem.Opacity.soft)
-        case .disabled:     .primary.opacity(DesignSystem.Opacity.faint)
-        }
-    }
-
-    var borderColor: Color {
-        switch state {
-        case .default:      .primary.opacity(DesignSystem.Opacity.faint)
-        case .correct:      DesignSystem.Color.success.opacity(DesignSystem.Opacity.strong)
-        case .incorrect:    DesignSystem.Color.error.opacity(DesignSystem.Opacity.strong)
-        case .disabled:     .clear
-        }
-    }
-
-    var glowTint: Color? {
+    var tint: Color? {
         switch state {
         case .correct:   DesignSystem.Color.success
         case .incorrect: DesignSystem.Color.error
         default:         nil
-        }
-    }
-
-    // The shape's own alpha scales its shadow, so the shadow color stays opaque.
-    var glowOpacity: Double {
-        switch state {
-        case .correct:   0.45
-        case .incorrect: 0.35
-        default:         0
-        }
-    }
-
-    var glowRadius: CGFloat {
-        switch state {
-        case .correct:   14
-        case .incorrect: 10
-        default:         0
         }
     }
 
