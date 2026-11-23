@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            oneGamesSection,
             gamesOpenOnSetup,
             setupFactButtons,
             answerWaiting,
@@ -41,19 +42,33 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var oneGamesSection: BuildNote {
+        BuildNote(
+            commit: "d45f736f",
+            title: "One Games section",
+            howToTest: """
+                Open Play. Quick Play is gone: every game sits under Games, and Neighbors, True or False, and \
+                Mystery Country are only in Quiz, as quiz types.
+                """,
+            systemImage: "square.grid.2x2",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var gamesOpenOnSetup: BuildNote {
         BuildNote(
             commit: "8de6b7a1",
             title: "Games open on their setup",
             howToTest: """
-                On Play, tap Neighbors, True or False, and Mystery Country: each opens the quiz setup with that \
-                quiz chosen, instead of starting at once. On the Map, open a continent and tap Play Map Puzzle: \
-                the puzzle setup opens with that continent chosen.
+                On the Map, open a continent and tap Play Map Puzzle: the puzzle setup opens with that continent \
+                chosen, instead of the puzzle starting at once.
                 """,
             systemImage: "list.bullet.rectangle",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.neighbors)
+            go.open(.mapPuzzle)
         }
     }
 
