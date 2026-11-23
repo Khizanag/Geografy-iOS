@@ -21,6 +21,8 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            resultsInPlace,
+            systemGlassButtons,
             questionAtTop,
             rareAccent,
             calmCopy,
@@ -48,6 +50,37 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var resultsInPlace: BuildNote {
+        BuildNote(
+            commit: "eae51c7a",
+            title: "Quiz results in place",
+            howToTest: """
+                Finish a 5-question quiz: the results replace the questions on the same screen, with no back \
+                button. Play Again starts a new round right there; Done closes the quiz.
+                """,
+            systemImage: "checkmark.seal",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
+    var systemGlassButtons: BuildNote {
+        BuildNote(
+            commit: "cea0df77",
+            title: "System glass buttons",
+            howToTest: """
+                On the Map, tap a country: More info is filled green glass. In Travel, the status chips are glass, \
+                with the active one filled in its colour. In a typing quiz, Hint is a glass capsule; in Spelling \
+                Bee, so is Skip. Pressing a card no longer buzzes; the screen it opens does.
+                """,
+            systemImage: "capsule",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.travel)
+        }
+    }
+
     var questionAtTop: BuildNote {
         BuildNote(
             commit: "b08c7626",
