@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            glassAnswers,
             guideNavigation,
             gameGuides,
             mapPuzzleWorld,
@@ -37,6 +38,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var glassAnswers: BuildNote {
+        BuildNote(
+            commit: "462ab319",
+            title: "Answers are glass capsules",
+            howToTest: """
+                Start a Neighbors quiz. Each answer is one glass capsule with no inner outline. Tap one: it turns \
+                green if right or red if wrong, and the right answer turns green too.
+                """,
+            systemImage: "capsule",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var guideNavigation: BuildNote {
         BuildNote(
             commit: "eb84d71f",
