@@ -1,11 +1,9 @@
 import SwiftUI
 
 /// The style of a card or tile that is itself the button, as article 12 asks: the whole item takes the tap, dims a
-/// little and settles back while pressed, lifts under a pointer, and fades when disabled. A standalone button is
-/// glass instead (`GlassButton`, `.buttonStyle(.glass)`); this style is for content that acts.
-///
-/// A press plays no haptic: a haptic confirms a change of state (article 23), and the screen the tap changes plays
-/// its own.
+/// little and settles back while pressed, taps lightly at half strength, lifts under a pointer, and fades when
+/// disabled. A standalone button is glass instead (`GlassButton`, `.buttonStyle(.glass)`); this style is for
+/// content that acts.
 public struct PressButtonStyle: ButtonStyle {
     public init() {}
 
@@ -30,6 +28,9 @@ private struct PressButtonBody: View {
                 value: configuration.isPressed
             )
             .hoverEffect(.lift)
+            .haptic(trigger: configuration.isPressed) { _, isPressed in
+                isPressed ? .impact(weight: .light, intensity: 0.5) : nil
+            }
     }
 
     var opacity: Double {

@@ -165,6 +165,7 @@ private extension TravelTrackerScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
         .scrollClipDisabled()
+        .haptic(.selection, trigger: selectedFilter)
     }
 
     /// A glass chip: prominent in the status's own colour while it filters the list, plain glass otherwise.

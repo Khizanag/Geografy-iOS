@@ -8,6 +8,8 @@ public struct GlassButton: View {
     private let fullWidth: Bool
     private let action: () -> Void
 
+    @State private var pressCount = 0
+
     public enum Role {
         case primary
         case secondary
@@ -62,8 +64,12 @@ public struct GlassButton: View {
 
 // MARK: - Subviews
 private extension GlassButton {
+    /// Every press taps lightly, whatever the action does next.
     var button: some View {
-        Button(action: action) {
+        Button {
+            pressCount += 1
+            action()
+        } label: {
             label
                 .font(font)
                 .foregroundStyle(labelStyle)
@@ -71,6 +77,7 @@ private extension GlassButton {
                 .padding(.vertical, DesignSystem.Spacing.xxs)
         }
         .buttonBorderShape(.capsule)
+        .haptic(.impact(weight: .light), trigger: pressCount)
     }
 
     @ViewBuilder

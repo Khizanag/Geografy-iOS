@@ -36,7 +36,11 @@ In a two-column grid of tiles, a last tile alone on its row takes the full width
 
 ### Article 105: a card that acts takes the press style
 
-A card, tile, or row that is itself the button takes `PressButtonStyle`: it dims and settles while pressed, lifts under a pointer, and fades when disabled, with no haptic of its own. A standalone button is glass (article 3), never this style around a hand-drawn fill.
+A card, tile, or row that is itself the button takes `PressButtonStyle`: it dims and settles while pressed, taps lightly at half strength, lifts under a pointer, and fades when disabled. A standalone button is glass (article 3), never this style around a hand-drawn fill.
+
+### Article 106: every press is felt
+
+At the owner's word, a press on a button or a card is a change of state that is felt: `GlassButton` taps lightly on every press and `PressButtonStyle` at half strength, each through `.sensoryFeedback` on the button itself (article 23). A screen never adds a tap of its own to a press; it adds a haptic only for what the press changed, such as a right answer, a toggled favorite, or a choice among options.
 
 ## Exceptions
 
