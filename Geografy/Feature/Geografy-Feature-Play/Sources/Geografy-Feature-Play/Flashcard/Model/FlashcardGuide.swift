@@ -34,7 +34,7 @@ public enum FlashcardGuide {
         GuidePage(
             title: "Swipe to Rate",
             subtitle: "Swipe the card to quickly rate your answer."
-                + " You can even swipe right before flipping if you're sure you know it!",
+                + " You can even swipe right before flipping if you're sure you know it.",
             steps: [
                 GuideStep(
                     icon: "arrow.right",

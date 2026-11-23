@@ -337,10 +337,10 @@ private extension MapPuzzleScreen {
     var summaryTitle: String {
         let fraction = Double(correctCount) / Double(max(questions.count, 1))
         return switch fraction {
-        case 0.8...: "Excellent!"
-        case 0.6..<0.8: "Well Done!"
-        case 0.4..<0.6: "Good Try!"
-        default: "Keep Practicing!"
+        case 0.8...: "Excellent"
+        case 0.6..<0.8: "Well Done"
+        case 0.4..<0.6: "Good Try"
+        default: "Keep Practicing"
         }
     }
 }

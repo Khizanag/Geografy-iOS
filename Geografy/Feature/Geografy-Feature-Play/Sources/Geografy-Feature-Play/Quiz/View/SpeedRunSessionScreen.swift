@@ -420,10 +420,10 @@ private extension SpeedRunSessionScreen {
 
     var completionMessage: String {
         let fraction = Double(completedCodes.count) / Double(targetCountries.count)
-        if fraction >= 1.0 { return "Perfect!" }
-        if fraction >= 0.8 { return "Impressive!" }
-        if fraction >= 0.5 { return "Good Run!" }
-        return "Keep Training!"
+        if fraction >= 1.0 { return "Perfect" }
+        if fraction >= 0.8 { return "Impressive" }
+        if fraction >= 0.5 { return "Good Run" }
+        return "Keep Training"
     }
 
     var speedRunLeaderboardID: String {

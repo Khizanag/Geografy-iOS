@@ -71,7 +71,7 @@ private extension AchievementUnlockedBanner {
 
     var textContent: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
-            Text("Achievement Unlocked!")
+            Text("Achievement Unlocked")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(categoryColor)

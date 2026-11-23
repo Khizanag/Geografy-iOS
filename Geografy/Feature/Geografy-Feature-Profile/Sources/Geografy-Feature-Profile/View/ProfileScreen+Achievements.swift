@@ -62,7 +62,7 @@ private extension ProfileScreen {
         EmptyStateView(
             icon: "trophy",
             title: "No Achievements Yet",
-            message: "Start exploring to earn achievements!",
+            message: "Explore countries and play games to earn achievements.",
             actionTitle: "See All Achievements"
         ) {
             hapticsService.impact(.light)

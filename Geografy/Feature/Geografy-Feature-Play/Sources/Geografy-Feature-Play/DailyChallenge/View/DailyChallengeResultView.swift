@@ -116,13 +116,13 @@ private extension DailyChallengeResultView {
     var scoreMessage: String {
         let accuracy = Double(score) / Double(maxScore)
         if accuracy >= 0.9 {
-            return "Outstanding!"
+            return "Outstanding"
         } else if accuracy >= 0.7 {
-            return "Great Job!"
+            return "Great Job"
         } else if accuracy >= 0.5 {
-            return "Good Effort!"
+            return "Good Effort"
         } else {
-            return "Keep Trying!"
+            return "Keep Trying"
         }
     }
 

@@ -110,7 +110,7 @@ private extension PinDropResultsView {
     @ViewBuilder
     var recordLabel: some View {
         if isNewBest {
-            Label("New Best!", systemImage: "trophy.fill")
+            Label("New Best", systemImage: "trophy.fill")
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.warning)

@@ -138,17 +138,17 @@ private extension LocalMultiplayerResultScreen {
 
     var resultTitle: String {
         switch resultOutcome {
-        case .win: "Victory!"
-        case .draw: "It's a Draw!"
-        case .loss: "Defeat"
+        case .win: "You Won"
+        case .draw: "It's a Draw"
+        case .loss: "Your Opponent Won"
         }
     }
 
     var resultSubtitle: String {
         switch resultOutcome {
-        case .win: "You outplayed your opponent!"
-        case .draw: "Perfectly matched!"
-        case .loss: "Better luck next time!"
+        case .win: "You scored more than your opponent."
+        case .draw: "You scored the same."
+        case .loss: "Ask for a rematch to play again."
         }
     }
 

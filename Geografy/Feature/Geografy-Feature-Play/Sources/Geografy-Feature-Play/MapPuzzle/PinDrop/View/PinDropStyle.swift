@@ -27,8 +27,8 @@ enum PinDropStyle {
 extension PinDropScore.Rating {
     var title: LocalizedStringKey {
         switch self {
-        case .bullseye: "Bullseye!"
-        case .excellent: "So Close!"
+        case .bullseye: "Bullseye"
+        case .excellent: "So Close"
         case .good: "Nice Guess"
         case .fair: "Not Bad"
         case .far: "Way Off"

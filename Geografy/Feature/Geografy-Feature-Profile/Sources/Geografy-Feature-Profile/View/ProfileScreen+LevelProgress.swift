@@ -65,7 +65,7 @@ private extension ProfileScreen {
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             } else {
-                Text("Maximum level reached!")
+                Text("Maximum Level Reached")
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.warning)
             }

@@ -22,7 +22,7 @@ private extension LocalMultiplayerCountdownView {
     var countdownContent: some View {
         if case .countdown(let remaining) = coordinator.state {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                Text(remaining > 0 ? "\(remaining)" : "GO!")
+                Text(remaining > 0 ? "\(remaining)" : "Go")
                     .font(DesignSystem.Font.displayXL)
                     .fontWeight(.black)
                     .foregroundStyle(
@@ -38,9 +38,9 @@ private extension LocalMultiplayerCountdownView {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(remaining > 0 ? "Get ready, \(remaining)" : "Go!")
+            .accessibilityLabel(remaining > 0 ? "Get ready, \(remaining)" : "Go")
             .onChange(of: remaining) { _, newValue in
-                AccessibilityNotification.Announcement(newValue > 0 ? "\(newValue)" : "Go!").post()
+                AccessibilityNotification.Announcement(newValue > 0 ? "\(newValue)" : "Go").post()
             }
         }
     }

@@ -17,7 +17,7 @@ struct WordSearchResultCard: View {
                     .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(foundAll ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
                     .accessibilityHidden(true)
-                Text(foundAll ? "All Words Found!" : "Puzzle Complete")
+                Text(foundAll ? "All Words Found" : "Puzzle Complete")
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)

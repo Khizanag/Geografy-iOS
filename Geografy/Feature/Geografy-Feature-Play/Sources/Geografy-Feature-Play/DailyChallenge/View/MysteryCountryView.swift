@@ -213,7 +213,7 @@ private extension MysteryCountryView {
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(isCorrect ? "Correct!" : "The answer was \(target.name)")
+                Text(isCorrect ? "Correct" : "The answer was \(target.name)")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(
                         isCorrect

@@ -113,7 +113,7 @@ private extension LevelUpSheet {
                 in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
             )
         } else {
-            Text("That's the top level. Well travelled!")
+            Text("That's the top level. Well travelled.")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
@@ -134,7 +134,7 @@ private extension LevelUpSheet {
     }
 
     var announcement: String {
-        String(localized: "Level up! You’re now level \(newLevel.level), \(newLevel.title).", in: locale)
+        String(localized: "Level up. You’re now level \(newLevel.level), \(newLevel.title).", in: locale)
     }
 }
 

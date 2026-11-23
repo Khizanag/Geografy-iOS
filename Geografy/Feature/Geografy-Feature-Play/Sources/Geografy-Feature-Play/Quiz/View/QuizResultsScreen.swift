@@ -223,13 +223,13 @@ private extension QuizResultsScreen {
 private extension QuizResultsScreen {
     var scoreMessage: String {
         if result.accuracy >= 0.9 {
-            "Excellent!"
+            "Excellent"
         } else if result.accuracy >= 0.7 {
-            "Great Job!"
+            "Great Job"
         } else if result.accuracy >= 0.5 {
-            "Good Effort!"
+            "Good Effort"
         } else {
-            "Keep Practicing!"
+            "Keep Practicing"
         }
     }
 

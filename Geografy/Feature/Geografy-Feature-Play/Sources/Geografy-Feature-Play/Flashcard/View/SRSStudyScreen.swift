@@ -148,7 +148,7 @@ private extension SRSStudyScreen {
     var allCaughtUpSection: some View {
         EmptyStateView(
             icon: "checkmark.seal.fill",
-            title: "All caught up!",
+            title: "All Caught Up",
             message: "No cards are due right now.\nCome back later or study new cards."
         )
     }
