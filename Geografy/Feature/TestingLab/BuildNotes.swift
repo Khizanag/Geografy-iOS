@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            gamesOpenOnSetup,
             setupFactButtons,
             answerWaiting,
             glassAnswers,
@@ -40,6 +41,22 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var gamesOpenOnSetup: BuildNote {
+        BuildNote(
+            commit: "8de6b7a1",
+            title: "Games open on their setup",
+            howToTest: """
+                On Play, tap Neighbors, True or False, and Mystery Country: each opens the quiz setup with that \
+                quiz chosen, instead of starting at once. On the Map, open a continent and tap Play Map Puzzle: \
+                the puzzle setup opens with that continent chosen.
+                """,
+            systemImage: "list.bullet.rectangle",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.neighbors)
+        }
+    }
+
     var setupFactButtons: BuildNote {
         BuildNote(
             commit: "624463cd",
