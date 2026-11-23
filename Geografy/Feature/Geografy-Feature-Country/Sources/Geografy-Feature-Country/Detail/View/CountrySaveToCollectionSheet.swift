@@ -140,6 +140,7 @@ private extension CountrySaveToCollectionSheet {
         GlassButton(
             "New Collection",
             systemImage: "plus.circle",
+            role: .secondary,
             fullWidth: true
         ) {
             showNewCollection = true

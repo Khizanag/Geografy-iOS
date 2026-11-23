@@ -130,12 +130,13 @@ private extension WordSearchGameScreen {
                             GlassButton(
                                 "Reveal \"\(nextHintWord.word)\"",
                                 systemImage: "eye",
+                                role: .secondary,
                                 fullWidth: true
                             ) {
                                 revealHint(nextHintWord)
                             }
                         }
-                        GlassButton("Reveal All", systemImage: "eye.slash", fullWidth: true) {
+                        GlassButton("Reveal All", systemImage: "eye.slash", role: .secondary, fullWidth: true) {
                             showRevealAllAlert = true
                         }
                     }

@@ -47,63 +47,43 @@ public struct GlassButton: View {
     }
 
     // MARK: - Body
+    /// The screen's one primary action is prominent glass in the accent; every other button is plain glass.
     public var body: some View {
-        if fullWidth {
-            Button(action: action) {
-                label
-            }
-            .buttonStyle(.glass)
+        if role == .primary {
+            button
+                .buttonStyle(.glassProminent)
+                .tint(DesignSystem.Color.accent)
         } else {
-            Button(action: action) {
-                label
-            }
-            .glassEffect(.regular.interactive(), in: .capsule)
+            button
+                .buttonStyle(.glass)
         }
     }
 }
 
 // MARK: - Subviews
 private extension GlassButton {
+    var button: some View {
+        Button(action: action) {
+            label
+                .font(font)
+                .foregroundStyle(labelStyle)
+                .frame(maxWidth: fullWidth ? .infinity : nil)
+                .padding(.vertical, DesignSystem.Spacing.xxs)
+        }
+        .buttonBorderShape(.capsule)
+    }
+
     @ViewBuilder
     var label: some View {
-        if fullWidth {
-            fullWidthLabel
-        } else {
-            inlineLabel
-        }
-    }
-
-    var fullWidthLabel: some View {
-        Group {
-            if let systemImage {
-                Label {
-                    title
-                } icon: {
-                    Image(systemName: systemImage)
-                }
-            } else {
+        if let systemImage {
+            Label {
                 title
-            }
-        }
-        .font(font)
-        .foregroundStyle(labelColor)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .hoverEffect(.highlight)
-    }
-
-    var inlineLabel: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            if let systemImage {
+            } icon: {
                 Image(systemName: systemImage)
             }
+        } else {
             title
         }
-        .font(font)
-        .foregroundStyle(labelColor)
-        .padding(.horizontal, DesignSystem.Spacing.lg)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .hoverEffect(.highlight)
     }
 
     /// Secondary ranks below primary by weight, not by a grey label that reads as disabled.
@@ -114,7 +94,13 @@ private extension GlassButton {
         }
     }
 
-    var labelColor: Color {
-        role == .destructive ? DesignSystem.Color.destructive : DesignSystem.Color.textPrimary
+    /// The prominent style draws its own label colour over the accent; the others name theirs as a style, never a
+    /// tint, so a sheet passing over them doesn't dim it.
+    var labelStyle: AnyShapeStyle {
+        switch role {
+        case .primary: AnyShapeStyle(DesignSystem.Color.onAccent)
+        case .secondary: AnyShapeStyle(DesignSystem.Color.textPrimary)
+        case .destructive: AnyShapeStyle(DesignSystem.Color.destructive)
+        }
     }
 }

@@ -301,7 +301,7 @@ private extension CustomQuizBuilderScreen {
             Spacer()
 
             if currentStep == .questionTypes {
-                GlassButton("Preview", systemImage: "eye.fill") {
+                GlassButton("Preview", systemImage: "eye.fill", role: .secondary) {
                     showPreview = true
                 }
                 .opacity(canProceed ? 1 : 0.5)

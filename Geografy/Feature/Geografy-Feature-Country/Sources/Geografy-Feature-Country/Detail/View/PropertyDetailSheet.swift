@@ -55,7 +55,12 @@ private extension PropertyDetailSheet {
         if hasButtons {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 if supportsMap, let onShowMap {
-                    GlassButton(mapButtonTitle, systemImage: "map.fill", fullWidth: true) {
+                    GlassButton(
+                        mapButtonTitle,
+                        systemImage: "map.fill",
+                        role: actionButtonTitle == nil ? .primary : .secondary,
+                        fullWidth: true
+                    ) {
                         onShowMap()
                     }
                 }

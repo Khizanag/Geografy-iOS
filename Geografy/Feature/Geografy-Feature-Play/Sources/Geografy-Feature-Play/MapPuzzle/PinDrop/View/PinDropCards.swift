@@ -103,7 +103,12 @@ struct PinDropRevealCard: View {
             header
             chips
             if let waitingFor {
-                GlassButton("Waiting for \(waitingFor)...", systemImage: "hourglass", fullWidth: true) {}
+                GlassButton(
+                    "Waiting for \(waitingFor)…",
+                    systemImage: "hourglass",
+                    role: .secondary,
+                    fullWidth: true
+                ) {}
                     .disabled(true)
             } else {
                 GlassButton(
