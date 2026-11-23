@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            setupFactButtons,
             answerWaiting,
             glassAnswers,
             guideNavigation,
@@ -39,6 +40,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var setupFactButtons: BuildNote {
+        BuildNote(
+            commit: "624463cd",
+            title: "Header facts are buttons",
+            howToTest: """
+                Open Quiz. Tap World under the title: the page scrolls to Region. Tap 10 questions: it scrolls to \
+                Game. Try the same on Map Puzzle, Pin Drop, and Speed Run.
+                """,
+            systemImage: "chevron.down.circle",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var answerWaiting: BuildNote {
         BuildNote(
             commit: "0a50f2d4",
