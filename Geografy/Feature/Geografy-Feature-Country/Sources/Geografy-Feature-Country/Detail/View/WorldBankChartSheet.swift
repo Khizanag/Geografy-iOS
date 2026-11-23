@@ -71,12 +71,15 @@ private extension WorldBankChartSheet {
             if let shown = selectedPoint ?? allPoints.last {
                 Text(indicator.format(shown.value))
                     .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
+                    .monospacedDigit()
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .contentTransition(.numericText())
+                    .contentTransition(.numericText(value: shown.value))
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Text(selectedPoint == nil ? "Latest: \(String(shown.year))" : String(shown.year))
                         .font(DesignSystem.Font.caption)
+                        .monospacedDigit()
                         .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .contentTransition(.numericText(value: Double(shown.year)))
                     Text("·")
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                         .accessibilityHidden(true)
@@ -224,12 +227,16 @@ private extension WorldBankChartSheet {
             Text(value)
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
+                .monospacedDigit()
                 .foregroundStyle(color)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
+                .contentTransition(.numericText())
             Text(detail)
                 .font(DesignSystem.Font.caption2)
+                .monospacedDigit()
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .contentTransition(.numericText())
         }
         .accessibilityElement(children: .combine)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -298,7 +305,8 @@ private extension WorldBankChartSheet {
         let nearest = points.min { abs($0.year - year) < abs($1.year - year) }
         guard let nearest, nearest.year != selectedPoint?.year else { return }
         let isFirstSelection = selectedPoint == nil
-        selectedPoint = nearest
+        // The value and year above roll to the new point as the finger moves along the line.
+        withAnimation(reduceMotion ? nil : .snappy(duration: 0.25)) { selectedPoint = nearest }
         if isFirstSelection {
             pointerPoint = nearest
         } else {
