@@ -64,6 +64,7 @@ private extension TimelineScreen {
             .padding(.vertical, DesignSystem.Spacing.xs)
             .readableContentWidth()
         }
+        .scrollClipDisabled()
     }
 
     var continentMenu: some View {

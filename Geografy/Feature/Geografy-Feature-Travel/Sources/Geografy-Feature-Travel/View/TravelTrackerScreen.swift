@@ -150,16 +150,21 @@ private extension TravelTrackerScreen {
 
 // MARK: - Filters
 private extension TravelTrackerScreen {
+    /// The chips share one glass container, as neighbouring glass does, and the row doesn't clip, so a chip's
+    /// glass can swell past its edge while pressed.
     var filterTabs: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                filterTab(nil, icon: "globe", label: "All")
-                ForEach(TravelStatus.allCases) { status in
-                    filterTab(status, icon: status.icon, label: status.label)
+            GlassEffectContainer(spacing: DesignSystem.Spacing.xs) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    filterTab(nil, icon: "globe", label: "All")
+                    ForEach(TravelStatus.allCases) { status in
+                        filterTab(status, icon: status.icon, label: status.label)
+                    }
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
+        .scrollClipDisabled()
     }
 
     /// A glass chip: prominent in the status's own colour while it filters the list, plain glass otherwise.
