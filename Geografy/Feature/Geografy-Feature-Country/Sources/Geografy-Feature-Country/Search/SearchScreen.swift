@@ -55,7 +55,7 @@ private extension SearchScreen {
                 onOpen: open
             )
         } else if results.isEmpty {
-            ContentUnavailableView.search(text: trimmedQuery)
+            NoSearchResultsView(query: trimmedQuery)
         } else {
             SearchResultsView(results: results, query: trimmedQuery, onOpen: open)
         }

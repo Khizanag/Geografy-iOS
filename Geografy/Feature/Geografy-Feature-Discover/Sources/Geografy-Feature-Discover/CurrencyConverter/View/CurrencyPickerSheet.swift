@@ -50,7 +50,7 @@ private extension CurrencyPickerSheet {
         .scrollDismissesKeyboard(.interactively)
         .overlay {
             if isSearching, searchResults.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                NoSearchResultsView(query: searchText)
             }
         }
     }

@@ -72,7 +72,7 @@ public struct CountryListScreen: View {
     @ViewBuilder
     private var searchEmptyOverlay: some View {
         if !state.debouncedSearchText.isEmpty, listing.sorted.isEmpty {
-            ContentUnavailableView.search(text: state.debouncedSearchText)
+            NoSearchResultsView(query: state.debouncedSearchText)
         }
     }
 }

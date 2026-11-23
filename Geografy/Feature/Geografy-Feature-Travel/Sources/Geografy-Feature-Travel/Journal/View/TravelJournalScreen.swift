@@ -95,7 +95,7 @@ private extension TravelJournalScreen {
         }
         .overlay {
             if filteredEntries.isEmpty, isSearching {
-                ContentUnavailableView.search(text: searchText)
+                NoSearchResultsView(query: searchText)
             }
         }
     }

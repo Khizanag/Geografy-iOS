@@ -113,7 +113,7 @@ private extension CountryPicker {
             .scrollDismissesKeyboard(.interactively)
             .overlay {
                 if sections.isEmpty {
-                    ContentUnavailableView.search(text: searchText)
+                    NoSearchResultsView(query: searchText)
                 }
             }
             .onAppear {

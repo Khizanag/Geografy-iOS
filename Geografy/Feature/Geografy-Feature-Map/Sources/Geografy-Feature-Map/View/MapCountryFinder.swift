@@ -52,7 +52,7 @@ private extension MapCountryFinder {
         .scrollDismissesKeyboard(.interactively)
         .overlay {
             if results.isEmpty, !searchText.isEmpty {
-                ContentUnavailableView.search(text: searchText)
+                NoSearchResultsView(query: searchText)
             }
         }
     }
