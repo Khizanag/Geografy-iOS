@@ -24,16 +24,10 @@ public struct QuizSetupScreen: View {
     @AppStorage("quiz_arcadeTimer") private var selectedArcadeTimer: ArcadeTimer = .sixty
     @AppStorage(QuizAnswerAdvance.storageKey) private var answerAdvance: QuizAnswerAdvance = .always
 
-    @State private var hasChosenInitialType = false
-
     private let color = DesignSystem.Color.blue
-    private let initialType: QuizType?
 
     // MARK: - Init
-    /// - Parameter type: The quiz to choose on arrival, as a game's own tile asks; nil keeps the last choice.
-    public init(type: QuizType? = nil) {
-        initialType = type
-    }
+    public init() {}
 
     // MARK: - Body
     public var body: some View {
@@ -43,7 +37,6 @@ public struct QuizSetupScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.quiz)
             .safeAreaBar(edge: .bottom) { startButton }
-            .onAppear { chooseInitialType() }
     }
 }
 
@@ -241,15 +234,6 @@ private extension QuizSetupScreen {
     /// Changes whenever a row appears or disappears, so one animation covers every transition.
     var layoutID: String {
         "\(selectedType.rawValue)-\(selectedGameMode.rawValue)-\(effectiveAnswerMode.wrappedValue.rawValue)"
-    }
-
-    /// Once only, so a type changed here isn't put back when a finished quiz returns to setup.
-    func chooseInitialType() {
-        guard !hasChosenInitialType else { return }
-        hasChosenInitialType = true
-        if let initialType {
-            selectedType = initialType
-        }
     }
 
     func makeConfiguration() -> QuizConfiguration {

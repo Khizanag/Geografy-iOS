@@ -12,8 +12,7 @@ public enum PlayRoute: Route {
     case pinDrop
     case quizLibrary(QuizLibraryTab)
     case quizSession(QuizConfiguration)
-    /// The quiz setup, with `type` chosen when given; nil keeps the player's last choice.
-    case quizSetup(type: QuizType? = nil)
+    case quizSetup
     case speedRunSetup
     case srsStudy
     case wordSearch

@@ -43,7 +43,7 @@ private extension RouteRegistry {
             case .pinDrop: PinDropSetupScreen()
             case .quizLibrary(let tab): QuizLibraryScreen(tab: tab)
             case .quizSession(let configuration): QuizSessionScreen(configuration: configuration)
-            case .quizSetup(let type): QuizSetupScreen(type: type)
+            case .quizSetup: QuizSetupScreen()
             case .speedRunSetup: SpeedRunSetupScreen()
             case .srsStudy: SRSStudyScreen()
             case .wordSearch: WordSearchScreen()

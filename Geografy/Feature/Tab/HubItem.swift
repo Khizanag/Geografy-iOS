@@ -7,9 +7,6 @@ import SwiftUI
 enum HubItem: Identifiable, CaseIterable {
     case profile
     case quiz
-    case trueOrFalse
-    case neighbors
-    case mysteryCountry
     case mapPuzzle
     case pinDrop
     case worldFacts
@@ -40,9 +37,6 @@ enum HubItem: Identifiable, CaseIterable {
         switch self {
         case .profile: "Profile"
         case .quiz: "Quiz"
-        case .trueOrFalse: "True or False"
-        case .neighbors: "Neighbors"
-        case .mysteryCountry: "Mystery Country"
         case .mapPuzzle: "Map Puzzle"
         case .pinDrop: "Pin Drop"
         case .worldFacts: "World Facts"
@@ -73,9 +67,6 @@ enum HubItem: Identifiable, CaseIterable {
         switch self {
         case .profile: "person.fill"
         case .quiz: "gamecontroller.fill"
-        case .trueOrFalse: "questionmark.bubble.fill"
-        case .neighbors: "square.dashed"
-        case .mysteryCountry: "magnifyingglass"
         case .mapPuzzle: "puzzlepiece.fill"
         case .pinDrop: "mappin.and.ellipse"
         case .worldFacts: "globe.europe.africa.fill"
@@ -106,9 +97,6 @@ enum HubItem: Identifiable, CaseIterable {
         switch self {
         case .profile: "View your stats and level"
         case .quiz: "Flags, capitals, and more"
-        case .trueOrFalse: "Is the statement right?"
-        case .neighbors: "Which country shares a border?"
-        case .mysteryCountry: "Guess from clues"
         case .mapPuzzle: "Place countries on the map"
         case .pinDrop: "Drop a pin on the named country"
         case .worldFacts: "Records, oceans, landmarks"
@@ -139,9 +127,6 @@ enum HubItem: Identifiable, CaseIterable {
         switch self {
         case .profile: DesignSystem.Color.indigo
         case .quiz: DesignSystem.Color.blue
-        case .trueOrFalse: DesignSystem.Color.indigo
-        case .neighbors: DesignSystem.Color.teal
-        case .mysteryCountry: DesignSystem.Color.purple
         case .mapPuzzle: DesignSystem.Color.purple
         case .pinDrop: DesignSystem.Color.orange
         case .worldFacts: DesignSystem.Color.teal
@@ -172,9 +157,6 @@ enum HubItem: Identifiable, CaseIterable {
         switch self {
         case .profile: "profile"
         case .quiz: "quiz"
-        case .trueOrFalse: "trueOrFalse"
-        case .neighbors: "neighbors"
-        case .mysteryCountry: "mysteryCountry"
         case .mapPuzzle: "mapPuzzle"
         case .pinDrop: "pinDrop"
         case .worldFacts: "worldFacts"
@@ -204,10 +186,7 @@ enum HubItem: Identifiable, CaseIterable {
     var destination: Destination {
         switch self {
         case .profile: Destination(ProfileRoute.profile)
-        case .quiz: Destination(PlayRoute.quizSetup())
-        case .trueOrFalse: Destination(PlayRoute.quizSetup(type: .trueOrFalse))
-        case .neighbors: Destination(PlayRoute.quizSetup(type: .neighbors))
-        case .mysteryCountry: Destination(PlayRoute.quizSetup(type: .mysteryCountry))
+        case .quiz: Destination(PlayRoute.quizSetup)
         case .mapPuzzle: Destination(PlayRoute.mapPuzzle())
         case .pinDrop: Destination(PlayRoute.pinDrop)
         case .worldFacts: Destination(DiscoverRoute.worldFacts(.records))

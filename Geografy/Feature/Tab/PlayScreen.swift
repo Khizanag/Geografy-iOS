@@ -23,7 +23,7 @@ struct PlayScreen: View {
                 srsCardsDue: flashcardService.dueCount(of: .countryToCapital, in: countryDataService.countries),
                 onDailyChallenge: { coordinator.push(PlayRoute.dailyChallenge) },
                 onReviewCards: { coordinator.push(PlayRoute.srsStudy) },
-                onStartQuiz: { coordinator.push(PlayRoute.quizSetup()) }
+                onStartQuiz: { coordinator.push(PlayRoute.quizSetup) }
             )
         }
         .task { await loadDailyChallenge() }
@@ -33,9 +33,11 @@ struct PlayScreen: View {
 // MARK: - Sections
 private extension PlayScreen {
     static let sections = [
-        HubSection(title: "Quick Play", items: [.quiz, .trueOrFalse, .neighbors, .mysteryCountry]),
+        HubSection(
+            title: "Games",
+            items: [.quiz, .mapPuzzle, .pinDrop, .speedRun, .wordSearch, .quizPacks, .multiplayer]
+        ),
         HubSection(title: "Study", items: [.learningPath, .srsStudy]),
-        HubSection(title: "Games", items: [.pinDrop, .speedRun, .quizPacks, .multiplayer, .mapPuzzle, .wordSearch]),
     ]
 }
 

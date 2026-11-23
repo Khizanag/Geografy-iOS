@@ -41,7 +41,7 @@ final class AppCoordinator {
             selectedTab = tab
         case .quiz:
             selectedTab = .play
-            playNavigator.push(PlayRoute.quizSetup())
+            playNavigator.push(PlayRoute.quizSetup)
         case .dailyChallenge:
             selectedTab = .play
             playNavigator.push(PlayRoute.dailyChallenge)
