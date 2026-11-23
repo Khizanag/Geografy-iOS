@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            questionAtTop,
             rareAccent,
             calmCopy,
             studyFirst,
@@ -47,6 +48,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var questionAtTop: BuildNote {
+        BuildNote(
+            commit: "b08c7626",
+            title: "Questions start at the top",
+            howToTest: """
+                Play a few Neighbors and Flag Quiz questions: each question starts right under the progress bar, \
+                at the same place every time, and the answers stay at the bottom. Try Typing mode too.
+                """,
+            systemImage: "arrow.up.to.line",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var rareAccent: BuildNote {
         BuildNote(
             commit: "eca03bc5 2920fd96",
