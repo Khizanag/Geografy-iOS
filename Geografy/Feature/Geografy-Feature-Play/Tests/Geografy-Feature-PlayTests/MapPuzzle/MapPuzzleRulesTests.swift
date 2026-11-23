@@ -1,3 +1,4 @@
+import Geografy_Core_Common
 @testable import Geografy_Feature_Play
 import Testing
 
@@ -13,15 +14,17 @@ struct MapPuzzleRulesTests {
         #expect(MapPuzzleRules.isPlayable(countryCount: countryCount) == expected)
     }
 
-    @Test("A round asks up to ten questions, and none in a region too small to play", arguments: [
-        (0, 0),
-        (3, 0),
-        (4, 4),
-        (10, 10),
-        (54, 10),
+    @Test("A round asks the chosen number, capped by the region, and none in a region too small", arguments: [
+        (QuestionCount.ten, 0, 0),
+        (.ten, 3, 0),
+        (.ten, 4, 4),
+        (.ten, 54, 10),
+        (.five, 54, 5),
+        (.fifty, 54, 50),
+        (.fifty, 12, 12),
     ])
-    func questionCount(countryCount: Int, expected: Int) {
-        #expect(MapPuzzleRules.questionCount(forCountryCount: countryCount) == expected)
+    func questionCount(requested: QuestionCount, countryCount: Int, expected: Int) {
+        #expect(MapPuzzleRules.questionCount(requested: requested, countryCount: countryCount) == expected)
     }
 
     @Test("The time estimate rounds up to whole minutes", arguments: [

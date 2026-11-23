@@ -45,7 +45,7 @@ extension GameGuide {
                 "A country lights up on the map. Pick its name from four choices.",
                 step("map.fill", "Choose a Region", "The whole world or one continent"),
                 step("circle.dashed", "Small Countries", "Tiny ones get a ring so you can find them"),
-                step("list.number", "Ten Rounds", "The next one comes a moment after each answer")
+                step("list.number", "Choose the Rounds", "From 5 to 50; a small continent asks each country once")
             ),
             page(
                 "Tips",

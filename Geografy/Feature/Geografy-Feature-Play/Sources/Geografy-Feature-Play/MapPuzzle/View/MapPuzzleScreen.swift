@@ -23,6 +23,8 @@ struct MapPuzzleScreen: View {
 
     /// Nil for the whole world.
     let continent: Country.Continent?
+    /// The rounds chosen in setup; a region with fewer countries asks about each of them once.
+    let questionCount: QuestionCount
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
@@ -278,7 +280,10 @@ private extension MapPuzzleScreen {
         let continentCountries = countryDataService.countries.filter { country in
             mappedCodes.contains(country.code) && (continent.map { country.continent == $0 } ?? true)
         }
-        let questionCount = MapPuzzleRules.questionCount(forCountryCount: continentCountries.count)
+        let questionCount = MapPuzzleRules.questionCount(
+            requested: questionCount,
+            countryCount: continentCountries.count
+        )
         guard questionCount > 0 else { return }
 
         questions = continentCountries.shuffled().prefix(questionCount).map { country in

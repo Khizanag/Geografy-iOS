@@ -7,7 +7,7 @@ public enum PlayRoute: Route {
     /// Map Puzzle's setup, with `continent` chosen when given; nil keeps the player's last choice.
     case mapPuzzle(continent: Country.Continent? = nil)
     /// A Map Puzzle on one continent, or on the whole world when it's nil.
-    case mapPuzzleGame(continent: Country.Continent?)
+    case mapPuzzleGame(continent: Country.Continent?, questionCount: QuestionCount)
     case multiplayer
     case pinDrop
     case quizLibrary(QuizLibraryTab)

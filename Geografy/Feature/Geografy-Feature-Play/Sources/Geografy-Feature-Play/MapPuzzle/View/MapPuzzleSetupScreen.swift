@@ -11,6 +11,7 @@ public struct MapPuzzleSetupScreen: View {
 
     /// A continent's raw value, or `worldKey` for the whole world.
     @AppStorage("mapPuzzle_selectedContinent") private var storedRegion = Self.worldKey
+    @AppStorage("mapPuzzle_questionCount") private var questionCount: QuestionCount = .ten
 
     /// The whole world on top, then each continent, as in every game's region choice.
     private let regions: [Country.Continent?] = [nil] + Country.Continent.allCases.filter { $0 != .antarctica }
@@ -45,6 +46,7 @@ private extension MapPuzzleSetupScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 header
                 regionSection
+                gameSection
             }
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -76,9 +78,28 @@ private extension MapPuzzleSetupScreen {
         }
     }
 
+    var gameSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Game")
+                .id(SetupSection.game)
+            CardView {
+                OptionPickerRow(
+                    "Rounds",
+                    selection: $questionCount,
+                    options: QuestionCount.allCases,
+                    note: roundsNote,
+                    label: \.displayName
+                )
+                .padding(DesignSystem.Spacing.md)
+            }
+        }
+    }
+
     var startButton: some View {
         GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-            coordinator.cover(PlayRoute.mapPuzzleGame(continent: selectedRegion.wrappedValue))
+            coordinator.cover(
+                PlayRoute.mapPuzzleGame(continent: selectedRegion.wrappedValue, questionCount: questionCount)
+            )
         }
         .disabled(!MapPuzzleRules.isPlayable(countryCount: countryCount(for: selectedRegion.wrappedValue)))
         .accessibilityHint("Starts a puzzle in \(regionName)")
@@ -91,18 +112,30 @@ private extension MapPuzzleSetupScreen {
 private extension MapPuzzleSetupScreen {
     var headerFacts: [GameIntroHeader.Fact] {
         let countryCount = countryCount(for: selectedRegion.wrappedValue)
-        let questionCount = MapPuzzleRules.questionCount(forCountryCount: countryCount)
-        guard questionCount > 0 else { return [] }
-        let minutes = MapPuzzleRules.estimatedMinutes(forQuestionCount: questionCount)
+        let rounds = MapPuzzleRules.questionCount(requested: questionCount, countryCount: countryCount)
+        guard rounds > 0 else { return [] }
+        let minutes = MapPuzzleRules.estimatedMinutes(forQuestionCount: rounds)
         return [
-            GameIntroHeader.Fact(regionName, systemImage: "globe", showing: SetupSection.region),
-            GameIntroHeader.Fact("\(questionCount) rounds", systemImage: "list.number"),
+            GameIntroHeader.Fact(regionTitle, systemImage: "globe", showing: SetupSection.region),
+            GameIntroHeader.Fact("\(rounds) rounds", systemImage: "list.number", showing: SetupSection.game),
             GameIntroHeader.Fact("\(MapPuzzleRules.optionsPerQuestion) choices each", systemImage: "square.grid.2x2"),
             GameIntroHeader.Fact("About \(minutes) min", systemImage: "clock"),
         ]
     }
 
     static let worldKey = "world"
+
+    /// Says so when the chosen region has fewer countries than the rounds chosen.
+    var roundsNote: String? {
+        let countryCount = countryCount(for: selectedRegion.wrappedValue)
+        guard MapPuzzleRules.isPlayable(countryCount: countryCount), countryCount < questionCount.rawValue else {
+            return nil
+        }
+        return String(
+            localized: "\(regionName) has \(countryCount) countries, so a round asks \(countryCount).",
+            bundle: .module
+        )
+    }
 
     /// Once only, so a region changed here isn't put back when a finished puzzle returns to setup.
     func chooseInitialRegion() {
@@ -119,6 +152,11 @@ private extension MapPuzzleSetupScreen {
         } set: { region in
             storedRegion = region?.rawValue ?? Self.worldKey
         }
+    }
+
+    /// The region as a title, for the header's fact.
+    var regionTitle: String {
+        selectedRegion.wrappedValue?.displayName ?? String(localized: "Whole World", bundle: .module)
     }
 
     var regionName: String {

@@ -38,7 +38,8 @@ private extension RouteRegistry {
             case .dailyChallenge: DailyChallengeScreen()
             case .learningPath: LearningPathScreen()
             case .mapPuzzle(let continent): MapPuzzleSetupScreen(continent: continent)
-            case .mapPuzzleGame(let continent): MapPuzzleScreen(continent: continent)
+            case let .mapPuzzleGame(continent, questionCount):
+                MapPuzzleScreen(continent: continent, questionCount: questionCount)
             case .multiplayer: LocalMultiplayerEntryScreen()
             case .pinDrop: PinDropSetupScreen()
             case .quizLibrary(let tab): QuizLibraryScreen(tab: tab)
