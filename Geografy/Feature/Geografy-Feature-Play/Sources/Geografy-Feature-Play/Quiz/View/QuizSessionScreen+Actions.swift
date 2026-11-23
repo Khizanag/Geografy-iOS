@@ -107,7 +107,7 @@ extension QuizSessionScreen {
     func finishQuiz() {
         let result = session.result()
         configuration.announceFinished(accuracy: result.accuracy)
-        navigateToResult = result
+        finishedResult = result
     }
 
     /// Waits for country data, so a quiz opened at launch doesn't settle on an empty question list.

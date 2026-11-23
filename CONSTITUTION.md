@@ -57,5 +57,4 @@ Open work from the adoption audit on 2026-11-24, each with what it takes. Remove
 - **Article 5, tokens.** About 140 raw colours in about 60 files, some of them data palettes. Each goes to a token or to the one palette file.
 - **Article 19, in-app language.** About 85 `String(localized:)` calls read the launch language. Needed once a second language ships; until then the exception above holds.
 - **Article 12, item actions.** Lists offer long presses and swipes screen by screen, in 6 files, with no shared modifier per kind of item, and most lists offer none.
-- **Article 13, navigation.** A finished quiz pushes its results with `.navigationDestination(item:)` instead of through the coordinator.
 - **Article 18, the audit.** No UI test runs `performAccessibilityAudit()`. The test lands with the fixes, so it never sits in the suite failing.

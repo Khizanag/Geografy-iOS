@@ -27,7 +27,7 @@ public struct QuizSessionScreen: View {
     @State private var showQuitAlert = false
     @State private var showFlagPreview = false
     @State var isPaused = false
-    @State var navigateToResult: QuizResult?
+    @State var finishedResult: QuizResult?
     @State var isAwaitingNext = false
     @AppStorage(QuizAnswerAdvance.storageKey) var answerAdvance: QuizAnswerAdvance = .always
 
@@ -52,8 +52,8 @@ public struct QuizSessionScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        quizContent
-            .navigationTitle(configuration.type.displayName)
+        content
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .hideNavigationCloseButton()
@@ -62,9 +62,6 @@ public struct QuizSessionScreen: View {
                 stopTimer()
                 stopArcadeTimer()
                 transition.cancel()
-            }
-            .navigationDestination(item: $navigateToResult) { result in
-                resultsDestination(for: result)
             }
             .alert("Give Up?", isPresented: $showQuitAlert) {
                 Button("Give Up", role: .destructive) { dismiss() }
@@ -83,6 +80,19 @@ public struct QuizSessionScreen: View {
 
 // MARK: - Subviews
 private extension QuizSessionScreen {
+    /// The questions, then the results in their place, as every game ends: a finished quiz shows its results on the
+    /// same screen, and Play Again starts over right there.
+    @ViewBuilder
+    var content: some View {
+        if let finishedResult {
+            resultsView(for: finishedResult)
+                .id(finishedResult.id)
+                .transition(.opacity)
+        } else {
+            quizContent
+        }
+    }
+
     var quizContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             progressSection
@@ -117,10 +127,12 @@ private extension QuizSessionScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            LeaveGameButton { showQuitAlert = true }
+        if finishedResult == nil {
+            ToolbarItem(placement: .topBarLeading) {
+                LeaveGameButton { showQuitAlert = true }
+            }
         }
-        if configuration.difficulty.hasTimer {
+        if finishedResult == nil, configuration.difficulty.hasTimer {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Pause", systemImage: "pause.fill") { togglePause() }
                     .disabled(showFeedback)
@@ -128,11 +140,11 @@ private extension QuizSessionScreen {
         }
     }
 
-    func resultsDestination(for result: QuizResult) -> some View {
+    func resultsView(for result: QuizResult) -> some View {
         QuizResultsScreen(
             result: result,
             onPlayAgain: {
-                navigateToResult = nil
+                finishedResult = nil
                 loadQuiz()
             },
             onDone: { dismiss() }
@@ -359,6 +371,10 @@ private extension QuizSessionScreen {
 
 // MARK: - Helpers
 extension QuizSessionScreen {
+    var title: String {
+        finishedResult == nil ? configuration.type.displayName : String(localized: "Results", bundle: .module)
+    }
+
     func timerPulseOpacity(seconds: Int) -> Double {
         let threshold = configuration.difficulty.timerDuration * 0.4
         guard Double(seconds) <= threshold else { return 1.0 }

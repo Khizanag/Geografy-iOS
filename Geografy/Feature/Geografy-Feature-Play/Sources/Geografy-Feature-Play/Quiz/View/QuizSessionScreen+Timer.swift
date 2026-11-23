@@ -54,7 +54,7 @@ extension QuizSessionScreen {
         stopTimer()
         let result = session.result(arcadeTimeRemaining: arcadeTimeRemaining)
         configuration.announceFinished(accuracy: result.accuracy)
-        navigateToResult = result
+        finishedResult = result
     }
 }
 #endif
