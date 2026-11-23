@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            answerWaiting,
             glassAnswers,
             guideNavigation,
             gameGuides,
@@ -38,6 +39,22 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var answerWaiting: BuildNote {
+        BuildNote(
+            commit: "0a50f2d4",
+            title: "Wait on an answer",
+            howToTest: """
+                In Quiz setup, set Next Question to On Tap and start a quiz. After each answer the quiz waits: tap \
+                the country button to read its page, then Next. With If Right, only a wrong answer waits; Auto \
+                moves on as before.
+                """,
+            systemImage: "hand.raised",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var glassAnswers: BuildNote {
         BuildNote(
             commit: "462ab319",
