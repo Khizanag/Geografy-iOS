@@ -136,13 +136,11 @@ private extension CountryBannerView {
                     .fontWeight(.bold)
                     .accessibilityHidden(true)
             }
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .frame(height: barHeight - Self.buttonInset * 2)
-            .background(DesignSystem.Color.accent, in: Capsule())
-            .fixedSize()
         }
-        .buttonStyle(PressButtonStyle())
+        .buttonStyle(.glassProminent)
+        .buttonBorderShape(.capsule)
+        .tint(DesignSystem.Color.accent)
+        .fixedSize()
     }
 }
 

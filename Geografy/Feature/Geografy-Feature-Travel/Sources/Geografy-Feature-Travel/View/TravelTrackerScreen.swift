@@ -165,39 +165,49 @@ private extension TravelTrackerScreen {
         }
     }
 
+    /// A glass chip: prominent in the status's own colour while it filters the list, plain glass otherwise.
+    @ViewBuilder
     func filterTab(_ filter: TravelStatus?, icon: String, label: String) -> some View {
         let isActive = selectedFilter == filter && !isSearching
-        let activeColor: Color = filter?.color ?? DesignSystem.Color.accent
-        return Button {
+        let button = Button {
             withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75)) {
                 selectedFilter = filter
             }
         } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption)
-                    .accessibilityHidden(true)
-                Text(label)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                if isActive, let count = filteredCount(for: filter), count > 0 {
-                    Text("\(count)")
-                        .font(DesignSystem.Font.caption2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 1)
-                        .background(.primary.opacity(DesignSystem.Opacity.tint), in: Capsule())
-                }
-            }
-            .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textSecondary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                Capsule().fill(isActive ? activeColor : DesignSystem.Color.cardBackgroundHighlighted)
-            )
+            filterTabLabel(filter, icon: icon, label: label, isActive: isActive)
         }
-        .buttonStyle(PressButtonStyle())
+        .buttonBorderShape(.capsule)
         .accessibilityAddTraits(isActive ? .isSelected : [])
+
+        if isActive {
+            button
+                .buttonStyle(.glassProminent)
+                .tint(filter?.color ?? DesignSystem.Color.accent)
+        } else {
+            button
+                .buttonStyle(.glass)
+        }
+    }
+
+    func filterTabLabel(_ filter: TravelStatus?, icon: String, label: String, isActive: Bool) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: icon)
+                .font(DesignSystem.Font.caption)
+                .accessibilityHidden(true)
+            Text(label)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+            if isActive, let count = filteredCount(for: filter), count > 0 {
+                Text("\(count)")
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.bold)
+                    .monospacedDigit()
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 1)
+                    .background(.primary.opacity(DesignSystem.Opacity.tint), in: Capsule())
+            }
+        }
+        .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
     }
 
     func filteredCount(for filter: TravelStatus?) -> Int? {

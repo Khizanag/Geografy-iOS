@@ -1,13 +1,12 @@
 import SwiftUI
-#if !os(tvOS)
-import UIKit
-#endif
 
+/// The style of a card or tile that is itself the button, as article 12 asks: the whole item takes the tap, dims a
+/// little and settles back while pressed, lifts under a pointer, and fades when disabled. A standalone button is
+/// glass instead (`GlassButton`, `.buttonStyle(.glass)`); this style is for content that acts.
+///
+/// A press plays no haptic: a haptic confirms a change of state (article 23), and the screen the tap changes plays
+/// its own.
 public struct PressButtonStyle: ButtonStyle {
-    #if !os(tvOS)
-    public var feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle = .light
-    #endif
-
     public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
@@ -18,24 +17,23 @@ public struct PressButtonStyle: ButtonStyle {
 // MARK: - Body
 private struct PressButtonBody: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
+    @Environment(\.isEnabled) private var isEnabled
+
     let configuration: ButtonStyleConfiguration
 
     var body: some View {
         configuration.label
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.97 : 1.0)
-            .opacity(configuration.isPressed ? 0.85 : 1.0)
-            .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
+            .opacity(opacity)
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.7),
+                value: configuration.isPressed
+            )
             .hoverEffect(.lift)
-            #if !os(tvOS)
-            .onChange(of: configuration.isPressed) { _, isPressed in
-                // A tap only acknowledges the touch, so it stays at half strength.
-                if isPressed {
-                    hapticsService.impact(.light, intensity: 0.5)
-                }
-            }
-            #endif
+    }
+
+    var opacity: Double {
+        guard isEnabled else { return DesignSystem.Opacity.half }
+        return configuration.isPressed ? 0.85 : 1.0
     }
 }

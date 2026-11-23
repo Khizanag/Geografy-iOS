@@ -213,12 +213,10 @@ private extension QuizTypingInputView {
                     .contentTransition(.opacity)
             }
             .foregroundStyle(DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .glassEffect(.regular.interactive(), in: .capsule)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.capsule)
         .disabled(showFeedback)
-        .opacity(showFeedback ? 0.4 : 1)
         .accessibilityLabel(showHint ? "Hint: \(hintText)" : "Hint")
         .accessibilityHint(showHint ? "" : "Shows the first letters of the answer")
     }

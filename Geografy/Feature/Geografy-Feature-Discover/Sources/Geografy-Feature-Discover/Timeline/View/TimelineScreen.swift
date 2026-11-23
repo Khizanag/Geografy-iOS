@@ -114,12 +114,10 @@ private extension TimelineScreen {
         } label: {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.caption.weight(.semibold))
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 44, height: 44)
-                .contentShape(Circle())
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
         .accessibilityLabel("Clear Filters")
     }
 

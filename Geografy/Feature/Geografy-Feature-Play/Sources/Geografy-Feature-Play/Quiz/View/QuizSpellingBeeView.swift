@@ -108,11 +108,10 @@ private extension QuizSpellingBeeView {
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
             }
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
         }
-        .glassEffect(.regular.interactive(), in: .capsule)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.capsule)
         .accessibilityHint("Reveals the answer and counts it as wrong")
     }
 }
