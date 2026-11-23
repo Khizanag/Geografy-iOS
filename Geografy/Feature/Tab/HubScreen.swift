@@ -180,12 +180,9 @@ private extension HubGrid {
 
 // MARK: - Navigation
 private extension HubGrid {
+    /// Every game opens on its own setup page, with its guide, before anything starts.
     func open(_ item: HubItem) {
-        if item.opensFullScreen {
-            coordinator.cover(item.destination)
-        } else {
-            coordinator.push(item.destination)
-        }
+        coordinator.push(item.destination)
     }
 }
 

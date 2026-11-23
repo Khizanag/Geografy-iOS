@@ -204,11 +204,11 @@ enum HubItem: Identifiable, CaseIterable {
     var destination: Destination {
         switch self {
         case .profile: Destination(ProfileRoute.profile)
-        case .quiz: Destination(PlayRoute.quizSetup)
-        case .trueOrFalse: Destination(PlayRoute.quizSession(.quickPlay(.trueOrFalse)))
-        case .neighbors: Destination(PlayRoute.quizSession(.quickPlay(.neighbors)))
-        case .mysteryCountry: Destination(PlayRoute.quizSession(.quickPlay(.mysteryCountry)))
-        case .mapPuzzle: Destination(PlayRoute.mapPuzzle)
+        case .quiz: Destination(PlayRoute.quizSetup())
+        case .trueOrFalse: Destination(PlayRoute.quizSetup(type: .trueOrFalse))
+        case .neighbors: Destination(PlayRoute.quizSetup(type: .neighbors))
+        case .mysteryCountry: Destination(PlayRoute.quizSetup(type: .mysteryCountry))
+        case .mapPuzzle: Destination(PlayRoute.mapPuzzle())
         case .pinDrop: Destination(PlayRoute.pinDrop)
         case .worldFacts: Destination(DiscoverRoute.worldFacts(.records))
         case .countries: Destination(CountryRoute.countries)
@@ -231,14 +231,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .wordSearch: Destination(PlayRoute.wordSearch)
         case .srsStudy: Destination(PlayRoute.srsStudy)
         case .learningPath: Destination(PlayRoute.learningPath)
-        }
-    }
-
-    /// Quick games run full screen; everything else opens inside the tab.
-    var opensFullScreen: Bool {
-        switch self {
-        case .trueOrFalse, .neighbors, .mysteryCountry: true
-        default: false
         }
     }
 }

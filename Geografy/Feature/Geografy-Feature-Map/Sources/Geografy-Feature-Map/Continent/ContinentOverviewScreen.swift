@@ -39,7 +39,7 @@ public struct ContinentOverviewScreen: View {
                 if continent != .antarctica {
                     ToolbarItem(placement: .primaryAction) {
                         Button("Play Map Puzzle", systemImage: "puzzlepiece.fill") {
-                            coordinator.cover(PlayRoute.mapPuzzleGame(continent: continent))
+                            coordinator.push(PlayRoute.mapPuzzle(continent: continent))
                         }
                     }
                 }

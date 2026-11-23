@@ -23,7 +23,7 @@ struct PlayScreen: View {
                 srsCardsDue: flashcardService.dueCount(of: .countryToCapital, in: countryDataService.countries),
                 onDailyChallenge: { coordinator.push(PlayRoute.dailyChallenge) },
                 onReviewCards: { coordinator.push(PlayRoute.srsStudy) },
-                onStartQuiz: { coordinator.push(PlayRoute.quizSetup) }
+                onStartQuiz: { coordinator.push(PlayRoute.quizSetup()) }
             )
         }
         .task { await loadDailyChallenge() }

@@ -15,9 +15,16 @@ public struct MapPuzzleSetupScreen: View {
     /// The whole world on top, then each continent, as in every game's region choice.
     private let regions: [Country.Continent?] = [nil] + Country.Continent.allCases.filter { $0 != .antarctica }
     private let gameColor = DesignSystem.Color.purple
+    private let initialContinent: Country.Continent?
+
+    @State private var hasChosenInitialRegion = false
 
     // MARK: - Init
-    public init() {}
+    /// - Parameter continent: The continent to choose on arrival, as a continent's map asks; nil keeps the last
+    ///   choice.
+    public init(continent: Country.Continent? = nil) {
+        initialContinent = continent
+    }
 
     // MARK: - Body
     public var body: some View {
@@ -27,6 +34,7 @@ public struct MapPuzzleSetupScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.mapPuzzle)
             .safeAreaBar(edge: .bottom) { startButton }
+            .onAppear { chooseInitialRegion() }
     }
 }
 
@@ -95,6 +103,15 @@ private extension MapPuzzleSetupScreen {
     }
 
     static let worldKey = "world"
+
+    /// Once only, so a region changed here isn't put back when a finished puzzle returns to setup.
+    func chooseInitialRegion() {
+        guard !hasChosenInitialRegion else { return }
+        hasChosenInitialRegion = true
+        if let initialContinent {
+            storedRegion = initialContinent.rawValue
+        }
+    }
 
     var selectedRegion: Binding<Country.Continent?> {
         Binding {
