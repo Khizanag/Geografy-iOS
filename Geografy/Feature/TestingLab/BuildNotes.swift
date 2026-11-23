@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            fullWidthLastTile,
             oneGamesSection,
             gamesOpenOnSetup,
             setupFactButtons,
@@ -42,6 +43,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var fullWidthLastTile: BuildNote {
+        BuildNote(
+            commit: "bd16aab0",
+            title: "Odd last tile is full width",
+            howToTest: """
+                Open Play and scroll to the end of Games: Multiplayer, alone on its row, spans the full width. \
+                Check Explore and Profile too: any section with an odd number of tiles ends the same way.
+                """,
+            systemImage: "rectangle.split.2x1",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
     var oneGamesSection: BuildNote {
         BuildNote(
             commit: "d45f736f",
