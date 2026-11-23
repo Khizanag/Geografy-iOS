@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            guideNavigation,
             gameGuides,
             mapPuzzleWorld,
             leaveGameButton,
@@ -36,6 +37,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var guideNavigation: BuildNote {
+        BuildNote(
+            commit: "eb84d71f",
+            title: "Guide: close button and Next",
+            howToTest: """
+                Open Quiz and tap the ? button. The game's name is the title with a close button beside it. Tap \
+                Next through the pages: each one slides in, including the last, where Next becomes Got It.
+                """,
+            systemImage: "arrow.right.circle",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var gameGuides: BuildNote {
         BuildNote(
             commit: "bfcd4f5c",
