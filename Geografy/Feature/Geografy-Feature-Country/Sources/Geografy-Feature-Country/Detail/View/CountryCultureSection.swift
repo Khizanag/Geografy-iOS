@@ -40,7 +40,7 @@ private extension CountryDetailScreen {
         HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.sm) {
             Image(systemName: highlight.icon)
                 .font(DesignSystem.Font.callout)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .frame(width: DesignSystem.Size.Icon.xl)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {

@@ -110,7 +110,7 @@ private extension CountrySaveToCollectionSheet {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "folder.fill")
                         .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
 
                     Text(name)
                         .font(DesignSystem.Font.subheadline)

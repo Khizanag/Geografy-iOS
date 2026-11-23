@@ -339,9 +339,9 @@ private extension CountryListScreen {
     func sectionKeyBadge(key: String) -> some View {
         ZStack {
             Circle()
-                .fill(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint))
+                .fill(DesignSystem.Color.cardBackgroundHighlighted)
             Circle()
-                .strokeBorder(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
+                .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
             Text(String(key.prefix(1)).uppercased())
                 .font(
                     DesignSystem.Font.system(
@@ -350,7 +350,7 @@ private extension CountryListScreen {
                         design: .rounded
                     )
                 )
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
         .frame(width: state.groupBy == .firstLetter ? 36 : 30, height: state.groupBy == .firstLetter ? 36 : 30)
     }

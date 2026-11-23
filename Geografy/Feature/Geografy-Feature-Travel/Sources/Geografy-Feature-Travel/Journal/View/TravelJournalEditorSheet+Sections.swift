@@ -206,7 +206,7 @@ extension TravelJournalEditorSheet {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "photo.badge.plus.fill")
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .accessibilityHidden(true)
                 Text("Add Photos")
                     .font(DesignSystem.Font.subheadline)

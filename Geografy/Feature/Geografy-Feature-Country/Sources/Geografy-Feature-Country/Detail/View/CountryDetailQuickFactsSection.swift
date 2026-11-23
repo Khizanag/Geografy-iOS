@@ -109,7 +109,7 @@ private extension CountryDetailScreen {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .accessibilityHidden(true)
             Text(label)
                 .font(DesignSystem.Font.caption2)

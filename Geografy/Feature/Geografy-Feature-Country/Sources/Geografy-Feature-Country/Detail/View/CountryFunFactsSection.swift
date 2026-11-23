@@ -69,7 +69,7 @@ private extension TappableFunFactCard {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Text("Fact #\(index + 1)")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             Text(fact)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -97,7 +97,7 @@ private struct FunFactDetailSheet: View {
 
     var factText: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            EyebrowLabel("Fun Fact #\(index + 1)", color: DesignSystem.Color.accent)
+            EyebrowLabel("Fun Fact #\(index + 1)")
             Text(fact)
                 .font(DesignSystem.Font.title3)
                 .fontWeight(.semibold)

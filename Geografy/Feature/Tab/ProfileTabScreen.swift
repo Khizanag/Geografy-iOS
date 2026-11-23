@@ -43,7 +43,7 @@ private extension ProfileTabScreen {
 private extension ProfileTabScreen {
     var greeting: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            EyebrowLabel(greetingLabel, color: DesignSystem.Color.accent)
+            EyebrowLabel(greetingLabel)
             Text(authService.currentProfile?.displayName ?? AuthService.defaultDisplayName)
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)

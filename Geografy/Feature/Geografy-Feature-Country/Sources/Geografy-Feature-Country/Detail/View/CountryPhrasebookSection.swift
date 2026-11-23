@@ -93,7 +93,7 @@ private extension PhraseChip {
             Text(phrase.local)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .lineLimit(2)
                 .rotation3DEffect(.degrees(reduceMotion ? 0 : 180), axis: (x: 0, y: 1, z: 0))
             Text(phrase.pronunciation)

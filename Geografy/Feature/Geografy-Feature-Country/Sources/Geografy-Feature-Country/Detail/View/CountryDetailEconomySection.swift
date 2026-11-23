@@ -36,7 +36,7 @@ extension CountryDetailScreen {
             icon: "chart.bar.fill",
             label: "GDP",
             value: gdp.formatGDP(),
-            color: DesignSystem.Color.accent
+            color: DesignSystem.Color.blue
         ) {
             activeSheet = .info(
                 InfoItem(

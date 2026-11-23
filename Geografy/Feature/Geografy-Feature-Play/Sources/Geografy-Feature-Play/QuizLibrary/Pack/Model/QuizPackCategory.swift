@@ -67,7 +67,7 @@ extension QuizPackCategory {
         case .capitals: DesignSystem.Color.indigo
         case .flags: DesignSystem.Color.error
         case .population: DesignSystem.Color.blue
-        case .geography: DesignSystem.Color.accent
+        case .geography: DesignSystem.Color.teal
         case .currency: DesignSystem.Color.orange
         case .government: DesignSystem.Color.purple
         case .organizations: DesignSystem.Color.warning

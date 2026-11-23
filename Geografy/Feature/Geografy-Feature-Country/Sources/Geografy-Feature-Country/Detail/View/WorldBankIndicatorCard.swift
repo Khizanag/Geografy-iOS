@@ -82,7 +82,7 @@ private extension WorldBankIndicatorCard {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: indicator.icon)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .accessibilityHidden(true)
             Text(indicator.title)
                 .font(DesignSystem.Font.subheadline)
@@ -140,7 +140,7 @@ private extension WorldBankIndicatorCard {
                 Text("Tap to retry")
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
             }
             Spacer()
         }

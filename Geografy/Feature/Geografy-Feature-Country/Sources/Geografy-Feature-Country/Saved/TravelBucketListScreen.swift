@@ -67,7 +67,7 @@ private extension TravelBucketListScreen {
             HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: "list.star")
                     .font(DesignSystem.Font.iconLarge)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("\(countries.count) countries on your bucket list")

@@ -31,18 +31,18 @@ private extension CountryTimelineView {
     func timelineIndicator(isFirst: Bool, isLast: Bool) -> some View {
         VStack(spacing: 0) {
             Rectangle()
-                .fill(isFirst ? .clear : DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft))
+                .fill(isFirst ? .clear : DesignSystem.Color.iconSecondary.opacity(DesignSystem.Opacity.soft))
                 .frame(width: 2)
 
             Circle()
-                .fill(DesignSystem.Color.accent)
+                .fill(DesignSystem.Color.iconSecondary)
                 .frame(
                     width: DesignSystem.Spacing.sm,
                     height: DesignSystem.Spacing.sm
                 )
 
             Rectangle()
-                .fill(isLast ? .clear : DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft))
+                .fill(isLast ? .clear : DesignSystem.Color.iconSecondary.opacity(DesignSystem.Opacity.soft))
                 .frame(width: 2)
         }
         .frame(width: DesignSystem.Spacing.md)
@@ -54,7 +54,7 @@ private extension CountryTimelineView {
                 Text(event.year)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
 
                 Text(event.title)
                     .font(DesignSystem.Font.headline)

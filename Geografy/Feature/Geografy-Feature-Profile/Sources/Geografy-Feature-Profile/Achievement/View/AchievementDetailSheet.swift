@@ -220,28 +220,15 @@ private extension AchievementDetailSheet {
 // MARK: - Pin
 private extension AchievementDetailSheet {
     var pinSection: some View {
-        Button {
+        GlassButton(
+            isPinned ? "Unpin from Showcase" : "Pin to Showcase",
+            systemImage: isPinned ? "pin.slash.fill" : "pin.fill",
+            role: .secondary,
+            fullWidth: true
+        ) {
             hapticsService.impact(.light)
             onTogglePin()
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: isPinned ? "pin.slash.fill" : "pin.fill")
-                    .accessibilityHidden(true)
-
-                Text(isPinned ? "Unpin from Showcase" : "Pin to Showcase")
-                    .fontWeight(.semibold)
-            }
-            .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(isPinned ? DesignSystem.Color.error : DesignSystem.Color.accent)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(
-                (isPinned ? DesignSystem.Color.error : DesignSystem.Color.accent).opacity(DesignSystem.Opacity.tint)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
-        .buttonStyle(PressButtonStyle())
         .disabled(!canPin && !isPinned)
-        .opacity(!canPin && !isPinned ? 0.5 : 1.0)
     }
 }

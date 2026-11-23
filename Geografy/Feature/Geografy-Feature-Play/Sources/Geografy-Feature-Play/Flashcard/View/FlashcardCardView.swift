@@ -129,7 +129,7 @@ private extension FlashcardCardView {
         } else {
             Text(card.backText)
                 .font(DesignSystem.Font.title)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.7)
                 .lineLimit(3)

@@ -128,7 +128,7 @@ private extension GeographyFeaturesScreen {
                 .lineLimit(1)
             Text("\(feature.measurementLabel): \(feature.formattedMeasurement)")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 
@@ -149,7 +149,7 @@ private extension GeographyFeaturesScreen {
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
-                InfoPill(feature.continent, style: .accent)
+                InfoPill(feature.continent)
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.bottom, DesignSystem.Spacing.sm)

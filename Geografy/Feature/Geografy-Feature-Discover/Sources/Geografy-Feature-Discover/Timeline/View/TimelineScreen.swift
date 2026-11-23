@@ -264,7 +264,7 @@ private extension TimelineScreen {
     }
 
     func detailEventTypePill(for event: HistoricalEvent) -> some View {
-        InfoPill(event.type.displayName, systemImage: event.type.icon, style: .accent)
+        InfoPill(event.type.displayName, systemImage: event.type.icon)
             .accessibilityElement(children: .combine)
         .accessibilityLabel("Event type: \(event.type.displayName)")
     }

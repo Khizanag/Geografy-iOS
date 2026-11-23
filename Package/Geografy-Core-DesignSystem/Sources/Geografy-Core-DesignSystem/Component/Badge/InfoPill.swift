@@ -10,9 +10,6 @@ public struct InfoPill: View {
         case neutral
         /// In a color that carries meaning, such as an organization's color or a site type's.
         case tinted(Color)
-
-        /// Calls attention, in the accent color.
-        public static var accent: Style { .tinted(DesignSystem.Color.accent) }
     }
 
     // MARK: - Properties

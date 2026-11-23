@@ -103,7 +103,7 @@ private extension CountryDetailScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.callout)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .frame(width: DesignSystem.Size.Icon.xl)
             Text(label)
                 .font(DesignSystem.Font.callout)

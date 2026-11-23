@@ -41,7 +41,7 @@ private extension InfoTile {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
 
             Text(title)
                 .font(DesignSystem.Font.caption)

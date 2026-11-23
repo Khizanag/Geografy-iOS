@@ -138,7 +138,7 @@ private extension DailyActionCard {
                 icon: "play.circle.fill",
                 title: "Start a Quiz",
                 subtitle: "Test your geography knowledge",
-                color: DesignSystem.Color.accent,
+                color: DesignSystem.Color.blue,
                 handler: onStartQuiz
             )
         }

@@ -143,7 +143,7 @@ private extension TerritorialDisputesScreen {
 
                     Text(currentSelectionLabel(for: dispute))
                         .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                         .lineLimit(1)
                 }
 

@@ -32,7 +32,7 @@ private extension CountryDetailScreen {
                     Spacer(minLength: 0)
                     Text("\(language.speakerCount)M speakers")
                         .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
                 Text("\(language.family) · \(language.script)")
                     .font(DesignSystem.Font.caption)

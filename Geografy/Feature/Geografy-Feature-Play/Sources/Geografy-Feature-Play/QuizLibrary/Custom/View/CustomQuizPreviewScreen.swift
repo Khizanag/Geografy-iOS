@@ -102,7 +102,7 @@ private extension CustomQuizPreviewScreen {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: type.icon)
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .frame(width: 28)
                     .accessibilityHidden(true)
 

@@ -132,7 +132,7 @@ private extension TravelStatsCard {
                 value: "\(visitedContinents)",
                 label: "Continents",
                 icon: "globe.europe.africa.fill",
-                color: DesignSystem.Color.accent
+                color: DesignSystem.Color.teal
             )
         }
     }

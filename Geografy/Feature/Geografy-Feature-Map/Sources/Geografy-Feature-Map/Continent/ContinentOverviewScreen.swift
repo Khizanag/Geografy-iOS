@@ -117,7 +117,7 @@ private extension ContinentOverviewScreen {
             value: "\(countries.count)",
             label: "Countries",
             icon: "flag.fill",
-            color: DesignSystem.Color.accent
+            color: DesignSystem.Color.blue
         )
         StatTile(
             value: totalPopulation.formatPopulation(),

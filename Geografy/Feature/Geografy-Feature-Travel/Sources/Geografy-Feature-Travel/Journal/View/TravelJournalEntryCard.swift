@@ -146,7 +146,7 @@ private extension TravelJournalEntryCard {
     }
 
     var photoCountBadge: some View {
-        InfoPill("\(entry.photoFileNames.count)", systemImage: "photo", style: .accent)
+        InfoPill("\(entry.photoFileNames.count)", systemImage: "photo")
     }
 
     var durationBadge: some View {

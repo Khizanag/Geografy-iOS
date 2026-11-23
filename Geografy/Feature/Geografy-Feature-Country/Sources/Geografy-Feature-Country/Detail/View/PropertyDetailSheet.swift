@@ -31,7 +31,7 @@ private extension PropertyDetailSheet {
                     .padding(.top, DesignSystem.Spacing.lg)
 
                 VStack(spacing: DesignSystem.Spacing.xs) {
-                    EyebrowLabel(title, color: DesignSystem.Color.accent)
+                    EyebrowLabel(title)
 
                     Text(value)
                         .font(DesignSystem.Font.title2)

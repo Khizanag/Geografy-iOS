@@ -69,7 +69,7 @@ private extension LessonScreen {
     }
 
     var lessonTypeTag: some View {
-        InfoPill(typeLabel, systemImage: typeIcon, style: .accent)
+        InfoPill(typeLabel, systemImage: typeIcon)
     }
 
     var lessonContent: some View {

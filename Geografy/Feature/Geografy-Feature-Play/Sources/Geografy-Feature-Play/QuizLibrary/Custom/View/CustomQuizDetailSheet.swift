@@ -75,7 +75,7 @@ private extension CustomQuizDetailSheet {
             HStack {
                 Image(systemName: continent.icon)
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .frame(width: 24)
                     .accessibilityHidden(true)
 
@@ -118,7 +118,7 @@ private extension CustomQuizDetailSheet {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: type.icon)
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .frame(width: 28)
                     .accessibilityHidden(true)
 
@@ -163,7 +163,7 @@ private extension CustomQuizDetailSheet {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .accessibilityHidden(true)
 
                 Text(value)

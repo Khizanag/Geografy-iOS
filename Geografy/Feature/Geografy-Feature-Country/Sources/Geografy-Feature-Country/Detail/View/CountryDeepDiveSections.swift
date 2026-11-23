@@ -54,7 +54,7 @@ private extension CountryDeepDiveSections {
             HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .frame(width: DesignSystem.Size.md)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(title)
@@ -77,7 +77,7 @@ private extension CountryDeepDiveSections {
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Image(systemName: "sparkle")
                         .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
                     Text("Natural Wonders")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -101,7 +101,7 @@ private extension CountryDeepDiveSections {
     }
 
     func wonderChip(_ name: String) -> some View {
-        InfoPill(name, style: .accent)
+        InfoPill(name)
     }
 }
 
@@ -151,13 +151,13 @@ private extension CountryDeepDiveSections {
         Text("#\(profile.economy.gdpRank)")
             .font(DesignSystem.Font.title2)
             .fontWeight(.bold)
-            .foregroundStyle(DesignSystem.Color.accent)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .padding(DesignSystem.Spacing.xs)
             .frame(
                 minWidth: DesignSystem.Size.xxl,
                 minHeight: DesignSystem.Size.xxl
             )
-            .background(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.faint))
+            .background(DesignSystem.Color.cardBackgroundHighlighted)
             .clipShape(Capsule())
             .overlay {
                 if colorSchemeContrast == .increased {
@@ -193,7 +193,7 @@ private extension CountryDeepDiveSections {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .accessibilityHidden(true)
                 Text(title)
                     .font(DesignSystem.Font.caption)

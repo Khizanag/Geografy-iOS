@@ -57,7 +57,7 @@ public struct SpeakerButton: View {
                 .foregroundStyle(
                     isActivelySpeaking
                         ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textSecondary
+                        : DesignSystem.Color.iconPrimary
                 )
                 .symbolEffect(.variableColor.iterative.reversing, isActive: isActivelySpeaking)
                 .dynamicTypeSize(...DynamicTypeSize.xxxLarge)

@@ -167,7 +167,7 @@ private extension LeaderboardScreen {
                 title: "Total XP",
                 subtitle: "Earn XP by exploring countries, completing quizzes, and maintaining streaks",
                 icon: "bolt.fill",
-                color: DesignSystem.Color.accent
+                color: DesignSystem.Color.indigo
             ),
             LeaderboardInfo(
                 id: GameCenterService.LeaderboardID.quizHighScore,

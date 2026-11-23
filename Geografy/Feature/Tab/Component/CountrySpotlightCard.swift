@@ -195,10 +195,10 @@ private extension CountrySpotlightCard {
     var continentColor: Color {
         switch country.continent {
         case .europe: DesignSystem.Color.blue
-        case .asia: DesignSystem.Color.accent
+        case .asia: DesignSystem.Color.teal
         case .africa: DesignSystem.Color.orange
         case .northAmerica: DesignSystem.Color.indigo
-        case .southAmerica: DesignSystem.Color.success
+        case .southAmerica: DesignSystem.Color.pink
         case .oceania: DesignSystem.Color.purple
         case .antarctica: DesignSystem.Color.blue
         }

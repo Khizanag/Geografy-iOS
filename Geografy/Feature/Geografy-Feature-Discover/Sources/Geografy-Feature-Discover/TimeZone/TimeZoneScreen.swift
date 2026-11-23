@@ -218,7 +218,7 @@ private struct AllZonesView: View {
             DesignSystem.Color.blue,
             DesignSystem.Color.indigo,
             DesignSystem.Color.purple,
-            DesignSystem.Color.accent,
+            DesignSystem.Color.pink,
             DesignSystem.Color.success,
             DesignSystem.Color.warning,
             DesignSystem.Color.orange,

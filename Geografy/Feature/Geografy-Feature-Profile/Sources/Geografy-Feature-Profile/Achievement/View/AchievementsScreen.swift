@@ -69,7 +69,7 @@ private extension AchievementsScreen {
                 value: "\(pinnedCount)",
                 label: "Pinned",
                 icon: "pin.fill",
-                color: DesignSystem.Color.accent
+                color: DesignSystem.Color.indigo
             )
         }
     }
@@ -158,7 +158,7 @@ private extension AchievementsScreen {
                 if achievementService.isPinned(definition.id) {
                     Image(systemName: "pin.fill")
                         .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
                 }
             }
 

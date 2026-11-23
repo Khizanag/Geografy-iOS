@@ -35,7 +35,7 @@ extension FlashcardReviewResult {
         case .again: DesignSystem.Color.error
         case .hard: DesignSystem.Color.warning
         case .good: DesignSystem.Color.success
-        case .easy: DesignSystem.Color.accent
+        case .easy: DesignSystem.Color.teal
         }
     }
 

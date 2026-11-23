@@ -62,7 +62,7 @@ private extension DailyChallengeSessionScreen {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "star.fill")
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                     .accessibilityHidden(true)
 
                 Text("\(String(score)) pts")
@@ -72,7 +72,7 @@ private extension DailyChallengeSessionScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint), in: Capsule())
+            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Score: \(score) points")
 

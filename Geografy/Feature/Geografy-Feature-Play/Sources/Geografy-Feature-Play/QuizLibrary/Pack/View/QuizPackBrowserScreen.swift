@@ -97,7 +97,7 @@ private extension QuizPackBrowserScreen {
                 value: "\(filteredPacks.count)",
                 label: "Available",
                 icon: "square.grid.2x2.fill",
-                color: DesignSystem.Color.accent
+                color: DesignSystem.Color.blue
             )
         }
     }

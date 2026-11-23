@@ -163,7 +163,7 @@ private extension HistoricalMapScreen {
         Group {
             if let year {
                 Text("Independent since \(String(year))")
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             } else {
                 Text("Historical state unknown")
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -179,7 +179,7 @@ private extension HistoricalMapScreen {
         } label: {
             Image(systemName: "info.circle")
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Event details")

@@ -115,7 +115,7 @@ private extension CountryBannerView {
     var capitalLabel: some View {
         HStack(alignment: .center, spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "star.fill")
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .imageScale(.small)
                 .accessibilityHidden(true)
             Text(capital)

@@ -9,6 +9,13 @@ Article 6 keeps the accent rare and lets an app name the few marks its identity 
 - **Each game's own colour:** its hub tile's icon, its setup header and fact pills, and its guide. Quiz is blue, Map Puzzle purple, Pin Drop orange, and so on, so a game is known by its colour wherever it appears.
 - **The map:** country fills, continent palettes, and the selected country's highlight. These are data palettes (article 5).
 
+Beyond what article 6 already allows, the accent marks:
+
+- **The reader's progress:** a session's progress bar, a step indicator, and the Learning Path's modules and lessons.
+- **The brand:** the map's loading globe, the ambient background, the profile header's ring, a result's share card, and the New badge.
+- **A chart's own series:** the line, area, and bars of a single-series chart.
+- **A chosen item's edge:** the check, border, or fill that marks the selected tile, chip, or index letter, as a picker's checkmark does.
+
 ## Articles of its own
 
 ### Article 101: green is right, red is wrong
@@ -46,8 +53,7 @@ The tvOS and Mac Catalyst targets are parked at the owner's word and are not hel
 Open work from the adoption audit on 2026-11-24, each with what it takes. Remove an entry when it lands.
 
 - **Article 23, haptics.** About 160 calls to `HapticsService` in 68 files, and `PressButtonStyle` plays its own impact. Moving to `.sensoryFeedback(_:trigger:)` on the view whose state changed, with the Haptics setting read from the environment, replaces the service.
-- **Article 3, buttons.** A screen's primary action is drawn with `.glass`, not `.glassProminent` with the accent, because `GlassButton` has no prominent style. `PressButtonStyle` stands in for system buttons in about 70 files, and about 25 files draw glass by hand with `.glassEffect`.
-- **Articles 6 and 7, the accent.** The app's root tints everything with the accent, so menus, toolbar glyphs, and secondary controls draw in it. The control colour becomes the tint on each tab's stack, and the accent stays on the marks article 6 lists; about 160 explicit uses need sorting.
+- **Article 3, buttons.** `PressButtonStyle` stands in for system buttons in about 70 files, and about 25 files draw glass by hand with `.glassEffect`. The map's country banner draws its Open capsule by hand.
 - **Article 5, tokens.** About 140 raw colours in about 60 files, some of them data palettes. Each goes to a token or to the one palette file.
 - **Article 19, in-app language.** About 85 `String(localized:)` calls read the launch language. Needed once a second language ships; until then the exception above holds.
 - **Article 12, item actions.** Lists offer long presses and swipes screen by screen, in 6 files, with no shared modifier per kind of item, and most lists offer none.

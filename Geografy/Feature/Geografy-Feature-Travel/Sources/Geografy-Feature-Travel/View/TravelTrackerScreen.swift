@@ -97,7 +97,7 @@ private extension TravelTrackerScreen {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "map.fill")
                         .font(DesignSystem.Font.title2)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
                         .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
@@ -258,7 +258,7 @@ private extension TravelTrackerScreen {
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
             }
-            .foregroundStyle(DesignSystem.Color.accent)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.md)
         }

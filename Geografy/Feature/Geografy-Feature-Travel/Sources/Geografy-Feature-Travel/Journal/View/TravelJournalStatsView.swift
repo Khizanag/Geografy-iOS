@@ -34,7 +34,7 @@ private extension TravelJournalStatsView {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "book.closed.fill")
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text("Journal Stats")

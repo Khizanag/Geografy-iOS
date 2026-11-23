@@ -58,7 +58,7 @@ private extension TravelJournalDetailScreen {
         } label: {
             Image(systemName: "pencil")
                 .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
         .accessibilityLabel("Edit Entry")
     }
@@ -130,7 +130,7 @@ private extension TravelJournalDetailScreen {
     }
 
     var durationBadge: some View {
-        InfoPill(durationText, systemImage: "clock", style: .accent)
+        InfoPill(durationText, systemImage: "clock")
     }
 
     var dateRow: some View {
@@ -215,7 +215,7 @@ private extension TravelJournalDetailScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.footnote)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .frame(width: 20)
                 .accessibilityHidden(true)
             Text(label)

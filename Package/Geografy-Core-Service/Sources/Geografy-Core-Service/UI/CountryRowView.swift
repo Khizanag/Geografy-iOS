@@ -127,7 +127,7 @@ private extension CountryRowView {
         HStack(spacing: DesignSystem.Spacing.xxxs) {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.pico.bold())
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .accessibilityHidden(true)
             Text(capitals.joined(separator: " · "))
                 .font(DesignSystem.Font.caption)

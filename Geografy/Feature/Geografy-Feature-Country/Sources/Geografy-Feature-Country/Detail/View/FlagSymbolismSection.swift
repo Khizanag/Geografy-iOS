@@ -204,7 +204,7 @@ private extension FlagSymbolismCard {
                     .frame(width: 32, height: 32)
                 Image(systemName: emblem.symbol)
                     .font(DesignSystem.Font.iconXS)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
 
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {

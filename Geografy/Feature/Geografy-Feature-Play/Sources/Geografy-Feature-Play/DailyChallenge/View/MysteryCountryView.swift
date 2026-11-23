@@ -147,7 +147,7 @@ private extension MysteryCountryView {
     func clueIcon(clue: DailyChallenge.MysteryClue) -> some View {
         Image(systemName: clue.iconName)
             .font(DesignSystem.Font.headline)
-            .foregroundStyle(DesignSystem.Color.accent)
+            .foregroundStyle(DesignSystem.Color.iconPrimary)
             .frame(width: DesignSystem.Size.md)
             .accessibilityHidden(true)
     }
