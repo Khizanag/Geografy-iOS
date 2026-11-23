@@ -85,11 +85,7 @@ private extension HubGrid {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
             GlassEffectContainer {
-                LazyVGrid(columns: gridColumns, spacing: DesignSystem.Spacing.sm) {
-                    ForEach(items, id: \.id) { sheet in
-                        gridTile(for: sheet)
-                    }
-                }
+                tileGrid(items)
             }
             // Over the container rather than on each tile: the container draws every tile's glass in one layer,
             // which would cover a badge hanging over a tile's corner.
@@ -190,15 +186,36 @@ private extension HubGrid {
 private extension HubGrid {
     var isWide: Bool { sizeClass == .regular }
 
-    /// Two tiles a row on a phone, so names fit on a line or two beside a readable icon;
-    /// one at accessibility text sizes, and as many as fit on a wide screen.
-    var gridColumns: [GridItem] {
+    /// Two tiles a row on a phone, so names fit on a line or two beside a readable icon, with a last tile on its
+    /// own taking the full width; one at accessibility text sizes, and as many as fit on a wide screen.
+    @ViewBuilder
+    func tileGrid(_ items: [HubItem]) -> some View {
         let spacing = DesignSystem.Spacing.sm
         if isWide {
-            return [GridItem(.adaptive(minimum: 200), spacing: spacing)]
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 200), spacing: spacing)], spacing: spacing) {
+                ForEach(items) { item in
+                    gridTile(for: item)
+                }
+            }
+        } else {
+            let columnCount = dynamicTypeSize.isAccessibilitySize ? 1 : 2
+            Grid(horizontalSpacing: spacing, verticalSpacing: spacing) {
+                ForEach(rows(of: items, columnCount: columnCount), id: \.self) { row in
+                    GridRow {
+                        ForEach(row) { item in
+                            gridTile(for: item)
+                                .gridCellColumns(columnCount - row.count + 1)
+                        }
+                    }
+                }
+            }
         }
-        let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
-        return Array(repeating: GridItem(.flexible(), spacing: spacing), count: count)
+    }
+
+    func rows(of items: [HubItem], columnCount: Int) -> [[HubItem]] {
+        stride(from: 0, to: items.count, by: columnCount).map { start in
+            Array(items[start..<min(start + columnCount, items.count)])
+        }
     }
 }
 
