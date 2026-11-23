@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            pressHaptics,
+            bottomBar,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var pressHaptics: BuildNote {
+    var bottomBar: BuildNote {
         BuildNote(
-            commit: "01644de9",
-            title: "Presses tap again",
+            commit: "d7884504",
+            title: "Bottom buttons sit lower",
             howToTest: """
-                Tap hub tiles, list rows, cards, and Start, Next, or Done: each press taps lightly, cards at half \
-                strength. A right or wrong answer, a favorite, and a Travel filter still play their own haptic. \
-                Turn Haptics off in Settings: none play.
+                Open a game's guide with ? and check Next: it sits just above the home indicator, with no extra \
+                gap. Check Start on Quiz, Map Puzzle, and Pin Drop, a quiz's results, and Local Play: the same \
+                small gap everywhere.
                 """,
-            systemImage: "hand.tap",
+            systemImage: "rectangle.bottomthird.inset.filled",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.play)
+            go.open(.dailyChallenge)
         }
     }
 }
