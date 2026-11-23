@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            rollingChartNumbers,
             hapticsFromViews,
             resultsInPlace,
             systemGlassButtons,
@@ -51,6 +52,22 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var rollingChartNumbers: BuildNote {
+        BuildNote(
+            commit: "8ef2b8cb",
+            title: "Chart numbers roll",
+            howToTest: """
+                Open a country, then an indicator such as Electricity Access. Hold and drag along the line: the \
+                big value and its year roll to each point instead of jumping. Switch 10Y, 20Y, 30Y: the summary \
+                values roll too.
+                """,
+            systemImage: "chart.line.uptrend.xyaxis",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.countries)
+        }
+    }
+
     var hapticsFromViews: BuildNote {
         BuildNote(
             commit: "ca0a05bc",
