@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            studyFirst,
             mapPuzzleRounds,
             fullWidthLastTile,
             oneGamesSection,
@@ -44,6 +45,18 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var studyFirst: BuildNote {
+        BuildNote(
+            commit: "e25e26cb",
+            title: "Study before Games",
+            howToTest: "Open Play: Study, with Learning Path and Flashcards, sits above Games.",
+            systemImage: "graduationcap",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.learningPath)
+        }
+    }
+
     var mapPuzzleRounds: BuildNote {
         BuildNote(
             commit: "185d8f84",
