@@ -65,7 +65,7 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
             .readableContentWidth()
         }
         .scrollBounceBehavior(.basedOnSize)
-        .safeAreaBar(edge: .bottom) { buttons }
+        .bottomActionBar { buttons }
         .onAppear { soundService.play(sound) }
     }
 }
@@ -137,8 +137,6 @@ private extension GameResultLayout {
                 )
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.sm)
     }
 }
 

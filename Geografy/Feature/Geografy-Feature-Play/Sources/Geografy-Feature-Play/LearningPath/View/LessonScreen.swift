@@ -35,7 +35,7 @@ public struct LessonScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .safeAreaBar(edge: .bottom) {
+            .bottomActionBar {
                 Group {
                     if let quiz = lesson.quiz, !isCompleted {
                         startQuizButton(quiz)
@@ -43,8 +43,6 @@ public struct LessonScreen: View {
                         completeButton
                     }
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
             }
             .onReceive(NotificationCenter.default.publisher(for: QuizConfiguration.finishedNotification)) {
                 recordQuiz($0)

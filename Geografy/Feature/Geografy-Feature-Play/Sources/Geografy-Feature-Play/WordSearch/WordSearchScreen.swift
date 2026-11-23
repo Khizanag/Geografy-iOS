@@ -25,7 +25,7 @@ public struct WordSearchScreen: View {
             .navigationTitle("Word Search")
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
-            .safeAreaBar(edge: .bottom) { startButton }
+            .bottomActionBar { startButton }
             .gameGuide(.wordSearch)
     }
 }
@@ -98,8 +98,6 @@ private extension WordSearchScreen {
             coordinator.cover(PlayLocalRoute.wordSearchGame(selectedTheme))
         }
         .accessibilityHint(Text("Starts a \(selectedTheme.rawValue) puzzle"))
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

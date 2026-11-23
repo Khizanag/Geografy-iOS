@@ -33,7 +33,7 @@ struct LocalMultiplayerEndingView: View {
         .screenBackground()
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
-        .safeAreaBar(edge: .bottom) { buttons }
+        .bottomActionBar { buttons }
         .onAppear {
             AccessibilityNotification.Announcement(title).post()
         }
@@ -54,8 +54,6 @@ private extension LocalMultiplayerEndingView {
                 action: playAgain
             )
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

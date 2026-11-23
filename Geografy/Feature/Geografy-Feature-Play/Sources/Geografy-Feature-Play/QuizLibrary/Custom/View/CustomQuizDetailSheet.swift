@@ -19,7 +19,7 @@ struct CustomQuizDetailSheet: View {
             .screenBackground()
             .navigationTitle(quiz.name)
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaBar(edge: .bottom) { playButton }
+            .bottomActionBar { playButton }
             .toolbar { toolbarContent }
     }
 }
@@ -190,8 +190,6 @@ private extension CustomQuizDetailSheet {
         GlassButton("Play Quiz", systemImage: "play.fill", fullWidth: true) {
             onPlay()
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

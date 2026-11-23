@@ -23,7 +23,5 @@ struct AnswerReviewBar: View {
                 onNext()
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.sm)
     }
 }

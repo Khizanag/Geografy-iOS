@@ -49,10 +49,8 @@ private extension MysteryCountryView {
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
         .scrollDismissesKeyboard(.interactively)
-        .safeAreaBar(edge: .bottom) {
+        .bottomActionBar {
             guessSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 

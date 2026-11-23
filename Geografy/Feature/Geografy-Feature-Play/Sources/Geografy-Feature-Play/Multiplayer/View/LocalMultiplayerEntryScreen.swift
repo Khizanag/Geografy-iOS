@@ -62,7 +62,7 @@ private extension LocalMultiplayerEntryScreen {
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
         .gameGuide(.localPlay)
-        .safeAreaBar(edge: .bottom) { roleButtons }
+        .bottomActionBar { roleButtons }
     }
 
     var heroSection: some View {
@@ -119,8 +119,6 @@ private extension LocalMultiplayerEntryScreen {
             }
         }
         .disabled(trimmedName.isEmpty)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

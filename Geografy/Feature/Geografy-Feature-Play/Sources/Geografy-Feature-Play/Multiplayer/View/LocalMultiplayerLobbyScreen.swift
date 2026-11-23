@@ -18,7 +18,7 @@ public struct LocalMultiplayerLobbyScreen: View {
             .screenBackground()
             .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaBar(edge: .bottom) { bottomAction }
+            .bottomActionBar { bottomAction }
     }
 }
 
@@ -373,8 +373,6 @@ private extension LocalMultiplayerLobbyScreen {
 
     func bottomButton(_ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
         GlassButton(title, systemImage: systemImage, fullWidth: true, action: action)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 #endif

@@ -71,7 +71,7 @@ private extension QuizPackDetailScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
         }
-        .safeAreaBar(edge: .bottom) {
+        .bottomActionBar {
             if let level = nextLevel(in: pack) {
                 GlassButton(
                     String(localized: "Play Level \(level.levelIndex)", in: locale),
@@ -80,9 +80,6 @@ private extension QuizPackDetailScreen {
                 ) {
                     play(level, in: pack)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.xs)
-                .readableContentWidth()
             }
         }
     }

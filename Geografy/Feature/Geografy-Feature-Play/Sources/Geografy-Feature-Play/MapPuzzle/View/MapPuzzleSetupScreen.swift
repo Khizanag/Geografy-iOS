@@ -34,7 +34,7 @@ public struct MapPuzzleSetupScreen: View {
             .navigationTitle("Map Puzzle")
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.mapPuzzle)
-            .safeAreaBar(edge: .bottom) { startButton }
+            .bottomActionBar { startButton }
             .onAppear { chooseInitialRegion() }
     }
 }
@@ -103,8 +103,6 @@ private extension MapPuzzleSetupScreen {
         }
         .disabled(!MapPuzzleRules.isPlayable(countryCount: countryCount(for: selectedRegion.wrappedValue)))
         .accessibilityHint("Starts a puzzle in \(regionName)")
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

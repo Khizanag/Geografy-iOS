@@ -24,7 +24,7 @@ public struct SpeedRunSetupScreen: View {
             .navigationTitle("Speed Run")
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.speedRun)
-            .safeAreaBar(edge: .bottom) { startButton }
+            .bottomActionBar { startButton }
     }
 }
 
@@ -102,8 +102,6 @@ private extension SpeedRunSetupScreen {
             transaction.disablesAnimations = true
             withTransaction(transaction) { dismiss() }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

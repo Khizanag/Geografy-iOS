@@ -39,10 +39,8 @@ struct FirstRunScreen: View {
         .readableContentWidth()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .screenBackground()
-        .safeAreaBar(edge: .bottom) {
+        .bottomActionBar {
             actions
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
         }
         .sheet(isPresented: $isPickingCountry) {
             NavigationStack {

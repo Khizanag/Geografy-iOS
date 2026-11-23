@@ -17,7 +17,7 @@ public struct CustomQuizPreviewScreen: View {
             .screenBackground()
             .navigationTitle("Preview")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaBar(edge: .bottom) { saveButton }
+            .bottomActionBar { saveButton }
     }
 }
 
@@ -123,8 +123,6 @@ private extension CustomQuizPreviewScreen {
         GlassButton("Save Quiz", systemImage: "checkmark", fullWidth: true) {
             onSave(quiz)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 #endif

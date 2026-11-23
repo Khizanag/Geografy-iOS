@@ -22,7 +22,7 @@ public struct SignInOptionsSheet: View {
     public var body: some View {
         scrollContent
             .screenBackground()
-            .safeAreaBar(edge: .bottom) { actionsSection }
+            .bottomActionBar { actionsSection }
             .alert("Sign In Failed", isPresented: $showError) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -116,7 +116,6 @@ private extension SignInOptionsSheet {
             #endif
             continueAsGuestButton
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.top, DesignSystem.Spacing.sm)
         .readableContentWidth()
     }

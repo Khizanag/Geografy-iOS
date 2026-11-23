@@ -33,7 +33,7 @@ public struct QuizSetupScreen: View {
             .navigationTitle("Quiz")
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.quiz)
-            .safeAreaBar(edge: .bottom) { startButton }
+            .bottomActionBar { startButton }
     }
 }
 
@@ -184,8 +184,6 @@ private extension QuizSetupScreen {
         GlassButton("Start", systemImage: "play.fill", fullWidth: true) {
             coordinator.cover(PlayRoute.quizSession(makeConfiguration()))
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

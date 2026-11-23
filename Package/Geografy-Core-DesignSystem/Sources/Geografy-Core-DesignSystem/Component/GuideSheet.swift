@@ -67,7 +67,7 @@ public struct GuideSheet<Illustration: View>: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             // The controls keep one height on every page, so the pages never resize as they change.
-            .safeAreaBar(edge: .bottom) { controls }
+            .bottomActionBar { controls }
             .screenBackground()
             .navigationTitle(title)
             #if !os(tvOS)
@@ -166,8 +166,6 @@ private extension GuideSheet {
             }
             .contentTransition(.opacity)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: currentPage)
     }
 

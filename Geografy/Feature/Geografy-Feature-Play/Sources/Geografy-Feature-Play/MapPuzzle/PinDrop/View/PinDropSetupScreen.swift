@@ -26,7 +26,7 @@ public struct PinDropSetupScreen: View {
             .navigationTitle("Pin Drop")
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.pinDrop)
-            .safeAreaBar(edge: .bottom) { startButton }
+            .bottomActionBar { startButton }
     }
 }
 
@@ -95,8 +95,6 @@ private extension PinDropSetupScreen {
             coordinator.cover(PlayLocalRoute.pinDropGame(configuration))
         }
         .disabled(countryCount(for: region) == 0)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 

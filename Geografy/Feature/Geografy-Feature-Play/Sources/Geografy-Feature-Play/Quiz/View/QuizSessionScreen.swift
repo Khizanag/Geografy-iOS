@@ -101,7 +101,7 @@ private extension QuizSessionScreen {
             Spacer(minLength: 0)
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .safeAreaBar(edge: .bottom) { answerReviewBar }
+        .bottomActionBar { answerReviewBar }
         .blur(radius: isPaused && !reduceTransparency ? 12 : 0)
         .accessibilityHidden(isPaused)
         .allowsHitTesting(!isPaused)

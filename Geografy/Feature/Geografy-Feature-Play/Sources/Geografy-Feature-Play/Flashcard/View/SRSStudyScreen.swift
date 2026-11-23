@@ -20,11 +20,9 @@ public struct SRSStudyScreen: View {
             .navigationTitle("Review")
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(id: FlashcardGuide.id) { FlashcardGuideSheet() }
-            .safeAreaBar(edge: .bottom) {
+            .bottomActionBar {
                 if !dueCards.isEmpty {
                     startReviewButton
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .padding(.bottom, DesignSystem.Spacing.md)
                 }
             }
             .onChange(of: dueCards.count) { _, newCount in

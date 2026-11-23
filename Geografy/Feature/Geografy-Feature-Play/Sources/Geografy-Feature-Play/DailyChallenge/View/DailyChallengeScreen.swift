@@ -22,7 +22,7 @@ public struct DailyChallengeScreen: View {
             .navigationTitle("Daily Challenge")
             .navigationBarTitleDisplayMode(.inline)
             .gameGuide(.dailyChallenge)
-            .safeAreaBar(edge: .bottom) { startBar }
+            .bottomActionBar { startBar }
             .task { await loadData() }
             .fullScreenCover(isPresented: $showSession) {
                 sessionCover
@@ -88,8 +88,6 @@ private extension DailyChallengeScreen {
                 showSession = true
             }
             .accessibilityHint("Opens today's challenge")
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
