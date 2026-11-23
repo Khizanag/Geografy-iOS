@@ -12,8 +12,6 @@ public struct WordSearchScreen: View {
 
     @AppStorage("wordSearch_selectedTheme") private var selectedTheme: WordSearchTheme = .capitals
 
-    @State private var showGuide = false
-
     private let service = WordSearchService()
     private let color = DesignSystem.Color.indigo
 
@@ -28,8 +26,7 @@ public struct WordSearchScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .safeAreaBar(edge: .bottom) { startButton }
-            .toolbar { toolbarContent }
-            .sheet(isPresented: $showGuide) { wordSearchGuide }
+            .gameGuide(.wordSearch)
     }
 }
 
@@ -103,75 +100,6 @@ private extension WordSearchScreen {
         .accessibilityHint(Text("Starts a \(selectedTheme.rawValue) puzzle"))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
-    }
-}
-
-// MARK: - Guide
-private extension WordSearchScreen {
-    var wordSearchGuide: some View {
-        GuideSheet(
-            pages: [
-                GuidePage(
-                    title: "Find Hidden Words",
-                    subtitle: "Country names and capitals are hidden in a grid of letters. Drag to select them!",
-                    steps: [
-                        GuideStep(
-                            icon: "hand.draw.fill", title: "Drag to Select",
-                            description: "Drag across letters horizontally, vertically, or diagonally"
-                        ),
-                        GuideStep(
-                            icon: "checkmark.circle.fill", title: "Words Highlight",
-                            description: "Correctly found words turn green in the grid"
-                        ),
-                        GuideStep(
-                            icon: "clock.fill", title: "Race the Clock",
-                            description: "Your time is tracked — try to beat your best"
-                        ),
-                    ]
-                ),
-                GuidePage(
-                    title: "Tips & Tricks",
-                    subtitle: "Master the word search with these strategies.",
-                    steps: [
-                        GuideStep(
-                            icon: "eye.fill", title: "Scan Systematically",
-                            description: "Check each row and column one at a time"
-                        ),
-                        GuideStep(
-                            icon: "arrow.left.arrow.right", title: "Words Go Both Ways",
-                            description: "Words can be placed forward or backward"
-                        ),
-                        GuideStep(
-                            icon: "arrow.up.left.and.arrow.down.right", title: "Try Diagonals",
-                            description: "Don't forget diagonal words — they're sneaky"
-                        ),
-                    ]
-                ),
-            ]
-        ) { _ in
-            IconBadge("character.magnify", color: color, size: .hero)
-                .frame(height: 180)
-        }
-    }
-}
-
-// MARK: - Toolbar
-private extension WordSearchScreen {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        #if os(tvOS)
-        ToolbarItem(placement: .automatic) {
-            Button { showGuide = true } label: {
-                Label("Guide", systemImage: "questionmark.circle")
-            }
-        }
-        #else
-        ToolbarItem(placement: .topBarTrailing) {
-            Button { showGuide = true } label: {
-                Label("Guide", systemImage: "questionmark.circle")
-            }
-        }
-        #endif
     }
 }
 

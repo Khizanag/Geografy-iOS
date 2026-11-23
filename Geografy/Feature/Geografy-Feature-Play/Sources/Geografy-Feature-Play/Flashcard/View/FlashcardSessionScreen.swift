@@ -28,7 +28,6 @@ public struct FlashcardSessionScreen: View {
     @State private var correctCount = 0
     @State private var cardExit: FlashcardCardExit?
 
-    @State private var showGuide = false
     @State private var showQuitAlert = false
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
@@ -54,7 +53,7 @@ public struct FlashcardSessionScreen: View {
             } message: {
                 Text("Cards you've already rated stay saved.")
             }
-            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
+            .gameGuide(id: FlashcardGuide.id) { FlashcardGuideSheet() }
             .onDisappear { flashcardService.persistPendingChanges() }
     }
 }
@@ -130,13 +129,6 @@ private extension FlashcardSessionScreen {
             ToolbarItem(placement: .topBarLeading) {
                 LeaveGameButton { showQuitAlert = true }
             }
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-            Button { showGuide = true } label: {
-                Label("Guide", systemImage: "questionmark.circle")
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
-            }
-            .buttonStyle(.plain)
         }
     }
 }

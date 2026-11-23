@@ -25,6 +25,7 @@ public struct PinDropSetupScreen: View {
             .screenBackground()
             .navigationTitle("Pin Drop")
             .navigationBarTitleDisplayMode(.inline)
+            .gameGuide(.pinDrop)
             .safeAreaBar(edge: .bottom) { startButton }
     }
 }

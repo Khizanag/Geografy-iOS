@@ -32,16 +32,20 @@ public struct GuideSheet<Illustration: View>: View {
     @Environment(\.dismiss) private var dismiss
 
     public let pages: [GuidePage]
+    public let color: Color
     public let illustration: (Int) -> Illustration
 
     @State private var currentPage = 0
 
     // MARK: - Init
+    /// - Parameter color: The game's color, for the step icons and the current page.
     public init(
         pages: [GuidePage],
+        color: Color = DesignSystem.Color.accent,
         @ViewBuilder illustration: @escaping (Int) -> Illustration
     ) {
         self.pages = pages
+        self.color = color
         self.illustration = illustration
     }
 
@@ -107,11 +111,11 @@ private extension GuideSheet {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()
-                    .fill(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint))
+                    .fill(color.opacity(DesignSystem.Opacity.tint))
                     .frame(width: 44, height: 44)
                 Image(systemName: step.icon)
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(color)
             }
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(step.title)
@@ -141,7 +145,7 @@ private extension GuideSheet {
                     Capsule()
                         .fill(
                             index == currentPage
-                                ? DesignSystem.Color.accent
+                                ? color
                                 : DesignSystem.Color.cardBackgroundHighlighted
                         )
                         .frame(width: index == currentPage ? 20 : 8, height: 8)

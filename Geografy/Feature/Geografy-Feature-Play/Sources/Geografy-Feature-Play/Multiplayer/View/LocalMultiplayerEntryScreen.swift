@@ -61,6 +61,7 @@ private extension LocalMultiplayerEntryScreen {
         .screenBackground()
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
+        .gameGuide(.localPlay)
         .safeAreaBar(edge: .bottom) { roleButtons }
     }
 

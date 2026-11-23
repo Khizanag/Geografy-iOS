@@ -19,6 +19,7 @@ public struct SRSStudyScreen: View {
             .screenBackground()
             .navigationTitle("Review")
             .navigationBarTitleDisplayMode(.inline)
+            .gameGuide(id: FlashcardGuide.id) { FlashcardGuideSheet() }
             .safeAreaBar(edge: .bottom) {
                 if !dueCards.isEmpty {
                     startReviewButton

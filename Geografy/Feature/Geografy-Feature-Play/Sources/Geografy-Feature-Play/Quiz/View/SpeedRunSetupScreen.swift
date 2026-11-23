@@ -24,6 +24,7 @@ public struct SpeedRunSetupScreen: View {
             .screenBackground()
             .navigationTitle("Speed Run")
             .navigationBarTitleDisplayMode(.inline)
+            .gameGuide(.speedRun)
             .safeAreaBar(edge: .bottom) { startButton }
     }
 }
@@ -36,7 +37,6 @@ private extension SpeedRunSetupScreen {
                 header
                 personalBestCard
                 regionSection
-                rulesSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.xs)
@@ -88,36 +88,6 @@ private extension SpeedRunSetupScreen {
         }
     }
 
-    var rulesSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "How It Works")
-            RowListCard(
-                Self.rules,
-                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.iconBadgeWidth)
-            ) { rule in
-                ruleRow(rule)
-            }
-        }
-    }
-
-    func ruleRow(_ rule: Rule) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge(rule.systemImage, color: color, size: .small)
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(rule.title)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(rule.subtitle)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            Spacer(minLength: 0)
-        }
-        .rowListCardRow()
-        .accessibilityElement(children: .combine)
-    }
-
     var startButton: some View {
         GlassButton("Start Speed Run", systemImage: "bolt.fill", fullWidth: true) {
             hapticsService.impact(.light)
@@ -131,28 +101,6 @@ private extension SpeedRunSetupScreen {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }
-}
-
-// MARK: - Rule
-private extension SpeedRunSetupScreen {
-    struct Rule: Identifiable {
-        let title: String
-        let subtitle: String
-        let systemImage: String
-
-        var id: String { title }
-    }
-
-    static let rules = [
-        Rule(title: "Just type", subtitle: "No need to press Return for a name", systemImage: "keyboard"),
-        Rule(
-            title: "Instant feedback",
-            subtitle: "A correct name ticks off as you type it",
-            systemImage: "checkmark.circle.fill"
-        ),
-        Rule(title: "Race the clock", subtitle: "Finish faster for more XP", systemImage: "timer"),
-        Rule(title: "Compete", subtitle: "Best times go to Game Center", systemImage: "trophy.fill"),
-    ]
 }
 
 // MARK: - Helpers

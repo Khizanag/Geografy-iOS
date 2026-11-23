@@ -25,6 +25,7 @@ public struct MapPuzzleSetupScreen: View {
             .screenBackground()
             .navigationTitle("Map Puzzle")
             .navigationBarTitleDisplayMode(.inline)
+            .gameGuide(.mapPuzzle)
             .safeAreaBar(edge: .bottom) { startButton }
     }
 }

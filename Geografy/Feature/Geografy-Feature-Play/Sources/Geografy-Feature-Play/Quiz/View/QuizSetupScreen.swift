@@ -34,6 +34,7 @@ public struct QuizSetupScreen: View {
             .screenBackground()
             .navigationTitle("Quiz")
             .navigationBarTitleDisplayMode(.inline)
+            .gameGuide(.quiz)
             .safeAreaBar(edge: .bottom) { startButton }
     }
 }

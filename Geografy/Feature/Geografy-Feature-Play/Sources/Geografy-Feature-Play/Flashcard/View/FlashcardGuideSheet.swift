@@ -11,7 +11,7 @@ public struct FlashcardGuideSheet: View {
 
     // MARK: - Body
     public var body: some View {
-        GuideSheet(pages: FlashcardGuide.pages) { index in
+        GuideSheet(pages: FlashcardGuide.pages, color: DesignSystem.Color.purple) { index in
             illustrationView(for: illustrations[index])
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 2).repeatForever(autoreverses: true), value: animating)

@@ -21,6 +21,7 @@ public struct DailyChallengeScreen: View {
             .screenBackground()
             .navigationTitle("Daily Challenge")
             .navigationBarTitleDisplayMode(.inline)
+            .gameGuide(.dailyChallenge)
             .safeAreaBar(edge: .bottom) { startBar }
             .task { await loadData() }
             .fullScreenCover(isPresented: $showSession) {

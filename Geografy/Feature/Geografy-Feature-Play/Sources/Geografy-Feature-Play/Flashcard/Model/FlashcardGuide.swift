@@ -10,6 +10,9 @@ public enum FlashcardIllustration: Int, CaseIterable {
 }
 
 public enum FlashcardGuide {
+    /// Remembers whether the flashcard guide has been shown, as `.gameGuide` does for every game.
+    static let id = "flashcards"
+
     public static let pages: [GuidePage] = [
         GuidePage(
             title: "Tap to Flip",
