@@ -30,10 +30,12 @@ public struct QuizQuestionView: View {
 
 // MARK: - Subviews
 private extension QuizQuestionView {
+    /// The question starts right under the progress bar, at the same place for every question, and the answers sit
+    /// at the bottom; a longer question or its explanation grows down, never moving where it starts.
     var mainContent: some View {
         VStack(spacing: 0) {
-            Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
+                .padding(.top, DesignSystem.Spacing.md)
                 .opacity(promptVisible ? 1 : 0)
                 .scaleEffect(promptVisible || reduceMotion ? 1 : 0.94)
                 .animation(reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.8), value: promptVisible)
@@ -148,7 +150,6 @@ private extension QuizQuestionView {
                     .transition(.opacity)
             }
         }
-        .padding(.vertical, DesignSystem.Spacing.xl)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: showFeedback)
     }
 

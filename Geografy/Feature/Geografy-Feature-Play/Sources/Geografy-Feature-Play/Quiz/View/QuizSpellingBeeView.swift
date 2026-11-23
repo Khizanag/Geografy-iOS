@@ -34,9 +34,8 @@ public struct QuizSpellingBeeView: View {
 private extension QuizSpellingBeeView {
     var mainContent: some View {
         VStack(spacing: 0) {
-            Spacer(minLength: DesignSystem.Spacing.md)
-
             promptSection
+                .padding(.top, DesignSystem.Spacing.md)
 
             Spacer(minLength: DesignSystem.Spacing.md)
 

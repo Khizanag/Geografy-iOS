@@ -47,8 +47,8 @@ public struct QuizTypingInputView: View {
 private extension QuizTypingInputView {
     var mainContent: some View {
         VStack(spacing: 0) {
-            Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
+                .padding(.top, DesignSystem.Spacing.md)
             Spacer(minLength: DesignSystem.Spacing.lg)
             typingSection
         }
@@ -131,7 +131,6 @@ private extension QuizTypingInputView {
                     .padding(.horizontal, DesignSystem.Spacing.xs)
             }
         }
-        .padding(.vertical, DesignSystem.Spacing.xl)
     }
 }
 
