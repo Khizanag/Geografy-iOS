@@ -26,11 +26,14 @@ public struct GuideStep: Identifiable, Sendable {
     }
 }
 
+/// A game's guide: pages that swipe sideways, each with an illustration, a title, a short explanation, and steps.
+/// Next walks through them and becomes Got It on the last page; the close button leaves at any time.
 public struct GuideSheet<Illustration: View>: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
 
+    public let title: String
     public let pages: [GuidePage]
     public let color: Color
     public let illustration: (Int) -> Illustration
@@ -38,12 +41,16 @@ public struct GuideSheet<Illustration: View>: View {
     @State private var currentPage = 0
 
     // MARK: - Init
-    /// - Parameter color: The game's color, for the step icons and the current page.
+    /// - Parameters:
+    ///   - title: The game's name, for the navigation bar.
+    ///   - color: The game's color, for the step icons, the current page, and the button.
     public init(
+        title: String,
         pages: [GuidePage],
         color: Color = DesignSystem.Color.accent,
         @ViewBuilder illustration: @escaping (Int) -> Illustration
     ) {
+        self.title = title
         self.pages = pages
         self.color = color
         self.illustration = illustration
@@ -51,7 +58,7 @@ public struct GuideSheet<Illustration: View>: View {
 
     // MARK: - Body
     public var body: some View {
-        VStack(spacing: 0) {
+        NavigationStack {
             TabView(selection: $currentPage) {
                 ForEach(Array(pages.enumerated()), id: \.element.id) { index, page in
                     pageContent(page, index: index)
@@ -59,13 +66,19 @@ public struct GuideSheet<Illustration: View>: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-
-            pageIndicatorAndButton
+            // The controls keep one height on every page, so the pages never resize as they change.
+            .safeAreaBar(edge: .bottom) { controls }
+            .screenBackground()
+            .navigationTitle(title)
+            #if !os(tvOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .close) { dismiss() }
+                }
+            }
         }
-        .screenBackground()
-        #if !os(tvOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 }
 
@@ -81,22 +94,27 @@ private extension GuideSheet {
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     func pageText(_ page: GuidePage) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Text(page.title)
                 .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
             Text(page.subtitle)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
+        .frame(maxWidth: .infinity)
     }
 
     func stepsSection(_ steps: [GuideStep]) -> some View {
@@ -108,63 +126,87 @@ private extension GuideSheet {
     }
 
     func stepCard(_ step: GuideStep) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(DesignSystem.Opacity.tint))
-                    .frame(width: 44, height: 44)
+        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: step.icon)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(color)
+                    .frame(width: DesignSystem.Size.Button.regular, height: DesignSystem.Size.Button.regular)
+                    .background(color.opacity(DesignSystem.Opacity.tint), in: .circle)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text(step.title)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text(step.description)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
             }
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(step.title)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(step.description)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer(minLength: 0)
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
+        .accessibilityElement(children: .combine)
     }
 }
 
-// MARK: - Page Indicator
+// MARK: - Controls
 private extension GuideSheet {
-    var pageIndicatorAndButton: some View {
+    var controls: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(0..<pages.count, id: \.self) { index in
-                    Capsule()
-                        .fill(
-                            index == currentPage
-                                ? color
-                                : DesignSystem.Color.cardBackgroundHighlighted
-                        )
-                        .frame(width: index == currentPage ? 20 : 8, height: 8)
-                        .animation(
-                            reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
-                            value: currentPage
-                        )
-                }
+            pageIndicator
+            GlassButton(
+                isLastPage ? "Got It" : "Next",
+                systemImage: isLastPage ? "checkmark" : "arrow.right",
+                role: isLastPage ? .primary : .secondary,
+                fullWidth: true
+            ) {
+                advance()
             }
+            .contentTransition(.opacity)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: currentPage)
+    }
 
-            if currentPage == pages.count - 1 {
-                GlassButton("Got it!", systemImage: "checkmark", fullWidth: true) {
-                    dismiss()
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+    var pageIndicator: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(pages.indices, id: \.self) { index in
+                Capsule()
+                    .fill(index == currentPage ? color : DesignSystem.Color.cardBackgroundHighlighted)
+                    .frame(width: index == currentPage ? 20 : 8, height: 8)
             }
         }
-        .padding(.vertical, DesignSystem.Spacing.md)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: currentPage)
+        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7), value: currentPage)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Page \(currentPage + 1) of \(pages.count)")
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment: show(page: currentPage + 1)
+            case .decrement: show(page: currentPage - 1)
+            @unknown default: break
+            }
+        }
+    }
+
+    var isLastPage: Bool {
+        currentPage >= pages.count - 1
+    }
+
+    func advance() {
+        guard !isLastPage else {
+            dismiss()
+            return
+        }
+        show(page: currentPage + 1)
+    }
+
+    func show(page: Int) {
+        guard pages.indices.contains(page) else { return }
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.35)) {
+            currentPage = page
+        }
     }
 }

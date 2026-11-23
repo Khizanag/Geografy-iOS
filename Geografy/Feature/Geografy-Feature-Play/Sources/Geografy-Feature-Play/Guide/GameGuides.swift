@@ -6,6 +6,7 @@ import SwiftUI
 extension GameGuide {
     static let quiz = GameGuide(
         id: "quiz",
+        title: String(localized: "Quiz", bundle: .module),
         systemImage: "gamecontroller.fill",
         color: DesignSystem.Color.blue,
         pages: [
@@ -35,6 +36,7 @@ extension GameGuide {
 
     static let mapPuzzle = GameGuide(
         id: "mapPuzzle",
+        title: String(localized: "Map Puzzle", bundle: .module),
         systemImage: "puzzlepiece.fill",
         color: DesignSystem.Color.purple,
         pages: [
@@ -57,6 +59,7 @@ extension GameGuide {
 
     static let pinDrop = GameGuide(
         id: "pinDrop",
+        title: String(localized: "Pin Drop", bundle: .module),
         systemImage: "mappin.and.ellipse",
         color: DesignSystem.Color.orange,
         pages: [
@@ -79,6 +82,7 @@ extension GameGuide {
 
     static let speedRun = GameGuide(
         id: "speedRun",
+        title: String(localized: "Speed Run", bundle: .module),
         systemImage: "timer",
         color: DesignSystem.Color.pink,
         pages: [
@@ -100,6 +104,7 @@ extension GameGuide {
 
     static let wordSearch = GameGuide(
         id: "wordSearch",
+        title: String(localized: "Word Search", bundle: .module),
         systemImage: "character.magnify",
         color: DesignSystem.Color.indigo,
         pages: [
@@ -122,6 +127,7 @@ extension GameGuide {
 
     static let dailyChallenge = GameGuide(
         id: "dailyChallenge",
+        title: String(localized: "Daily Challenge", bundle: .module),
         systemImage: "calendar.badge.exclamationmark",
         color: DesignSystem.Color.orange,
         pages: [
@@ -144,6 +150,7 @@ extension GameGuide {
 
     static let localPlay = GameGuide(
         id: "localPlay",
+        title: String(localized: "Local Play", bundle: .module),
         systemImage: "person.2.fill",
         color: DesignSystem.Color.teal,
         pages: [

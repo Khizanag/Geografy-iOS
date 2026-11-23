@@ -5,13 +5,16 @@ public struct GameGuide: Sendable {
     // MARK: - Properties
     /// Names the game for remembering whether its guide has been shown, such as "mapPuzzle".
     public let id: String
+    /// The game's name, shown as the guide's title.
+    public let title: String
     public let systemImage: String
     public let color: Color
     public let pages: [GuidePage]
 
     // MARK: - Init
-    public init(id: String, systemImage: String, color: Color, pages: [GuidePage]) {
+    public init(id: String, title: String, systemImage: String, color: Color, pages: [GuidePage]) {
         self.id = id
+        self.title = title
         self.systemImage = systemImage
         self.color = color
         self.pages = pages
@@ -24,7 +27,7 @@ public extension View {
     /// game is opened, so a new player learns the rules before the first round.
     func gameGuide(_ guide: GameGuide) -> some View {
         gameGuide(id: guide.id) {
-            GuideSheet(pages: guide.pages, color: guide.color) { _ in
+            GuideSheet(title: guide.title, pages: guide.pages, color: guide.color) { _ in
                 IconBadge(guide.systemImage, color: guide.color, size: .hero)
                     .frame(height: 180)
                     .accessibilityHidden(true)
