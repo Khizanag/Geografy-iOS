@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            rareAccent,
             calmCopy,
             studyFirst,
             mapPuzzleRounds,
@@ -46,6 +47,22 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var rareAccent: BuildNote {
+        BuildNote(
+            commit: "eca03bc5 2920fd96",
+            title: "Accent only where it means something",
+            howToTest: """
+                Start buttons are filled green glass; other buttons are plain glass. Open France: section icons and \
+                small labels are white or grey, not green. Green stays on progress bars, selected tiles, charts, \
+                and toggles. Open an achievement: Pin to Showcase is a glass button.
+                """,
+            systemImage: "paintpalette",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var calmCopy: BuildNote {
         BuildNote(
             commit: "55c9bd53",
