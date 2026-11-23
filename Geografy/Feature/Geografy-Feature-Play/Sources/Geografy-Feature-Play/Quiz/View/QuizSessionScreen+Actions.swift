@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -58,6 +59,7 @@ extension QuizSessionScreen {
     }
 
     func advanceToNext() {
+        isAwaitingNext = false
         if session.moveToNext() {
             selectedOptionID = nil
             showFeedback = false
@@ -112,6 +114,7 @@ extension QuizSessionScreen {
     func loadQuiz() {
         session.load(countries: countryDataService.countries)
         guard session.hasLoaded else { return }
+        isAwaitingNext = false
         selectedOptionID = nil
         showFeedback = false
         typingInput = ""
@@ -156,6 +159,18 @@ extension QuizSessionScreen {
             showFeedback = true
         }
 
+        moveOn(afterCorrectAnswer: isCorrect, delay: delay)
+    }
+
+    /// Moves on by itself, or waits on the answer until the player taps Next, as the quiz setup chose.
+    func moveOn(afterCorrectAnswer isCorrect: Bool, delay: Duration) {
+        guard answerAdvance.movesOn(afterCorrectAnswer: isCorrect) else {
+            stopArcadeTimer()
+            withAnimation(.easeInOut(duration: 0.25)) {
+                isAwaitingNext = true
+            }
+            return
+        }
         if session.isOutOfLives {
             #if !os(tvOS)
             transition.schedule(after: .seconds(1)) { finishArcade() }
@@ -163,6 +178,25 @@ extension QuizSessionScreen {
         } else {
             transition.schedule(after: delay) { advanceToNext() }
         }
+    }
+
+    /// Next, after waiting on an answer: the arcade clock, held while the player read, runs again.
+    func continueAfterAnswer() {
+        isAwaitingNext = false
+        #if !os(tvOS)
+        if session.isOutOfLives {
+            finishArcade()
+            return
+        }
+        if session.isArcade, session.hasArcadeTimer {
+            startArcadeTimer()
+        }
+        #endif
+        advanceToNext()
+    }
+
+    func showCountry(_ country: Country) {
+        coordinator.sheet(CountryRoute.countryDetail(country))
     }
 
     func spokenResult(isCorrect: Bool, question: QuizQuestion) -> String {

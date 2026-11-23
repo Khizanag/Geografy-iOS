@@ -33,7 +33,7 @@ extension QuizSessionScreen {
             showFeedback = true
         }
 
-        transition.schedule(after: .seconds(1.3)) { advanceToNext() }
+        moveOn(afterCorrectAnswer: false, delay: AnswerFeedback.revealDuration)
     }
 
     func startArcadeTimer() {

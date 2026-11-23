@@ -22,6 +22,7 @@ public struct QuizSetupScreen: View {
     @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
     @AppStorage("quiz_gameMode") private var selectedGameMode: QuizGameMode = .standard
     @AppStorage("quiz_arcadeTimer") private var selectedArcadeTimer: ArcadeTimer = .sixty
+    @AppStorage(QuizAnswerAdvance.storageKey) private var answerAdvance: QuizAnswerAdvance = .always
 
     private let color = DesignSystem.Color.blue
 
@@ -103,6 +104,7 @@ private extension QuizSetupScreen {
                         label: \.rawValue
                     )
                     lengthRow
+                    answerAdvanceRow
                     if selectedType.supportedAnswerModes.count > 1 {
                         answerModeRows
                     }
@@ -119,6 +121,16 @@ private extension QuizSetupScreen {
                 .padding(DesignSystem.Spacing.md)
             }
         }
+    }
+
+    var answerAdvanceRow: some View {
+        OptionPickerRow(
+            "Next Question",
+            selection: $answerAdvance,
+            options: QuizAnswerAdvance.allCases,
+            note: answerAdvance.description,
+            label: \.displayName
+        )
     }
 
     @ViewBuilder

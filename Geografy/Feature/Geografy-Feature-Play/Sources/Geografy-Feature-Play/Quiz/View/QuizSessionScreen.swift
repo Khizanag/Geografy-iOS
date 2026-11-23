@@ -10,6 +10,7 @@ public struct QuizSessionScreen: View {
     @Environment(HapticsService.self) var hapticsService
     @Environment(SoundService.self) var soundService
     @Environment(CountryDataService.self) var countryDataService
+    @Environment(Navigator.self) var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
@@ -27,6 +28,8 @@ public struct QuizSessionScreen: View {
     @State private var showFlagPreview = false
     @State var isPaused = false
     @State var navigateToResult: QuizResult?
+    @State var isAwaitingNext = false
+    @AppStorage(QuizAnswerAdvance.storageKey) var answerAdvance: QuizAnswerAdvance = .always
 
     @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
     @State var typingInput: String = ""
@@ -87,10 +90,29 @@ private extension QuizSessionScreen {
             Spacer(minLength: 0)
         }
         .padding(.top, DesignSystem.Spacing.sm)
+        .safeAreaBar(edge: .bottom) { answerReviewBar }
         .blur(radius: isPaused && !reduceTransparency ? 12 : 0)
         .accessibilityHidden(isPaused)
         .allowsHitTesting(!isPaused)
         .screenBackground()
+    }
+
+    @ViewBuilder
+    var answerReviewBar: some View {
+        if isAwaitingNext, let question = session.currentQuestion {
+            AnswerReviewBar(
+                country: question.correctCountry,
+                nextTitle: isLastAnswer ? "Results" : "Next",
+                onShowCountry: { showCountry(question.correctCountry) },
+                onNext: { continueAfterAnswer() }
+            )
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+        }
+    }
+
+    /// The quiz ends after this answer: the last question, or an arcade game out of lives.
+    var isLastAnswer: Bool {
+        session.isArcade ? session.isOutOfLives : session.currentIndex + 1 >= session.questions.count
     }
 
     @ToolbarContentBuilder
