@@ -7,7 +7,6 @@ import SwiftUI
 public struct TravelTrackerScreen: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) var countryDataService
-    @Environment(HapticsService.self) var hapticsService
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) var travelService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -128,7 +127,6 @@ private extension TravelTrackerScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button {
-                hapticsService.impact(.light)
                 coordinator.push(CountryRoute.saved(.wantToVisit))
             } label: {
                 Label("Bucket List", systemImage: "list.star")
@@ -138,7 +136,6 @@ private extension TravelTrackerScreen {
 
         ToolbarItem(placement: .primaryAction) {
             Button {
-                hapticsService.impact(.light)
                 showCountryPicker = true
             } label: {
                 Label("Add", systemImage: "plus")
@@ -258,7 +255,6 @@ private extension TravelTrackerScreen {
 
     var addCountryFooter: some View {
         Button {
-            hapticsService.impact(.light)
             showCountryPicker = true
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {

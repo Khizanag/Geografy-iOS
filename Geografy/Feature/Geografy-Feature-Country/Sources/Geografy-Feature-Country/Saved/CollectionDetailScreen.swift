@@ -9,7 +9,6 @@ public struct CollectionDetailScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(CollectionService.self) private var collectionService
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let collectionName: String
@@ -23,6 +22,7 @@ public struct CollectionDetailScreen: View {
     public var body: some View {
         content
             .screenBackground()
+            .haptic(.impact(weight: .light), trigger: collectionService.items(in: collectionName).count)
             .navigationTitle(collectionName)
             .navigationBarTitleDisplayMode(.inline)
     }
@@ -47,7 +47,6 @@ private extension CollectionDetailScreen {
             message: "Add items from country details, oceans, languages, and more.",
             actionTitle: "Browse Countries"
         ) {
-            hapticsService.impact(.light)
             coordinator.push(CountryRoute.countries)
         }
     }
@@ -118,7 +117,6 @@ private extension CollectionDetailScreen {
                 Spacer()
 
                 Button {
-                    hapticsService.impact(.light)
                     withAnimation(reduceMotion ? nil : .default) {
                         collectionService.remove(
                             itemID: item.itemID,

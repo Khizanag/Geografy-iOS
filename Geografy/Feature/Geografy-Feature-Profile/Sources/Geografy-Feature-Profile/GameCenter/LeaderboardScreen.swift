@@ -6,7 +6,6 @@ import SwiftUI
 public struct LeaderboardScreen: View {
     // MARK: - Properties
     @Environment(GameCenterService.self) private var gameCenterService
-    @Environment(HapticsService.self) private var hapticsService
 
     // MARK: - Init
     public init() {}
@@ -95,7 +94,6 @@ private extension LeaderboardScreen {
 
     func leaderboardCard(_ info: LeaderboardInfo) -> some View {
         Button {
-            hapticsService.impact(.light)
             GKAccessPoint.shared.trigger(
                 leaderboardID: info.id,
                 playerScope: .global,
@@ -143,7 +141,6 @@ private extension LeaderboardScreen {
 
     var openGameCenterButton: some View {
         GlassButton("Open Game Center", systemImage: "gamecontroller.fill", fullWidth: true) {
-            hapticsService.impact(.light)
             GKAccessPoint.shared.trigger(state: .dashboard) {}
         }
         .padding(.top, DesignSystem.Spacing.xs)

@@ -12,7 +12,6 @@ public struct CountryDetailScreen: View {
     @Environment(CollectionService.self) private var collectionService
     @Environment(XPService.self) var xpService
     @Environment(AchievementService.self) var achievementService
-    @Environment(HapticsService.self) var hapticsService
     @Environment(WorldBankService.self) private var worldBankService
     @Environment(PronunciationService.self) private var pronunciationService
     @Environment(CountryDataService.self) var countryDataService
@@ -44,6 +43,7 @@ public struct CountryDetailScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
+            .haptic(.impact(weight: .light), trigger: isFavorite)
             .task { trackExploration() }
             .userActivity("com.khizanag.geografy.viewCountry") { activity in
                 activity.title = country.name
@@ -100,7 +100,6 @@ private extension CountryDetailScreen {
 
         ToolbarItem(placement: .primaryAction) {
             Button {
-                hapticsService.impact(.light)
                 withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }
@@ -132,7 +131,6 @@ private extension CountryDetailScreen {
 
     var compareButton: some View {
         Button {
-            hapticsService.impact(.light)
             coordinator.sheet(CountryRoute.compare(preselectedCountry: country))
         } label: {
             Label("Compare", systemImage: "arrow.left.arrow.right")
@@ -141,7 +139,6 @@ private extension CountryDetailScreen {
 
     var saveToCollectionButton: some View {
         Button {
-            hapticsService.impact(.light)
             coordinator.sheet(CountryLocalRoute.saveToCollection(countryCode: country.code, countryName: country.name))
         } label: {
             Label("Save to Collection", systemImage: "folder.badge.plus")
@@ -262,10 +259,7 @@ extension CountryDetailScreen {
     @ViewBuilder
     var bottomSections: some View {
         if !content.memberOrganizations.isEmpty {
-            organizationsSection(
-                countryDataService: countryDataService,
-                hapticsService: hapticsService
-            )
+            organizationsSection(countryDataService: countryDataService)
         }
         flagSymbolismSection
         cultureSection

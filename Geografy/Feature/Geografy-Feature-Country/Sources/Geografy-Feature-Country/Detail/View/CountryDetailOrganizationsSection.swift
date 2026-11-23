@@ -6,27 +6,19 @@ import SwiftUI
 
 // MARK: - Organizations
 extension CountryDetailScreen {
-    func organizationsSection(
-        countryDataService: CountryDataService,
-        hapticsService: HapticsService
-    ) -> some View {
+    func organizationsSection(countryDataService: CountryDataService) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of")
             VStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(content.memberOrganizations) { org in
-                    orgCard(org, countryDataService: countryDataService, hapticsService: hapticsService)
+                    orgCard(org, countryDataService: countryDataService)
                 }
             }
         }
     }
 
-    func orgCard(
-        _ org: Organization,
-        countryDataService: CountryDataService,
-        hapticsService: HapticsService
-    ) -> some View {
+    func orgCard(_ org: Organization, countryDataService: CountryDataService) -> some View {
         Button {
-            hapticsService.impact(.light)
             navigateToOrganization(org)
         } label: {
             orgCardLabel(org, countryDataService: countryDataService)

@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct TravelJournalEditorSheet: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelJournalService.self) var journalService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.displayScale) var displayScale
@@ -26,6 +25,7 @@ public struct TravelJournalEditorSheet: View {
     @State var loadedImages: [LoadedImage] = []
     @State var existingPhotosLoaded = false
     @State var showCountryPicker = false
+    @State private var isSaved = false
 
     let existingEntry: TravelJournalEntry?
 
@@ -65,6 +65,7 @@ public struct TravelJournalEditorSheet: View {
             .sheet(isPresented: $showCountryPicker) {
                 countryPickerSheet
             }
+            .haptic(.success, trigger: isSaved)
     }
 }
 
@@ -90,7 +91,7 @@ private extension TravelJournalEditorSheet {
 
     var saveButton: some View {
         Button("Save", systemImage: "checkmark", role: .confirm) {
-            hapticsService.notification(.success)
+            isSaved = true
             saveEntry()
         }
         .disabled(!canSave)

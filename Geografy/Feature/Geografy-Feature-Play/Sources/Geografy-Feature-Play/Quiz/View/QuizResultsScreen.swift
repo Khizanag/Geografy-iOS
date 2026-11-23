@@ -15,9 +15,6 @@ public struct QuizResultsScreen: View {
     @Environment(DatabaseManager.self) private var database
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(PronunciationService.self) private var pronunciationService
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
     public let result: QuizResult
     public let onPlayAgain: () -> Void
@@ -33,12 +30,7 @@ public struct QuizResultsScreen: View {
             title: Text(scoreMessage),
             message: Text("\(result.correctCount) of \(result.answers.count) correct"),
             xpEarned: xpEarned,
-            primaryAction: .playAgain {
-                #if !os(tvOS)
-                hapticsService.impact(.light)
-                #endif
-                onPlayAgain()
-            },
+            primaryAction: .playAgain { onPlayAgain() },
             share: resultShare,
             onDone: onDone,
             hero: { ScoreRingView(progress: result.accuracy) },
@@ -50,6 +42,10 @@ public struct QuizResultsScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .task { processQuizResult() }
+        .haptic(trigger: hasProcessed) { _, isProcessed in
+            guard isProcessed else { return nil }
+            return result.accuracy >= 0.7 ? .success : .warning
+        }
     }
 }
 
@@ -205,14 +201,6 @@ private extension QuizResultsScreen {
         descriptor.fetchLimit = 200
         let history = (try? database.mainContext.fetch(descriptor)) ?? []
         achievementService.checkQuizAchievements(history: history)
-
-        #if !os(tvOS)
-        if result.accuracy >= 0.7 {
-            hapticsService.notification(.success)
-        } else {
-            hapticsService.notification(.warning)
-        }
-        #endif
 
         let announcement = "\(scoreMessage) \(result.correctCount) correct out of \(result.answers.count)"
         AccessibilityNotification.Announcement(announcement).post()

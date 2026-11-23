@@ -9,9 +9,6 @@ struct SettingsLanguageSection: View {
     @Environment(LanguageService.self) private var languageService
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
     // MARK: - Body
     var body: some View {
@@ -50,6 +47,7 @@ private extension SettingsLanguageSection {
             }
         }
         .settingsRowPadding()
+        .haptic(.selection, trigger: languageService.language)
     }
 
     /// Opens Geografy's page in iOS Settings, where its language can be set as well.
@@ -74,9 +72,6 @@ private extension SettingsLanguageSection {
             languageService.language
         } set: { language in
             guard language != languageService.language else { return }
-            #if !os(tvOS)
-            hapticsService.selection()
-            #endif
             languageService.language = language
         }
     }

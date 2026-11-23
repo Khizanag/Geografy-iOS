@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct TravelJournalScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
 
     let serviceStore: TravelJournalServiceStore
@@ -53,7 +52,6 @@ private extension TravelJournalScreen {
     var addEntryButton: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button {
-                hapticsService.impact(.light)
                 activeSheet = .newEntry
             } label: {
                 Label("Add", systemImage: "plus")
@@ -138,7 +136,6 @@ private extension TravelJournalScreen {
             message: "Capture memories from your travels with photos, notes, and ratings",
             actionTitle: "Add First Entry"
         ) {
-            hapticsService.impact(.light)
             activeSheet = .newEntry
         }
     }

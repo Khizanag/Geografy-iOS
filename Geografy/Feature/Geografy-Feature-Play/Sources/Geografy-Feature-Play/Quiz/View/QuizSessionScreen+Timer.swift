@@ -24,7 +24,7 @@ extension QuizSessionScreen {
         stopTimer()
         guard let question = session.currentQuestion else { return }
         session.timeOut()
-        hapticsService.impact(.light)
+        checkedAnswer = CheckedAnswer(isCorrect: false)
         typingIsCorrect = false
         let answer = session.correctAnswerText(for: question)
         AccessibilityNotification.Announcement("Time's up. The answer is \(answer).").post()

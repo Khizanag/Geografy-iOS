@@ -5,7 +5,6 @@ import SwiftUI
 struct CurrencyPickerSheet: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) private var hapticsService
 
     let title: String
     let currencies: [CurrencyEntry]
@@ -82,7 +81,6 @@ private extension CurrencyPickerSheet {
 // MARK: - Actions
 private extension CurrencyPickerSheet {
     func select(_ currency: CurrencyEntry) {
-        hapticsService.selection()
         onSelect(currency)
         dismiss()
     }

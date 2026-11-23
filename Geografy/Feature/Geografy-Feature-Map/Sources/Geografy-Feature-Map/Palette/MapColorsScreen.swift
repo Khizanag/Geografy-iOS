@@ -6,7 +6,6 @@ import SwiftUI
 /// Chooses the palette every map colors its countries from, with the world map previewing the choice.
 public struct MapColorsScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
@@ -37,6 +36,7 @@ public struct MapColorsScreen: View {
                 .readableContentWidth()
         }
         .screenBackground()
+        .haptic(.selection, trigger: palette)
         .navigationTitle("Map Colors")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -73,7 +73,6 @@ private extension MapColorsScreen {
         let isSelected = option == selected
         return Button {
             guard !isSelected else { return }
-            hapticsService.selection()
             palette = option.rawValue
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {

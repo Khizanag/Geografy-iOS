@@ -10,7 +10,6 @@ public struct TravelMapScreen: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelService.self) private var travelService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -55,6 +54,7 @@ public struct TravelMapScreen: View {
             .task { await loadMapData() }
             .onChange(of: selectedFilter) { restyleShapes() }
             .onChange(of: travelService.entries) { restyleShapes() }
+            .haptic(.impact(weight: .light), trigger: showLabels)
     }
 }
 
@@ -144,7 +144,6 @@ private extension TravelMapScreen {
     var labelsToggle: some View {
         ToolbarToggle("Country labels", systemImage: "textformat", isOn: showLabels) {
             showLabels.toggle()
-            hapticsService.impact(.light)
         }
     }
 

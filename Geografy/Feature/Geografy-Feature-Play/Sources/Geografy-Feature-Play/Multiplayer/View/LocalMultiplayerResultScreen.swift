@@ -6,7 +6,6 @@ import SwiftUI
 
 public struct LocalMultiplayerResultScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.locale) private var locale
@@ -33,6 +32,7 @@ public struct LocalMultiplayerResultScreen: View {
         )
         .screenBackground()
         .onAppear { awardXPOnce() }
+        .haptic(trigger: xpAwarded) { _, isAwarded in isAwarded && isWin ? .success : nil }
         .alert("Rematch?", isPresented: $coordinator.rematchRequested) {
             Button("Play Again") { coordinator.acceptRematch() }
             Button("Not Now", role: .cancel) { coordinator.declineRematch() }
@@ -72,9 +72,6 @@ private extension LocalMultiplayerResultScreen {
         let announcement = "\(resultTitle) \(scores)"
         AccessibilityNotification.Announcement(announcement).post()
         xpService.award(XPRules.multiplayer(won: isWin), source: isWin ? .quizCompletedMedium : .quizCompletedEasy)
-        if isWin {
-            hapticsService.notification(.success)
-        }
     }
 }
 
@@ -99,7 +96,6 @@ private extension LocalMultiplayerResultScreen {
             return GameResultAction("Waiting...", systemImage: "hourglass") {}
         }
         return GameResultAction("Rematch", systemImage: "arrow.2.squarepath") {
-            hapticsService.impact(.light)
             coordinator.requestRematch()
         }
     }

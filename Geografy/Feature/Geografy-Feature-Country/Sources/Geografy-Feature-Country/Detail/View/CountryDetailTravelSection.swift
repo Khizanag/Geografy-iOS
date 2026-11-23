@@ -9,7 +9,6 @@ extension CountryDetailScreen {
     var travelSection: some View {
         let currentStatus = travelService.status(for: country.code)
         return Button {
-            hapticsService.impact(.light)
             activeSheet = .travelStatus
         } label: {
             travelCardLabel(status: currentStatus)

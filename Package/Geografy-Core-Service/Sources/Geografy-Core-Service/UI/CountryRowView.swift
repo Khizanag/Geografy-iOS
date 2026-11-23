@@ -4,7 +4,6 @@ import SwiftUI
 
 public struct CountryRowView: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(PronunciationService.self) private var pronunciationService
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -60,6 +59,7 @@ public struct CountryRowView: View {
         .accessibilityLabel(accessibilityLabel(text))
         .accessibilityHint("Double tap to view details")
         .accessibilityValue(isFavorite ? "Favorite" : "")
+        .haptic(.impact(weight: .light), trigger: isFavorite)
         .accessibilityActions {
             if onFavoriteTap != nil {
                 Button(favoriteActionLabel) { toggleFavorite() }
@@ -232,7 +232,7 @@ private extension CountryRowView {
             Button(action: toggleFavorite) {
                 Image(systemName: isFavorite ? "heart.fill" : "heart")
                     .font(DesignSystem.Font.title2)
-                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textSecondary)
+                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
                     .symbolEffect(.bounce, value: reduceMotion ? false : isFavorite)
                     .contentShape(Rectangle())
             }
@@ -263,7 +263,6 @@ private extension CountryRowView {
 
     func toggleFavorite() {
         guard let onFavoriteTap else { return }
-        hapticsService.impact(.light)
         withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
             onFavoriteTap()
         }

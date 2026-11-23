@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct AchievementUnlockedBanner: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
@@ -14,6 +13,7 @@ public struct AchievementUnlockedBanner: View {
     public let onDismiss: () -> Void
 
     @State private var slideOffset: CGFloat = -160
+    @State private var hasAppeared = false
 
     // MARK: - Init
     public init(achievement: AchievementDefinition, onDismiss: @escaping () -> Void) {
@@ -25,8 +25,9 @@ public struct AchievementUnlockedBanner: View {
     public var body: some View {
         bannerContent
             .offset(y: reduceMotion ? 0 : slideOffset)
+            .haptic(.impact(weight: .light), trigger: hasAppeared)
             .onAppear {
-                hapticsService.impact(.light)
+                hasAppeared = true
                 soundService.play(.celebrate)
                 withAnimation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.7)) {
                     slideOffset = 0

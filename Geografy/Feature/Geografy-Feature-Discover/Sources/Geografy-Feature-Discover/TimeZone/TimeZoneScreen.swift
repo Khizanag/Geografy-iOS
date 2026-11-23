@@ -12,9 +12,6 @@ public struct TimeZoneScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 

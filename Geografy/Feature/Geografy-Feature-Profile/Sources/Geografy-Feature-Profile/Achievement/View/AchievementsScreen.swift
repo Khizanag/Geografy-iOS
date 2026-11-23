@@ -8,7 +8,6 @@ public struct AchievementsScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(AchievementService.self) private var achievementService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 48
@@ -101,7 +100,6 @@ private extension AchievementsScreen {
         LazyVStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(Array(filteredAchievements.enumerated()), id: \.element.id) { index, definition in
                 Button {
-                    hapticsService.impact(.light)
                     coordinator.sheet(ProfileLocalRoute.achievementDetail(definition))
                 } label: {
                     achievementRow(definition)

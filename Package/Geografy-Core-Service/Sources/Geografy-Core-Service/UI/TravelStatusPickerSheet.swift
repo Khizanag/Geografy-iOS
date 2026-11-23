@@ -9,7 +9,6 @@ public struct TravelStatusPickerSheet: View {
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -34,6 +33,7 @@ public struct TravelStatusPickerSheet: View {
         .padding(.bottom, DesignSystem.Spacing.md)
         .fittedSheet()
         .animation(reduceMotion ? nil : .smooth(duration: 0.25), value: currentStatus)
+        .haptic(.selection, trigger: currentStatus)
     }
 }
 
@@ -128,7 +128,6 @@ private extension TravelStatusPickerSheet {
 
     var removeButton: some View {
         GlassButton("Remove Status", systemImage: "xmark", role: .destructive, fullWidth: true) {
-            hapticsService.impact(.light)
             travelService.set(status: nil, for: country.code)
             dismiss()
         }
@@ -138,7 +137,6 @@ private extension TravelStatusPickerSheet {
 // MARK: - Actions
 private extension TravelStatusPickerSheet {
     func select(_ status: TravelStatus, isSelected: Bool) {
-        hapticsService.impact(.light)
         if isSelected {
             travelService.set(status: nil, for: country.code)
             return

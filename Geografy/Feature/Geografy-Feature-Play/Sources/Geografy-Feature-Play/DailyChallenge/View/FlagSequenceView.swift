@@ -7,7 +7,6 @@ import SwiftUI
 public struct FlagSequenceView: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(FlashcardService.self) private var flashcardService
 
@@ -21,6 +20,7 @@ public struct FlagSequenceView: View {
 
     @State private var questions: [QuizQuestion] = []
     @State private var nextStep = PendingAction()
+    @State private var checkedAnswer: CheckedAnswer?
     @State private var selectedOptionID: UUID?
     @State private var showFeedback = false
     @State private var showFlagPreview = false
@@ -59,6 +59,7 @@ public struct FlagSequenceView: View {
         }
         .task { prepareQuestions() }
         .onDisappear { nextStep.cancel() }
+        .answerHaptic(checkedAnswer)
     }
 }
 
@@ -116,7 +117,7 @@ private extension FlagSequenceView {
         if !isCorrect {
             score = max(0, score - 200)
         }
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: isCorrect,
             announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: correct.name)
         )

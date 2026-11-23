@@ -34,11 +34,11 @@ public struct CountryListScreen: View {
     @Environment(\.locale) private var locale
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var state: CountryListState
+    @State private var jumpedLetter: String?
 
     // MARK: - Init
     /// Pass a `state` the host keeps to have the list's choices outlive this screen.
@@ -53,6 +53,7 @@ public struct CountryListScreen: View {
             .searchable(text: $state.searchText, prompt: "Search by name, capital, or currency")
             .overlay { searchEmptyOverlay }
             .toolbar { toolbarContent }
+            .haptic(.impact(weight: .light), trigger: favoritesService.favoriteCodes.count)
             .onAppear {
                 // Only the first time, so groups collapsed before opening a country stay collapsed on return.
                 if !state.hasSeededSections {
@@ -112,12 +113,13 @@ private extension CountryListScreen {
     func jumpIndex(proxy: ScrollViewProxy) -> some View {
         if showJumpIndex {
             AlphabetJumpIndex(letters: listing.sectionKeys) { letter in
-                hapticsService.selection()
+                jumpedLetter = letter
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
                     state.expandedSections.insert(letter)
                     proxy.scrollTo(letter, anchor: .top)
                 }
             }
+            .haptic(.selection, trigger: jumpedLetter)
         }
     }
 }
@@ -396,7 +398,6 @@ private extension CountryListScreen {
         #if !os(tvOS)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {
-                hapticsService.impact(.light)
                 withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }

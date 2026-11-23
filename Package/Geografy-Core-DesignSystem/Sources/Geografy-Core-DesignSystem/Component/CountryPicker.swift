@@ -7,7 +7,6 @@ import SwiftUI
 public struct CountryPicker<Accessory: View>: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) private var hapticsService
 
     @State private var searchText = ""
     @State private var continentFilter: Country.Continent?
@@ -34,6 +33,7 @@ public struct CountryPicker<Accessory: View>: View {
             }
             .screenBackground()
             .presentationDetents([.large])
+            .haptic(.selection, trigger: multipleSelection)
     }
 }
 
@@ -238,8 +238,13 @@ private extension CountryPicker {
 
 // MARK: - Actions
 private extension CountryPicker {
+    /// The codes picked so far when several can be; a pick or an unpick plays the selection haptic.
+    var multipleSelection: Set<String> {
+        guard case .multiple(let selection) = behavior else { return [] }
+        return selection.wrappedValue
+    }
+
     func select(_ country: Country) {
-        hapticsService.impact(.light)
         switch behavior {
         case .single(_, let onSelect):
             onSelect(country)

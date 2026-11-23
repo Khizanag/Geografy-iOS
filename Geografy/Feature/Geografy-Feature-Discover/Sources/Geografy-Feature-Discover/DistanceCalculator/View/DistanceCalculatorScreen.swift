@@ -7,9 +7,6 @@ import SwiftUI
 
 public struct DistanceCalculatorScreen: View {
     // MARK: - Properties
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -35,6 +32,9 @@ public struct DistanceCalculatorScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .onAppear(perform: loadRecentRoutes)
             .onChange(of: currentRoute?.id) { routeDidChange() }
+            .haptic(trigger: slotCodes) { oldCodes, newCodes in
+                newCodes == Array(oldCodes.reversed()) ? .impact(weight: .light) : nil
+            }
             .sheet(item: $pickingSide) { side in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     picker(for: side)
@@ -159,9 +159,6 @@ private extension DistanceCalculatorScreen {
     }
 
     func swapCountries() {
-        #if !os(tvOS)
-        hapticsService.impact(.light)
-        #endif
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
             (originCountry, destinationCountry) = (destinationCountry, originCountry)
         }
@@ -205,6 +202,10 @@ private extension DistanceCalculatorScreen {
     var currentRoute: CapitalRoute? {
         guard let originCountry, let destinationCountry else { return nil }
         return CapitalRoute(origin: originCountry, destination: destinationCountry)
+    }
+
+    var slotCodes: [String?] {
+        [originCountry?.code, destinationCountry?.code]
     }
 
     /// Only countries whose capital is on record, so every pick can be measured.

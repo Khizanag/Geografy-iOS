@@ -9,7 +9,6 @@ public struct CurrencyConverterScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(CurrencyService.self) private var currencyService
-    @Environment(HapticsService.self) private var hapticsService
 
     private let preselectedCurrencyCode: String?
 
@@ -20,6 +19,7 @@ public struct CurrencyConverterScreen: View {
     @State private var pickingSide: PairSide?
     @State private var recentPairs: [CurrencyPair] = []
     @State private var hasAppliedPreselection = false
+    @State private var quickAmountPickCount = 0
 
     // MARK: - Init
     public init(preselectedCurrencyCode: String? = nil) {
@@ -35,6 +35,10 @@ public struct CurrencyConverterScreen: View {
             .task(id: fromCurrency?.code) { await fetchRates() }
             .onAppear(perform: loadRecents)
             .onChange(of: countryDataService.countries.count, initial: true) { loadCurrencies() }
+            .haptic(trigger: slotCodes) { oldCodes, newCodes in
+                pairFeedback(from: oldCodes, to: newCodes)
+            }
+            .haptic(.selection, trigger: quickAmountPickCount)
             .sheet(item: $pickingSide) { side in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     picker(for: side)
@@ -93,7 +97,7 @@ private extension CurrencyConverterScreen {
             )
             if let rate {
                 CurrencyQuickAmountsView(from: fromCurrency, to: toCurrency, rate: rate) { amount in
-                    hapticsService.selection()
+                    quickAmountPickCount += 1
                     amountText = CurrencyAmountFormatter.inputString(for: amount)
                 }
             }
@@ -103,7 +107,6 @@ private extension CurrencyConverterScreen {
                 toCurrency: toCurrency,
                 currencies: currencies,
                 onChoose: { currency, side in
-                    hapticsService.selection()
                     setCurrency(currency, on: side)
                 },
                 onChoosePair: open,
@@ -164,21 +167,18 @@ private extension CurrencyConverterScreen {
     }
 
     func open(_ pair: CurrencyEntryPair) {
-        hapticsService.selection()
         fromCurrency = pair.from
         toCurrency = pair.to
         saveIfBothSelected()
     }
 
     func swapCurrencies() {
-        hapticsService.impact(.light)
         (fromCurrency, toCurrency) = (toCurrency, fromCurrency)
         saveIfBothSelected()
     }
 
     /// Fills whichever slots are empty with random currencies.
     func shuffle() {
-        hapticsService.impact(.light)
         let from = fromCurrency ?? currencies.filter { $0.code != toCurrency?.code }.randomElement()
         let to = toCurrency ?? currencies.filter { $0.code != from?.code }.randomElement()
         fromCurrency = from
@@ -215,6 +215,15 @@ private extension CurrencyConverterScreen {
     /// Changes whenever the screen's layout does, so one animation covers every transition.
     var selectionID: String {
         "\(fromCurrency?.code ?? "")-\(toCurrency?.code ?? "")-\(recentPairs.count)"
+    }
+
+    var slotCodes: [String?] {
+        [fromCurrency?.code, toCurrency?.code]
+    }
+
+    func pairFeedback(from oldCodes: [String?], to newCodes: [String?]) -> SensoryFeedback? {
+        if newCodes == Array(oldCodes.reversed()) { return .impact(weight: .light) }
+        return newCodes.compactMap { $0 }.count < oldCodes.compactMap { $0 }.count ? nil : .selection
     }
 
     func currency(on side: PairSide) -> CurrencyEntry? {

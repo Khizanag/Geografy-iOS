@@ -82,7 +82,6 @@ private extension CountryDetailScreen {
 
     var exploreNeighborsButton: some View {
         Button {
-            hapticsService.impact(.light)
             coordinator.sheet(CountryLocalRoute.neighborExplorer(country))
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {

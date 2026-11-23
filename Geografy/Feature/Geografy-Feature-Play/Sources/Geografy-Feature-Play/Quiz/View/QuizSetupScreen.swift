@@ -7,9 +7,6 @@ import SwiftUI
 public struct QuizSetupScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.locale) private var locale
 
@@ -185,9 +182,6 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var startButton: some View {
         GlassButton("Start", systemImage: "play.fill", fullWidth: true) {
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
             coordinator.cover(PlayRoute.quizSession(makeConfiguration()))
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

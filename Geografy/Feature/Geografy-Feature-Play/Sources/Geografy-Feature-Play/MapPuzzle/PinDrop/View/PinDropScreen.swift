@@ -16,7 +16,6 @@ struct PinDropScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
     #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     #endif
 
@@ -45,6 +44,9 @@ struct PinDropScreen: View {
     @State private var controlsHeight: CGFloat = 80
 
     @State private var dropCount = 0
+    @State private var selectionCount = 0
+    @State private var roundFeedback: RoundFeedback?
+    @State private var finishCount = 0
     @State private var lineProgress: CGFloat = 0
     @State private var bestScore = 0
     @State private var isNewBest = false
@@ -88,6 +90,10 @@ struct PinDropScreen: View {
             Text("Your answers so far won't be saved.")
         }
         .task { await load() }
+        .haptic(.selection, trigger: selectionCount)
+        .haptic(.impact(weight: .medium), trigger: dropCount)
+        .haptic(trigger: roundFeedback) { _, feedback in feedback?.feedback }
+        .haptic(.success, trigger: finishCount)
     }
 }
 
@@ -475,15 +481,10 @@ private extension PinDropScreen {
             // Smallest first, so an enclave like San Marino wins over the country around it.
             guard let shape = shapesBySize.first(where: { $0.contains(mapPoint) }) else { return }
             game.selectCountry(shape)
-            #if !os(tvOS)
-            hapticsService.selection()
-            #endif
+            selectionCount += 1
         } else {
             game.dropPin(at: mapPoint)
             dropCount += 1
-            #if !os(tvOS)
-            hapticsService.impact(.medium)
-            #endif
         }
     }
 
@@ -521,9 +522,7 @@ private extension PinDropScreen {
     func celebrate(_ result: PinDropGame.Result) {
         let rating = result.score.rating
         let isGood = rating == .bullseye || rating == .excellent
-        #if !os(tvOS)
-        hapticsService.notification(isGood ? .success : rating == .far ? .error : .warning)
-        #endif
+        roundFeedback = RoundFeedback(feedback: isGood ? .success : rating == .far ? .error : .warning)
         if isGood {
             soundService.play(.correct)
         } else if rating == .far {
@@ -552,9 +551,7 @@ private extension PinDropScreen {
         xpService.award(PinDropScoring.xp(for: game.results), source: .pinDropCompleted)
         isNewBest = records.record(game.totalScore, for: configuration)
         bestScore = max(bestScore, game.totalScore)
-        #if !os(tvOS)
-        hapticsService.notification(.success)
-        #endif
+        finishCount += 1
         frameRegion(animated: true)
     }
 
@@ -575,4 +572,11 @@ private extension PinDropScreen {
         }
         return DesignSystem.Color.mapLandMuted.mix(with: shape.color, by: 0.45)
     }
+}
+
+// MARK: - Round Feedback
+/// How a locked-in round felt, new for every round, so two bullseyes in a row each play their haptic.
+private struct RoundFeedback: Equatable {
+    let id = UUID()
+    let feedback: SensoryFeedback
 }

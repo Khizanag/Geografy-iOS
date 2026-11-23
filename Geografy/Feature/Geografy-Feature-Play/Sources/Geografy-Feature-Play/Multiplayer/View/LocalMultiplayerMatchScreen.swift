@@ -8,7 +8,6 @@ import SwiftUI
 /// bottom within thumb reach. The bar on top keeps both scores and shows whether the other player has answered.
 public struct LocalMultiplayerMatchScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -16,6 +15,7 @@ public struct LocalMultiplayerMatchScreen: View {
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
     @State private var selectedOptionID: UUID?
+    @State private var checkedAnswer: CheckedAnswer?
     @State private var answerStartTime = Date()
     @State private var showFlagPreview = false
 
@@ -38,6 +38,7 @@ public struct LocalMultiplayerMatchScreen: View {
                 ZoomableFlagView(countryCode: flagCode) { showFlagPreview = false }
             }
         }
+        .answerHaptic(checkedAnswer)
     }
 }
 
@@ -151,7 +152,7 @@ private extension LocalMultiplayerMatchScreen {
         guard selectedOptionID == nil, let question = currentQuestion else { return }
         selectedOptionID = optionID
         let isCorrect = optionID == question.correctOptionID
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: isCorrect,
             announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: answerText(for: question))
         )

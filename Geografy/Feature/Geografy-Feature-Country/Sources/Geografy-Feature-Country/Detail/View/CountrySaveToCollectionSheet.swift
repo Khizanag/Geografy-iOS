@@ -6,7 +6,6 @@ import SwiftUI
 public struct CountrySaveToCollectionSheet: View {
     // MARK: - Properties
     @Environment(CollectionService.self) private var collectionService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     public let countryCode: String
     public let countryName: String
@@ -24,6 +23,9 @@ public struct CountrySaveToCollectionSheet: View {
             .screenBackground()
             .navigationTitle("Save to Collection")
             .navigationBarTitleDisplayMode(.inline)
+            .haptic(trigger: collectionService.collectionNames.count) { oldCount, newCount in
+                newCount > oldCount ? .success : nil
+            }
             .nameEntryAlert(
                 "New Collection",
                 isPresented: $showNewCollection,
@@ -32,7 +34,6 @@ public struct CountrySaveToCollectionSheet: View {
                 isValid: collectionService.isAvailableName
             ) { name in
                 collectionService.add(itemID: countryCode, type: .country, to: name)
-                hapticsService.notification(.success)
             }
     }
 }
@@ -97,7 +98,6 @@ private extension CountrySaveToCollectionSheet {
         .contains(name)
 
         return Button {
-            hapticsService.impact(.light)
             withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
                 collectionService.toggle(
                     itemID: countryCode,
@@ -134,6 +134,7 @@ private extension CountrySaveToCollectionSheet {
             }
         }
         .buttonStyle(PressButtonStyle())
+        .haptic(.impact(weight: .light), trigger: isSaved)
     }
 
     var newCollectionButton: some View {

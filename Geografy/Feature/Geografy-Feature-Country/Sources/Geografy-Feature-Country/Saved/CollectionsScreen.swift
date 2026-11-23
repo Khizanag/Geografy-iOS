@@ -8,7 +8,6 @@ struct CollectionsScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CollectionService.self) private var collectionService
-    @Environment(HapticsService.self) private var hapticsService
 
     @State private var showNewCollection = false
     @State private var collectionToDelete: String?
@@ -18,6 +17,9 @@ struct CollectionsScreen: View {
         content
             .screenBackground()
             .toolbar { toolbarContent }
+            .haptic(trigger: collectionService.collectionNames.count) { oldCount, newCount in
+                newCount > oldCount ? .success : nil
+            }
             .nameEntryAlert(
                 "New Collection",
                 isPresented: $showNewCollection,
@@ -26,7 +28,6 @@ struct CollectionsScreen: View {
                 isValid: collectionService.isAvailableName
             ) { name in
                 collectionService.createCollection(named: name)
-                hapticsService.notification(.success)
             }
             .confirmationDialog(
                 "Delete Collection",
@@ -80,7 +81,6 @@ private extension CollectionsScreen {
         let typeCounts = collectionService.typeCounts(in: name)
 
         return Button {
-            hapticsService.impact(.light)
             coordinator.push(CountryLocalRoute.collectionDetail(name))
         } label: {
             CardView {

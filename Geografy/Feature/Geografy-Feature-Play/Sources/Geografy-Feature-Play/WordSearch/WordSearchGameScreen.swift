@@ -11,7 +11,6 @@ public struct WordSearchGameScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     #endif
 
@@ -23,6 +22,7 @@ public struct WordSearchGameScreen: View {
     }
 
     @State private var puzzle: WordSearchPuzzle?
+    @State private var checkedAnswer: CheckedAnswer?
     @State private var spokenRows: [String] = []
     @State private var foundWordIDs: Set<UUID> = []
     @State private var stopwatch = WordSearchStopwatch()
@@ -63,6 +63,13 @@ public struct WordSearchGameScreen: View {
                     stopwatch.pause(at: .now)
                 }
             }
+            .answerHaptic(checkedAnswer)
+            .haptic(trigger: foundWordIDs.count) { oldCount, newCount in
+                guard newCount > oldCount else { return nil }
+                return newCount == puzzle?.words.count ? .success : .impact(weight: .medium)
+            }
+            .haptic(.impact(weight: .light), trigger: hintRevealedIDs.count)
+            .haptic(.impact(weight: .light), trigger: isRevealed)
     }
 }
 
@@ -342,16 +349,10 @@ private extension WordSearchGameScreen {
                     XPRules.wordSearch(wordsFound: foundWordIDs.count, foundAll: true),
                     source: .wordSearchCompleted
                 )
-                #if !os(tvOS)
-                hapticsService.notification(.success)
-                #endif
                 soundService.play(.complete)
                 let announcement = "Found \(wordItem.word). All words found in \(formattedTime)."
                 AccessibilityNotification.Announcement(announcement).post()
             } else {
-                #if !os(tvOS)
-                hapticsService.impact(.medium)
-                #endif
                 soundService.play(.correct)
                 let announcement = "Found \(wordItem.word). \(foundWordIDs.count) of \(puzzle.words.count)."
                 AccessibilityNotification.Announcement(announcement).post()
@@ -361,7 +362,7 @@ private extension WordSearchGameScreen {
         // A tap on one letter isn't a guess; a drag across letters that spell no word is a wrong answer.
         guard cells.count > 1 else { return }
         #if !os(tvOS)
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: false,
             announcement: String(localized: "Not one of the words.", bundle: .module)
         )
@@ -379,9 +380,6 @@ private extension WordSearchGameScreen {
             hintRevealedIDs.insert(wordItem.id)
         }
         AccessibilityNotification.Announcement("\(wordItem.word) \(wordItem.spokenLocation).").post()
-        #if !os(tvOS)
-        hapticsService.impact(.light)
-        #endif
     }
 
     func revealAllWords() {
@@ -392,8 +390,5 @@ private extension WordSearchGameScreen {
             source: .wordSearchCompleted
         )
         AccessibilityNotification.Announcement("All words revealed.").post()
-        #if !os(tvOS)
-        hapticsService.impact(.light)
-        #endif
     }
 }

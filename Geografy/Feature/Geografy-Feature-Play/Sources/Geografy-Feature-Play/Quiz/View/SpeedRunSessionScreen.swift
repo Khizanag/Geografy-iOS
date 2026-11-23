@@ -8,7 +8,6 @@ public struct SpeedRunSessionScreen: View {
     // MARK: - Properties
     @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
@@ -29,6 +28,7 @@ public struct SpeedRunSessionScreen: View {
     @State private var inputFeedback: AnswerField.Feedback = .none
     @State private var inputMessage: String?
     @State private var rejectedInput: String?
+    @State private var rejectionCount = 0
     @State private var isFinished = false
     @State private var xpEarned = 0
     @State private var showGiveUpAlert = false
@@ -60,6 +60,10 @@ public struct SpeedRunSessionScreen: View {
             } message: {
                 Text("You'll see your results and missed countries.")
             }
+            .haptic(trigger: completedCodes.count) { oldCount, newCount in
+                newCount > oldCount ? .success : nil
+            }
+            .haptic(.error, trigger: rejectionCount)
     }
 }
 
@@ -297,7 +301,6 @@ private extension SpeedRunSessionScreen {
         inputMessage = nil
         inputFeedback = .correct
         flashingCode = match.code
-        hapticsService.notification(.success)
         soundService.play(.correct)
         let announcement = "\(match.name). \(completedCodes.count) of \(targetCountries.count)."
         AccessibilityNotification.Announcement(announcement).post()
@@ -325,7 +328,7 @@ private extension SpeedRunSessionScreen {
         }
         rejectedInput = normalized
         inputFeedback = .incorrect
-        hapticsService.notification(.error)
+        rejectionCount += 1
         soundService.play(.wrong)
         isInputFocused = true
         if let inputMessage {
@@ -360,7 +363,6 @@ private extension SpeedRunSessionScreen {
         elapsedTime = Date.now.timeIntervalSince(startDate)
         isFinished = true
         isInputFocused = false
-        hapticsService.notification(.success)
 
         // Only a run that names every country counts as a personal best or a leaderboard time.
         if isComplete {

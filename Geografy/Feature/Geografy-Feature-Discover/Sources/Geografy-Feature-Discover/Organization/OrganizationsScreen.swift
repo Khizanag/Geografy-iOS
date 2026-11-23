@@ -21,9 +21,6 @@ public struct OrganizationsScreen: View {
     public init() {}
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var sortOption: OrgSortOption = .alphabetical
@@ -69,9 +66,6 @@ private extension OrganizationsScreen {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(sortedOrgs(memberCounts: memberCounts)) { org in
                     Button {
-                        #if !os(tvOS)
-                        hapticsService.impact(.light)
-                        #endif
                         coordinator.push(DiscoverRoute.organizationDetail(org))
                     } label: {
                         CardView {

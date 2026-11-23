@@ -6,9 +6,6 @@ import SwiftUI
 
 public struct CompareScreen: View {
     // MARK: - Properties
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -48,6 +45,9 @@ public struct CompareScreen: View {
         .screenBackground()
         .navigationTitle("Compare")
         .navigationBarTitleDisplayMode(.inline)
+        .haptic(trigger: [leftCountry?.code, rightCountry?.code]) { oldCodes, newCodes in
+            newCodes == Array(oldCodes.reversed()) ? .impact(weight: .light) : nil
+        }
         .onAppear(perform: setUp)
         .sheet(item: $pickingSide) { side in
             CoordinatedNavigationStack(showCloseButton: true) {
@@ -161,9 +161,6 @@ private extension CompareScreen {
     }
 
     func swapCountries() {
-        #if !os(tvOS)
-        hapticsService.impact(.light)
-        #endif
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
             (leftCountry, rightCountry) = (rightCountry, leftCountry)
         }

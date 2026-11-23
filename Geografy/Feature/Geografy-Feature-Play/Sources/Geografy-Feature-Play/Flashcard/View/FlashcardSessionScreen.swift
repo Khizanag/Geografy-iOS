@@ -13,7 +13,6 @@ public struct FlashcardSessionScreen: View {
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(AchievementService.self) private var achievementService
     @Environment(GameCenterService.self) private var gameCenterService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -22,6 +21,7 @@ public struct FlashcardSessionScreen: View {
     public let cards: [FlashcardItem]
 
     @State private var currentIndex = 0
+    @State private var checkedAnswer: CheckedAnswer?
     @State private var nextCard = PendingAction()
     @State private var isFlipped = false
     @State private var showResults = false
@@ -55,6 +55,8 @@ public struct FlashcardSessionScreen: View {
             }
             .gameGuide(id: FlashcardGuide.id) { FlashcardGuideSheet() }
             .onDisappear { flashcardService.persistPendingChanges() }
+            .answerHaptic(checkedAnswer)
+            .haptic(.impact(weight: .light), trigger: isFlipped)
     }
 }
 
@@ -230,7 +232,6 @@ private extension FlashcardSessionScreen {
             thinkingTimes.append(thinkingTime)
         }
         isFlipped.toggle()
-        hapticsService.impact(.light)
     }
 
     func recordReview(_ result: FlashcardReviewResult) {
@@ -295,7 +296,7 @@ private extension FlashcardSessionScreen {
 
     /// The quiz's right-or-wrong feedback, the same for a swipe and a rating button.
     func playFeedback(knewIt: Bool) {
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: knewIt,
             announcement: knewIt
                 ? String(localized: "Got it.", bundle: .module)

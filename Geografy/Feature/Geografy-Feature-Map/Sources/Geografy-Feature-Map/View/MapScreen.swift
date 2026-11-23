@@ -11,9 +11,6 @@ public struct MapScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
 
@@ -37,6 +34,8 @@ public struct MapScreen: View {
     @State private var mapState = MapState()
     @State private var showFlagPreview = false
     @State private var showsFinder = false
+    /// Counts the countries the person picks or unpicks, since a requested focus selects one on appear too.
+    @State private var countryPickCount = 0
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
     @State private var hasFocusedRequestedCountry = false
@@ -65,6 +64,8 @@ public struct MapScreen: View {
             }
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
+            .haptic(.selection, trigger: countryPickCount)
+            .haptic(.impact(weight: .light), trigger: mapState.showLabels)
             .onChange(of: isInitialized) { focusRequestedCountry() }
             .onChange(of: focusCountryCode) { focusRequestedCountry() }
             // Again when the projection or colors change in Settings: the Map tab stays alive behind it.
@@ -76,7 +77,10 @@ public struct MapScreen: View {
             }
             .sheet(isPresented: $showsFinder) {
                 CoordinatedNavigationStack(showCloseButton: true) {
-                    MapCountryFinder(shapes: mapState.countryShapes) { focus(on: $0) }
+                    MapCountryFinder(shapes: mapState.countryShapes) { shape in
+                        countryPickCount += 1
+                        focus(on: shape)
+                    }
                 }
             }
             .zoomableViewer(isPresented: $showFlagPreview, title: selectedCountryTitle) {
@@ -204,9 +208,6 @@ private extension MapScreen {
         ToolbarItem(placement: .primaryAction) {
             ToolbarToggle("Country labels", systemImage: "textformat", isOn: mapState.showLabels) {
                 mapState.showLabels.toggle()
-                #if !os(tvOS)
-                hapticsService.impact(.light)
-                #endif
             }
         }
         .sharedBackgroundVisibility(.hidden)
@@ -381,15 +382,10 @@ private extension MapScreen {
             withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.78)) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
-                    #if !os(tvOS)
-                    hapticsService.impact(.light)
-                    #endif
                 } else {
                     mapState.selectedCountryCode = shape.id
-                    #if !os(tvOS)
-                    hapticsService.selection()
-                    #endif
                 }
+                countryPickCount += 1
             }
             return
         }

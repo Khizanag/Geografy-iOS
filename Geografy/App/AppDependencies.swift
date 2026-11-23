@@ -25,7 +25,6 @@ final class AppDependencies {
     let flashcardService = FlashcardService()
     let gameCenterService = GameCenterService()
     let geoJSONCache = GeoJSONCache()
-    let hapticsService = HapticsService()
     let languageService = LanguageService()
     let learningPathService: LearningPathService
     let pronunciationService = PronunciationService()
@@ -80,7 +79,6 @@ extension View {
             .environment(dependencies.flashcardService)
             .environment(dependencies.gameCenterService)
             .environment(dependencies.geoJSONCache)
-            .environment(dependencies.hapticsService)
             .environment(dependencies.languageService)
             .environment(dependencies.learningPathService)
             .environment(dependencies.pronunciationService)

@@ -5,8 +5,6 @@ import SwiftUI
 
 public struct AchievementDetailSheet: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
-
     public let definition: AchievementDefinition
     public let isUnlocked: Bool
     public let progress: AchievementProgress
@@ -226,9 +224,9 @@ private extension AchievementDetailSheet {
             role: .secondary,
             fullWidth: true
         ) {
-            hapticsService.impact(.light)
             onTogglePin()
         }
         .disabled(!canPin && !isPinned)
+        .haptic(.impact(weight: .light), trigger: isPinned)
     }
 }

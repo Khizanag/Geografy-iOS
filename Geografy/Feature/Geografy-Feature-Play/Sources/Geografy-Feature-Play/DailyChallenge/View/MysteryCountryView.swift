@@ -7,7 +7,6 @@ public struct MysteryCountryView: View {
     // MARK: - Properties
     @Environment(\.locale) private var locale
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
 
     public let content: DailyChallenge.MysteryCountryContent
@@ -19,6 +18,7 @@ public struct MysteryCountryView: View {
 
     @FocusState private var isGuessFocused: Bool
     @State private var finish = PendingAction()
+    @State private var checkedAnswer: CheckedAnswer?
 
     public let onFinish: () -> Void
 
@@ -32,6 +32,7 @@ public struct MysteryCountryView: View {
             }
         }
         .onDisappear { finish.cancel() }
+        .answerHaptic(checkedAnswer)
     }
 }
 
@@ -244,7 +245,7 @@ private extension MysteryCountryView {
         if !isCorrect {
             score = max(0, score - 200)
         }
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: isCorrect,
             announcement: isCorrect
                 ? String(localized: "Correct. It's \(target.name).", bundle: .module)

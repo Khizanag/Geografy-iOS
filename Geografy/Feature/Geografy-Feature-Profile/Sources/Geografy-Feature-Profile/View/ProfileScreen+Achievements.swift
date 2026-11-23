@@ -26,7 +26,6 @@ private extension ProfileScreen {
             SectionHeaderView(title: "Achievements")
             Spacer()
             Button {
-                hapticsService.impact(.light)
                 coordinator.push(ProfileRoute.achievements)
             } label: {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
@@ -46,7 +45,6 @@ private extension ProfileScreen {
             HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 ForEach(recentUnlockedAchievements) { definition in
                     Button {
-                        hapticsService.impact(.light)
                         coordinator.sheet(ProfileLocalRoute.achievementDetail(definition))
                     } label: {
                         achievementCard(definition)
@@ -65,7 +63,6 @@ private extension ProfileScreen {
             message: "Explore countries and play games to earn achievements.",
             actionTitle: "See All Achievements"
         ) {
-            hapticsService.impact(.light)
             coordinator.push(ProfileRoute.achievements)
         }
     }

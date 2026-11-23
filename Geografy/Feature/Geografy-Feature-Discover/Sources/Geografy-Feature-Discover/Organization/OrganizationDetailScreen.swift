@@ -13,9 +13,6 @@ public struct OrganizationDetailScreen: View {
     }
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(ExplorationService.self) private var explorationService
     @Environment(AchievementService.self) private var achievementService
@@ -128,9 +125,6 @@ private extension OrganizationDetailScreen {
 
     var openMapButton: some View {
         GlassButton("Open Map", systemImage: "map.fill", fullWidth: true) {
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
             coordinator.cover(MapRoute.organizationMap(organization))
         }
     }

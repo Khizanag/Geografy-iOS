@@ -14,7 +14,6 @@ public struct FavoritesScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -39,6 +38,7 @@ public struct FavoritesScreen: View {
         .closeButtonPlacementLeading()
         .searchable(text: $searchText, prompt: "Search favorites")
         .toolbar { toolbarContent }
+        .haptic(.impact(weight: .light), trigger: favoritesService.favoriteCodes.count)
     }
 }
 
@@ -190,7 +190,6 @@ private extension FavoritesScreen {
 
     func removeButton(for country: Country) -> some View {
         Button(role: .destructive) {
-            hapticsService.impact(.light)
             withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                 favoritesService.toggle(code: country.code)
             }
@@ -215,7 +214,6 @@ private extension FavoritesScreen {
                 message: "Tap the heart icon on any country to save it here.",
                 actionTitle: "Browse Countries"
             ) {
-                hapticsService.impact(.light)
                 coordinator.push(CountryRoute.countries)
             }
         }

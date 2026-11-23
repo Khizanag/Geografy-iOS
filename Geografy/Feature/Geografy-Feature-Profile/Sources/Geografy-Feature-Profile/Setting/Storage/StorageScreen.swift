@@ -6,9 +6,6 @@ import SwiftUI
 public struct StorageScreen: View {
     // MARK: - Properties
     @Environment(\.locale) private var locale
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
     @State private var usage: StorageUsage?
     @State private var isClearing = false
@@ -35,6 +32,9 @@ public struct StorageScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .task { await refresh() }
+        .haptic(trigger: isClearing) { wasClearing, clearing in
+            wasClearing && !clearing ? .success : nil
+        }
         .confirmationDialog("Clear Cache?", isPresented: $showClearConfirmation, titleVisibility: .visible) {
             Button("Clear Cache", role: .destructive) {
                 Task { await clearCache() }
@@ -183,9 +183,6 @@ private extension StorageScreen {
         await StorageUsage.clearCache()
         await refresh()
         isClearing = false
-        #if !os(tvOS)
-        hapticsService.notification(.success)
-        #endif
     }
 }
 

@@ -146,7 +146,7 @@ extension QuizSessionScreen {
         announcement: String? = nil,
         advanceAfter delay: Duration
     ) {
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: isCorrect,
             announcement: announcement ?? spokenResult(isCorrect: isCorrect, question: question)
         )

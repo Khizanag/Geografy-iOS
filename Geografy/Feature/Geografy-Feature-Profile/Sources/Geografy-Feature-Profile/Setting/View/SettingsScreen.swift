@@ -15,11 +15,8 @@ public struct SettingsScreen: View {
     #if DEBUG
     @Environment(\.openTestingLab) private var openTestingLab
     #endif
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
-    @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
+    @AppStorage(HapticsSetting.key) private var hapticFeedbackEnabled = true
     @AppStorage(SoundService.enabledKey) private var soundEffectsEnabled = true
     @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
@@ -317,6 +314,9 @@ private extension SettingsScreen {
                     title: "Haptic feedback",
                     isOn: $hapticFeedbackEnabled
                 )
+                .haptic(trigger: hapticFeedbackEnabled) { _, isEnabled in
+                    isEnabled ? .impact(weight: .light) : nil
+                }
 
                 settingsDivider
 

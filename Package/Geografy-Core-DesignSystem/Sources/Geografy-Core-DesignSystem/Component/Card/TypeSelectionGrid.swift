@@ -12,9 +12,6 @@ public struct TypeSelectionGrid<T: SelectableType>: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
     @ScaledMetric(relativeTo: .subheadline) private var tileWidth: CGFloat = 156
     /// Room for a two-line name, so every compact tile in the grid is the same height.
@@ -49,10 +46,13 @@ public struct TypeSelectionGrid<T: SelectableType>: View {
 
     // MARK: - Body
     public var body: some View {
-        switch layout {
-        case .carousel: carousel
-        case .grid: grid
+        Group {
+            switch layout {
+            case .carousel: carousel
+            case .grid: grid
+            }
         }
+        .haptic(.selection, trigger: selectedIDs)
     }
 }
 
@@ -93,9 +93,6 @@ private extension TypeSelectionGrid {
     func typeTile(_ item: T) -> some View {
         let isSelected = selectedIDs.contains(item.id)
         return Button {
-            #if !os(tvOS)
-            hapticsService.selection()
-            #endif
             onSelect(item)
         } label: {
             switch layout {

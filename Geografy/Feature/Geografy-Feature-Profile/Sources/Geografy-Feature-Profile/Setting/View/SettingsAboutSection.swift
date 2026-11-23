@@ -5,11 +5,6 @@ import SwiftUI
 
 /// Rating and sharing the app, and its privacy policy and terms.
 struct SettingsAboutSection: View {
-    // MARK: - Properties
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
-
     // MARK: - Body
     var body: some View {
         SettingsGroup("About") {
@@ -44,9 +39,6 @@ struct SettingsAboutSection: View {
 private extension SettingsAboutSection {
     var rateAppRow: some View {
         Button {
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
             requestReview()
         } label: {
             SettingsExternalRow(icon: "star.fill", iconColor: DesignSystem.Color.warning, title: "Rate Geografy")

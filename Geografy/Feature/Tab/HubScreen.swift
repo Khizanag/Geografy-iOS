@@ -27,7 +27,6 @@ struct HubGrid<Header: View>: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(Navigator.self) private var coordinator
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
 
     @State private var testChecklistSheet: HubItem?
@@ -97,7 +96,6 @@ private extension HubGrid {
 
     func gridTile(for sheet: HubItem) -> some View {
         Button {
-            hapticsService.impact(.light)
             open(sheet)
         } label: {
             gridTileLabel(for: sheet)

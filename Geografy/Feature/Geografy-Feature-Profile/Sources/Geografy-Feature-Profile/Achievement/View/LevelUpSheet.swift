@@ -8,7 +8,6 @@ import SwiftUI
 /// session is the one that earned it.
 public struct LevelUpSheet: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     @Environment(XPService.self) private var xpService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -37,8 +36,8 @@ public struct LevelUpSheet: View {
                 .scaleEffect(isShown || reduceMotion ? 1 : 0.85)
                 .opacity(isShown ? 1 : 0)
         }
+        .haptic(.success, trigger: isShown)
         .onAppear {
-            hapticsService.notification(.success)
             soundService.play(.celebrate)
             withAnimation(reduceMotion ? .easeOut(duration: 0.2) : .spring(response: 0.45, dampingFraction: 0.75)) {
                 isShown = true

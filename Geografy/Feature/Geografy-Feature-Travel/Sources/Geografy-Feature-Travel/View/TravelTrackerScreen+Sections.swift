@@ -37,7 +37,6 @@ extension TravelTrackerScreen {
     func searchResultRow(_ country: Country) -> some View {
         let status = travelService.status(for: country.code)
         return Button {
-            hapticsService.impact(.light)
             selectedCountry = country
         } label: {
             CountryListRow(country: country, subtitle: country.continent.displayName) {
@@ -69,7 +68,6 @@ extension TravelTrackerScreen {
             message: emptyStateSubtitle,
             actionTitle: "Add Country"
         ) {
-            hapticsService.impact(.light)
             showCountryPicker = true
         }
         .padding(.top, DesignSystem.Spacing.xxl)

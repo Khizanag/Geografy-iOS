@@ -31,7 +31,6 @@ extension ProfileScreen {
 
     public var editButton: some View {
         Button {
-            hapticsService.impact(.light)
             coordinator.push(ProfileLocalRoute.editProfile)
         } label: {
             Image(systemName: "pencil")

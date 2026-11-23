@@ -6,7 +6,6 @@ import SwiftUI
 public struct QuizTypingInputView: View {
     // MARK: - Properties
     @Environment(\.locale) private var locale
-    @Environment(HapticsService.self) private var hapticsService
 
     public let question: QuizQuestion
     public let quizType: QuizType
@@ -201,7 +200,6 @@ private extension QuizTypingInputView {
             withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
                 showHint.toggle()
             }
-            hapticsService.selection()
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: showHint ? "lightbulb.fill" : "lightbulb")
@@ -219,6 +217,7 @@ private extension QuizTypingInputView {
         .disabled(showFeedback)
         .accessibilityLabel(showHint ? "Hint: \(hintText)" : "Hint")
         .accessibilityHint(showHint ? "" : "Shows the first letters of the answer")
+        .haptic(.selection, trigger: showHint)
     }
 }
 

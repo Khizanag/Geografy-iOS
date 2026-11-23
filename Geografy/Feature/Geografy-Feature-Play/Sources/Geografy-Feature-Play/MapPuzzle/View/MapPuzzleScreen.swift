@@ -11,7 +11,6 @@ struct MapPuzzleScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(SoundService.self) private var soundService
     #if !os(tvOS)
     @Environment(XPService.self) private var xpService
@@ -28,6 +27,7 @@ struct MapPuzzleScreen: View {
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
+    @State private var checkedAnswer: CheckedAnswer?
     @State private var selectedOptionID: UUID?
     @State private var showFeedback = false
     @State private var correctCount = 0
@@ -57,6 +57,7 @@ struct MapPuzzleScreen: View {
             }
             .task { await loadMap() }
             .onDisappear { transition.cancel() }
+            .answerHaptic(checkedAnswer)
     }
 }
 
@@ -232,7 +233,7 @@ private extension MapPuzzleScreen {
         if isCorrect {
             correctCount += 1
         }
-        AnswerFeedback(soundService: soundService, hapticsService: hapticsService).play(
+        checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: isCorrect,
             announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: question.country.name)
         )

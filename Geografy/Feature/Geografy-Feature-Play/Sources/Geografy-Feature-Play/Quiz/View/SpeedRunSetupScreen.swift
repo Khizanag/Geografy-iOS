@@ -8,7 +8,6 @@ public struct SpeedRunSetupScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
 
     @AppStorage("speedrun_selectedRegion") private var selectedRegion: QuizRegion = .world
@@ -96,7 +95,6 @@ private extension SpeedRunSetupScreen {
 
     var startButton: some View {
         GlassButton("Start Speed Run", systemImage: "bolt.fill", fullWidth: true) {
-            hapticsService.impact(.light)
             // The run covers the screen at once; setup leaves the stack underneath it, so closing the run
             // returns to where Speed Run was opened from.
             coordinator.cover(PlayLocalRoute.speedRunSession(region: selectedRegion))

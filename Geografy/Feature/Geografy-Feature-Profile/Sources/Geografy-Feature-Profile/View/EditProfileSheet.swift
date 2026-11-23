@@ -8,7 +8,6 @@ public struct EditProfileSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var database
-    @Environment(HapticsService.self) private var hapticsService
 
     @State private var displayName: String = ""
     @State private var isSaving = false
@@ -30,6 +29,7 @@ public struct EditProfileSheet: View {
             .onAppear {
                 displayName = authService.currentProfile?.displayName ?? ""
             }
+            .haptic(.success, trigger: isSaving)
     }
 }
 
@@ -84,7 +84,6 @@ private extension EditProfileSheet {
         let trimmed = displayName.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
         isSaving = true
-        hapticsService.notification(.success)
         if let profile = authService.currentProfile {
             profile.displayName = trimmed
             database.mainContext.saveOrLog()

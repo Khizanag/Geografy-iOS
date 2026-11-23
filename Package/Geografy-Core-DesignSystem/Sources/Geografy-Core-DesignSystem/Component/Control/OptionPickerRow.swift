@@ -12,9 +12,6 @@ public struct OptionPickerRow<Option: Hashable & Identifiable>: View {
 
     // MARK: - Properties
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
     @Binding private var selection: Option
     private let title: String
@@ -57,9 +54,7 @@ public struct OptionPickerRow<Option: Hashable & Identifiable>: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        #if !os(tvOS)
-        .onChange(of: selection) { hapticsService.selection() }
-        #endif
+        .haptic(.selection, trigger: selection)
     }
 }
 

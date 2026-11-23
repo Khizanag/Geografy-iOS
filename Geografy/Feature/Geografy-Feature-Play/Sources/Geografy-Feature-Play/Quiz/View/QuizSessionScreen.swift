@@ -7,7 +7,6 @@ import SwiftUI
 public struct QuizSessionScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) var hapticsService
     @Environment(SoundService.self) var soundService
     @Environment(CountryDataService.self) var countryDataService
     @Environment(Navigator.self) var coordinator
@@ -19,6 +18,7 @@ public struct QuizSessionScreen: View {
     @State var session: QuizSession
 
     @State var selectedOptionID: UUID?
+    @State var checkedAnswer: CheckedAnswer?
     @State var showFeedback = false
     @State var timerRemaining: TimeInterval = 0
     @State var timerDeadline: Date?
@@ -75,6 +75,7 @@ public struct QuizSessionScreen: View {
                 }
             }
             .overlay { pauseOverlay }
+            .answerHaptic(checkedAnswer)
     }
 }
 

@@ -12,9 +12,6 @@ public struct OrganizationMapScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
 
     public let organization: Organization
 
@@ -53,6 +50,8 @@ public struct OrganizationMapScreen: View {
             .closeButtonPlacementLeading()
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
+            .haptic(.selection, trigger: mapState.selectedCountryCode)
+            .haptic(.impact(weight: .light), trigger: mapState.showLabels)
             .task { await loadMapData() }
             .onChange(of: navigateToCountry) { _, country in
                 if let country {
@@ -148,9 +147,6 @@ private extension OrganizationMapScreen {
         ToolbarItem(placement: .primaryAction) {
             ToolbarToggle("Country labels", systemImage: "textformat", isOn: mapState.showLabels) {
                 mapState.showLabels.toggle()
-                #if !os(tvOS)
-                hapticsService.impact(.light)
-                #endif
             }
         }
         .sharedBackgroundVisibility(.hidden)
@@ -256,14 +252,8 @@ private extension OrganizationMapScreen {
         if let shape = mapState.shape(at: mapPoint) {
             if mapState.selectedCountryCode == shape.id {
                 mapState.selectedCountryCode = nil
-                #if !os(tvOS)
-                hapticsService.impact(.light)
-                #endif
             } else {
                 mapState.selectedCountryCode = shape.id
-                #if !os(tvOS)
-                hapticsService.selection()
-                #endif
             }
             return
         }

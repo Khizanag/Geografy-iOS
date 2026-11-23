@@ -16,9 +16,6 @@ public struct HistoricalMapScreen: View {
     // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
 
@@ -51,6 +48,7 @@ public struct HistoricalMapScreen: View {
             .onChange(of: mapState.selectedCountryCode) { _, code in
                 announceSelection(of: code)
             }
+            .haptic(.selection, trigger: mapState.selectedCountryCode)
             .sheet(item: $selectedEvent) { event in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     eventSheet(for: event)
@@ -261,9 +259,6 @@ private extension HistoricalMapScreen {
             } else {
                 mapState.selectedCountryCode = shape.id
             }
-            #if !os(tvOS)
-            hapticsService.selection()
-            #endif
             return
         }
 

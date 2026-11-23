@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct TerritorialDisputesScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(GeoJSONCache.self) private var geoJSONCache
 
     @State private var selections: [String: String] = [:]
@@ -24,6 +23,9 @@ public struct TerritorialDisputesScreen: View {
             .onAppear { loadSelections() }
             // Once, on the way out, so trying several options doesn't parse the map for each.
             .onDisappear { if hasChanges { geoJSONCache.invalidate() } }
+            .haptic(trigger: selections) { old, new in
+                changeFeedback(from: old, to: new)
+            }
             .alert("Reset to Defaults", isPresented: $showingResetAlert) {
                 Button("Reset", role: .destructive, action: resetToDefaults)
                 Button("Cancel", role: .cancel) {}
@@ -124,7 +126,6 @@ private extension TerritorialDisputesScreen {
         Binding {
             selections[dispute.id] ?? dispute.defaultOptionKey
         } set: { newValue in
-            hapticsService.selection()
             selections[dispute.id] = newValue
             UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
             hasChanges = true
@@ -185,6 +186,16 @@ private extension TerritorialDisputesScreen {
         return dispute.options.first { $0.key == key }?.label ?? key
     }
 
+    /// None for the first load; a pick changes one dispute, a reset can change several.
+    func changeFeedback(from old: [String: String], to new: [String: String]) -> SensoryFeedback? {
+        guard !old.isEmpty else { return nil }
+        switch new.count(where: { old[$0.key] != $0.value }) {
+        case 0: return nil
+        case 1: return .selection
+        default: return .impact(weight: .light)
+        }
+    }
+
     func loadSelections() {
         for dispute in TerritorialDispute.all {
             let stored = UserDefaults.standard.string(forKey: dispute.userDefaultsKey)
@@ -197,7 +208,6 @@ private extension TerritorialDisputesScreen {
     }
 
     func resetToDefaults() {
-        hapticsService.impact(.light)
         for dispute in TerritorialDispute.all {
             UserDefaults.standard.set(dispute.defaultOptionKey, forKey: dispute.userDefaultsKey)
             selections[dispute.id] = dispute.defaultOptionKey

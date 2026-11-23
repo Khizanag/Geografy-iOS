@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct LocalMultiplayerLobbyScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.openURL) private var openURL
 
@@ -260,7 +259,6 @@ private extension LocalMultiplayerLobbyScreen {
     var discoveredPeerRows: some View {
         ForEach(coordinator.sessionManager.discoveredPeers, id: \.self) { peer in
             Button {
-                hapticsService.impact(.light)
                 coordinator.joinHost(peer)
             } label: {
                 peerRow(peer)
@@ -374,10 +372,7 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     func bottomButton(_ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
-        GlassButton(title, systemImage: systemImage, fullWidth: true) {
-            hapticsService.impact(.light)
-            action()
-        }
+        GlassButton(title, systemImage: systemImage, fullWidth: true, action: action)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }

@@ -9,7 +9,6 @@ struct MapCountryFinder: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(HapticsService.self) private var hapticsService
 
     let shapes: [CountryShape]
     let onSelect: (CountryShape) -> Void
@@ -88,7 +87,6 @@ private extension MapCountryFinder {
     }
 
     func select(_ shape: CountryShape) {
-        hapticsService.selection()
         onSelect(shape)
         dismiss()
     }

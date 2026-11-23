@@ -10,9 +10,6 @@ public struct RegionPicker<Region: Hashable>: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
-    #if !os(tvOS)
-    @Environment(HapticsService.self) private var hapticsService
-    #endif
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @Binding private var selection: Region
@@ -72,6 +69,7 @@ public struct RegionPicker<Region: Hashable>: View {
             }
         }
         .task { await loadOutlines() }
+        .haptic(.selection, trigger: selection)
     }
 }
 
@@ -102,9 +100,6 @@ private extension RegionPicker {
 
     func select(_ region: Region) {
         guard region != selection else { return }
-        #if !os(tvOS)
-        hapticsService.selection()
-        #endif
         selection = region
     }
 

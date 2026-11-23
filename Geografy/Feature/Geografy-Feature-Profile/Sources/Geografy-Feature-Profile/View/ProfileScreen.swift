@@ -16,7 +16,6 @@ public struct ProfileScreen: View {
     @Environment(TravelService.self) var travelService
     @Environment(ExplorationService.self) var explorationService
     @Environment(DatabaseManager.self) var database
-    @Environment(HapticsService.self) var hapticsService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
