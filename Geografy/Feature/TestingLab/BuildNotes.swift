@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            gameGuides,
             mapPuzzleWorld,
             leaveGameButton,
             customQuizCountries,
@@ -35,6 +36,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var gameGuides: BuildNote {
+        BuildNote(
+            commit: "bfcd4f5c",
+            title: "A guide for every game",
+            howToTest: """
+                Open each game: Quiz, Map Puzzle, Pin Drop, Speed Run, Daily Challenge, Local Play, Word Search, \
+                and Flashcards. The first time, its guide opens by itself; after that, the ? button opens it.
+                """,
+            systemImage: "questionmark.circle",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
+        }
+    }
+
     var mapPuzzleWorld: BuildNote {
         BuildNote(
             commit: "25dd2708",
