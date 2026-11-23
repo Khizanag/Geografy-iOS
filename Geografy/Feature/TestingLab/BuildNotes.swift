@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            mapPuzzleRounds,
             fullWidthLastTile,
             oneGamesSection,
             gamesOpenOnSetup,
@@ -43,6 +44,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var mapPuzzleRounds: BuildNote {
+        BuildNote(
+            commit: "185d8f84",
+            title: "Map Puzzle rounds",
+            howToTest: """
+                Open Map Puzzle. Under Game, pick Rounds: 5, 10, 20, 30, or 50, as Quiz offers. Choose South \
+                America and 20: the note says a round asks 12, one per country. Start and count the rounds.
+                """,
+            systemImage: "list.number",
+            color: DesignSystem.Color.purple
+        ) {
+            go.open(.mapPuzzle)
+        }
+    }
+
     var fullWidthLastTile: BuildNote {
         BuildNote(
             commit: "bd16aab0",
