@@ -57,6 +57,7 @@ private extension PinDropSetupScreen {
             .readableContentWidth()
         }
         .scrollEdgeEffectStyle(.soft, for: .bottom)
+        .setupSectionScrolling()
     }
 
     var header: some View {
@@ -72,7 +73,12 @@ private extension PinDropSetupScreen {
     var headerFacts: [GameIntroHeader.Fact] {
         // Facts take plain text, so it's looked up in the chosen language here.
         var facts = [
-            GameIntroHeader.Fact(String(localized: "\(roundCount) rounds", in: locale), systemImage: "list.number"),
+            GameIntroHeader.Fact(region.displayName, systemImage: "globe", showing: SetupSection.region),
+            GameIntroHeader.Fact(
+                String(localized: "\(roundCount) rounds", in: locale),
+                systemImage: "list.number",
+                showing: SetupSection.game
+            ),
             GameIntroHeader.Fact(String(localized: "Bonus for speed", in: locale), systemImage: "bolt.fill"),
         ]
         let best = PinDropRecords().best(for: configuration)

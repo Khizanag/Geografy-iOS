@@ -7,17 +7,29 @@ public struct GameIntroHeader: View {
     public struct Fact: Identifiable {
         public let title: String
         public let systemImage: String
+        /// The setup section that changes this fact; tapping the fact scrolls there.
+        public let section: AnyHashable?
 
         public var id: String { title }
 
         public init(_ title: String, systemImage: String) {
             self.title = title
             self.systemImage = systemImage
+            self.section = nil
+        }
+
+        /// A fact the player can change: it's a button that scrolls to `section`, a view given the same `.id`
+        /// inside a scroll view that has `.setupSectionScrolling()`.
+        public init(_ title: String, systemImage: String, showing section: some Hashable) {
+            self.title = title
+            self.systemImage = systemImage
+            self.section = AnyHashable(section)
         }
     }
 
     // MARK: - Properties
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.showSetupSection) private var showSetupSection
     @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 56
 
     private let title: Text
@@ -71,7 +83,7 @@ public struct GameIntroHeader: View {
             if !facts.isEmpty {
                 FlowLayout(spacing: DesignSystem.Spacing.xs) {
                     ForEach(facts) { fact in
-                        InfoPill(fact.title, systemImage: fact.systemImage, style: .tinted(color))
+                        factPill(fact)
                     }
                 }
             }
@@ -82,6 +94,27 @@ public struct GameIntroHeader: View {
 
 // MARK: - Subviews
 private extension GameIntroHeader {
+    @ViewBuilder
+    func factPill(_ fact: Fact) -> some View {
+        if let section = fact.section, let showSetupSection {
+            Button {
+                showSetupSection(section)
+            } label: {
+                InfoPill(
+                    fact.title,
+                    systemImage: fact.systemImage,
+                    style: .tinted(color),
+                    trailingSystemImage: "chevron.down"
+                )
+                .contentShape(.capsule)
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint("Shows this setting")
+        } else {
+            InfoPill(fact.title, systemImage: fact.systemImage, style: .tinted(color))
+        }
+    }
+
     var iconTile: some View {
         Image(systemName: systemImage)
             .font(DesignSystem.Font.title2)
@@ -106,6 +139,34 @@ private extension GameIntroHeader {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
+
+// MARK: - Scrolling to a Section
+public extension EnvironmentValues {
+    /// Scrolls a setup screen to the section with the given id; set by `setupSectionScrolling()`.
+    @Entry var showSetupSection: ((AnyHashable) -> Void)?
+}
+
+public extension View {
+    /// Lets the facts in a `GameIntroHeader` inside this scroll view scroll to the sections they name.
+    func setupSectionScrolling() -> some View {
+        modifier(SetupSectionScrolling())
+    }
+}
+
+private struct SetupSectionScrolling: ViewModifier {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        ScrollViewReader { proxy in
+            content
+                .environment(\.showSetupSection) { section in
+                    withAnimation(reduceMotion ? nil : .smooth) {
+                        proxy.scrollTo(section, anchor: .top)
+                    }
+                }
         }
     }
 }

@@ -21,12 +21,20 @@ public struct InfoPill: View {
     private let title: String
     private let systemImage: String?
     private let style: Style
+    private let trailingSystemImage: String?
 
     // MARK: - Init
-    public init(_ title: String, systemImage: String? = nil, style: Style = .neutral) {
+    /// - Parameter trailingSystemImage: A small symbol after the title, such as a chevron on a pill that's a button.
+    public init(
+        _ title: String,
+        systemImage: String? = nil,
+        style: Style = .neutral,
+        trailingSystemImage: String? = nil
+    ) {
         self.title = title
         self.systemImage = systemImage
         self.style = style
+        self.trailingSystemImage = trailingSystemImage
     }
 
     // MARK: - Body
@@ -37,6 +45,11 @@ public struct InfoPill: View {
                     .accessibilityHidden(true)
             }
             Text(title)
+            if let trailingSystemImage {
+                Image(systemName: trailingSystemImage)
+                    .imageScale(.small)
+                    .accessibilityHidden(true)
+            }
         }
         .font(DesignSystem.Font.caption2)
         .fontWeight(.semibold)

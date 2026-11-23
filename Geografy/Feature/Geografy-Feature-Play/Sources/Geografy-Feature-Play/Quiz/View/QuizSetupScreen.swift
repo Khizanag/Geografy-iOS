@@ -55,6 +55,7 @@ private extension QuizSetupScreen {
             .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: layoutID)
         }
         .scrollEdgeEffectStyle(.soft, for: .bottom)
+        .setupSectionScrolling()
     }
 
     var header: some View {
@@ -84,6 +85,7 @@ private extension QuizSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
+                .id(SetupSection.region)
             RegionPicker(selectedRegion: $selectedRegion, color: color)
         }
     }
@@ -94,6 +96,7 @@ private extension QuizSetupScreen {
     var optionsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Game")
+                .id(SetupSection.game)
             CardView {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                     OptionPickerRow(
@@ -197,17 +200,25 @@ private extension QuizSetupScreen {
     /// Where the countries come from and how long a round lasts; the rest of the setup sits below.
     /// Facts take plain text, so it's looked up in the chosen language here.
     var facts: [GameIntroHeader.Fact] {
-        let region = GameIntroHeader.Fact(selectedRegion.displayName, systemImage: selectedRegion.regionIcon)
+        let region = GameIntroHeader.Fact(
+            selectedRegion.displayName,
+            systemImage: selectedRegion.regionIcon,
+            showing: SetupSection.region
+        )
         switch selectedGameMode {
         case .standard:
             let questions = String(localized: "\(selectedCount.rawValue) questions", in: locale)
-            return [region, GameIntroHeader.Fact(questions, systemImage: "list.number")]
+            return [region, GameIntroHeader.Fact(questions, systemImage: "list.number", showing: SetupSection.game)]
         case .arcade:
             let lives = String(localized: "3 lives", in: locale)
             return [
                 region,
-                GameIntroHeader.Fact(lives, systemImage: "heart.fill"),
-                GameIntroHeader.Fact(selectedArcadeTimer.rawValue, systemImage: selectedArcadeTimer.icon),
+                GameIntroHeader.Fact(lives, systemImage: "heart.fill", showing: SetupSection.game),
+                GameIntroHeader.Fact(
+                    selectedArcadeTimer.rawValue,
+                    systemImage: selectedArcadeTimer.icon,
+                    showing: SetupSection.game
+                ),
             ]
         }
     }

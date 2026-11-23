@@ -20,6 +20,7 @@ private extension PinDropSettingsSections {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
+                .id(SetupSection.region)
             RegionPicker(
                 selection: $configuration.region,
                 regions: PinDropRegion.allCases,
@@ -34,6 +35,7 @@ private extension PinDropSettingsSections {
     var optionsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Game")
+                .id(SetupSection.game)
             CardView {
                 VStack(spacing: DesignSystem.Spacing.md) {
                     OptionPickerRow(

@@ -42,6 +42,7 @@ private extension MapPuzzleSetupScreen {
             .readableContentWidth()
         }
         .scrollEdgeEffectStyle(.soft, for: .bottom)
+        .setupSectionScrolling()
     }
 
     var header: some View {
@@ -57,6 +58,7 @@ private extension MapPuzzleSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
+                .id(SetupSection.region)
             RegionPicker(
                 selection: selectedRegion,
                 regions: regions,
@@ -85,6 +87,7 @@ private extension MapPuzzleSetupScreen {
         guard questionCount > 0 else { return [] }
         let minutes = MapPuzzleRules.estimatedMinutes(forQuestionCount: questionCount)
         return [
+            GameIntroHeader.Fact(regionName, systemImage: "globe", showing: SetupSection.region),
             GameIntroHeader.Fact("\(questionCount) rounds", systemImage: "list.number"),
             GameIntroHeader.Fact("\(MapPuzzleRules.optionsPerQuestion) choices each", systemImage: "square.grid.2x2"),
             GameIntroHeader.Fact("About \(minutes) min", systemImage: "clock"),

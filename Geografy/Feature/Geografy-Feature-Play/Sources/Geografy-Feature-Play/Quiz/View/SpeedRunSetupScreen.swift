@@ -43,6 +43,7 @@ private extension SpeedRunSetupScreen {
             .padding(.bottom, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
+        .setupSectionScrolling()
     }
 
     var header: some View {
@@ -52,7 +53,11 @@ private extension SpeedRunSetupScreen {
             systemImage: "timer",
             color: color,
             facts: [
-                GameIntroHeader.Fact("\(countryCount) countries", systemImage: "flag.fill"),
+                GameIntroHeader.Fact(
+                    "\(countryCount) countries",
+                    systemImage: "flag.fill",
+                    showing: SetupSection.region
+                ),
                 GameIntroHeader.Fact("Typing", systemImage: "keyboard"),
                 GameIntroHeader.Fact("+50 XP", systemImage: "star.fill"),
             ]
@@ -84,6 +89,7 @@ private extension SpeedRunSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
+                .id(SetupSection.region)
             RegionPicker(selectedRegion: $selectedRegion, color: color)
         }
     }
