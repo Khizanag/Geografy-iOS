@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            unclippedChips,
             rollingChartNumbers,
             hapticsFromViews,
             resultsInPlace,
@@ -52,6 +53,21 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var unclippedChips: BuildNote {
+        BuildNote(
+            commit: "d7341ddb",
+            title: "Chips aren't cut when pressed",
+            howToTest: """
+                In Travel, press and hold each status chip: its glass swells without being cut at the top or \
+                bottom. Do the same with the Timeline's filter row.
+                """,
+            systemImage: "capsule.on.capsule",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.travel)
+        }
+    }
+
     var rollingChartNumbers: BuildNote {
         BuildNote(
             commit: "8ef2b8cb",
