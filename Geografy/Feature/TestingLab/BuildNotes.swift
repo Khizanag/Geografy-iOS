@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            calmCopy,
             studyFirst,
             mapPuzzleRounds,
             fullWidthLastTile,
@@ -45,6 +46,22 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var calmCopy: BuildNote {
+        BuildNote(
+            commit: "55c9bd53",
+            title: "Calm copy and app-worded search",
+            howToTest: """
+                Finish a quiz, a Map Puzzle, and a Local Play match: titles read without exclamation marks, and a \
+                lost match says "Your Opponent Won". Search Countries for "zzz": the empty state reads No Results \
+                for “zzz” in the app's own words.
+                """,
+            systemImage: "text.bubble",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.search)
+        }
+    }
+
     var studyFirst: BuildNote {
         BuildNote(
             commit: "e25e26cb",
