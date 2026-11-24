@@ -106,7 +106,8 @@ private extension CompareScreen {
             )
             RowListCard(
                 Array(recentPairs.prefix(Self.recentLimit)),
-                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth)
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth),
+                onRemove: removeRecent
             ) { pair in
                 CompareMatchupRow(pair: pair) {
                     open(pair)
@@ -181,6 +182,13 @@ private extension CompareScreen {
     func clearRecents() {
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
             recentPairs = []
+        }
+        saveRecentPairs()
+    }
+
+    func removeRecent(_ pair: ComparisonPair) {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            recentPairs = Self.recents.removing(pair, from: recentPairs)
         }
         saveRecentPairs()
     }

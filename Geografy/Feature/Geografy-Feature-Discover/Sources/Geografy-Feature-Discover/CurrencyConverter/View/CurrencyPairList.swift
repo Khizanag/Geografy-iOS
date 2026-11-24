@@ -6,12 +6,15 @@ struct CurrencyPairList: View {
     // MARK: - Properties
     let pairs: [CurrencyEntryPair]
     let onSelect: (CurrencyEntryPair) -> Void
+    /// When given, each pair swipes away, as recent pairs do.
+    var onRemove: ((CurrencyEntryPair) -> Void)?
 
     // MARK: - Body
     var body: some View {
         RowListCard(
             pairs,
-            dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth)
+            dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth),
+            onRemove: onRemove
         ) { pair in
             FlagPairRow(
                 leftFlagCode: pair.from.flagCode,

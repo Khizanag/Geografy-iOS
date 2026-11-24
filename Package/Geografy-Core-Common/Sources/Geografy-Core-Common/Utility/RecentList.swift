@@ -44,6 +44,12 @@ public struct RecentList<Item: Codable> {
         Array(([item] + items.filter { !isRepeat($0, item) }).prefix(limit))
     }
 
+    // MARK: - Removing
+    /// `items` without `item` or any repeat of it, such as when one recent entry is swiped away.
+    public func removing(_ item: Item, from items: [Item]) -> [Item] {
+        items.filter { !isRepeat($0, item) }
+    }
+
     private var key: String { UserScope.key(storageKey) }
 }
 

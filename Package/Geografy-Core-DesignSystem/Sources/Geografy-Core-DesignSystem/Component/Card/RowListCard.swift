@@ -6,12 +6,21 @@ public struct RowListCard<Item: Identifiable, Row: View>: View {
     private let items: [Item]
     private let dividerInset: CGFloat
     private let row: (Item) -> Row
+    private let onRemove: ((Item) -> Void)?
 
     // MARK: - Init
-    /// - Parameter dividerInset: Where dividers start, usually just past the row's leading flag or icon.
-    public init(_ items: [Item], dividerInset: CGFloat, @ViewBuilder row: @escaping (Item) -> Row) {
+    /// - Parameters:
+    ///   - dividerInset: Where dividers start, usually just past the row's leading flag or icon.
+    ///   - onRemove: When given, each row swipes left, or long-presses, to remove it, as recent entries do.
+    public init(
+        _ items: [Item],
+        dividerInset: CGFloat,
+        onRemove: ((Item) -> Void)? = nil,
+        @ViewBuilder row: @escaping (Item) -> Row
+    ) {
         self.items = items
         self.dividerInset = dividerInset
+        self.onRemove = onRemove
         self.row = row
     }
 
@@ -21,7 +30,11 @@ public struct RowListCard<Item: Identifiable, Row: View>: View {
             // Lazy, so a list of every country only builds the rows on screen.
             LazyVStack(spacing: 0) {
                 ForEach(items) { item in
-                    row(item)
+                    if let onRemove {
+                        SwipeToRemoveRow(onRemove: { onRemove(item) }, content: { row(item) })
+                    } else {
+                        row(item)
+                    }
                     if item.id != items.last?.id {
                         Divider()
                             .padding(.leading, dividerInset)

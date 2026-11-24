@@ -112,7 +112,8 @@ private extension DistanceCalculatorScreen {
             )
             RowListCard(
                 resolvedRecentRoutes,
-                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth)
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth),
+                onRemove: removeRecent
             ) { route in
                 RouteRow(route: route) {
                     open(route)
@@ -178,6 +179,13 @@ private extension DistanceCalculatorScreen {
     func clearRecents() {
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
             recentRoutes = []
+        }
+        saveRecentRoutes()
+    }
+
+    func removeRecent(_ route: CapitalRoute) {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            recentRoutes = Self.recents.removing(route.pair, from: recentRoutes)
         }
         saveRecentRoutes()
     }

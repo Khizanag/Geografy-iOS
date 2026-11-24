@@ -125,7 +125,7 @@ private extension CurrencyConverterScreen {
                     perform: clearRecents
                 )
             )
-            CurrencyPairList(pairs: recentEntryPairs, onSelect: open)
+            CurrencyPairList(pairs: recentEntryPairs, onSelect: open, onRemove: removeRecent)
         }
     }
 
@@ -188,6 +188,13 @@ private extension CurrencyConverterScreen {
 
     func clearRecents() {
         recentPairs = []
+        CurrencyRecents.list().save(recentPairs)
+    }
+
+    func removeRecent(_ pair: CurrencyEntryPair) {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            recentPairs = CurrencyRecents.list().removing(pair.pair, from: recentPairs)
+        }
         CurrencyRecents.list().save(recentPairs)
     }
 }
