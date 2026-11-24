@@ -113,7 +113,7 @@ private extension DistanceCalculatorScreen {
             RowListCard(
                 resolvedRecentRoutes,
                 dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth),
-                onRemove: removeRecent
+                menu: .routes(open: open, remove: removeRecent)
             ) { route in
                 RouteRow(route: route) {
                     open(route)

@@ -107,7 +107,7 @@ private extension CompareScreen {
             RowListCard(
                 Array(recentPairs.prefix(Self.recentLimit)),
                 dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth),
-                onRemove: removeRecent
+                menu: .comparisons(open: open, remove: removeRecent)
             ) { pair in
                 CompareMatchupRow(pair: pair) {
                     open(pair)

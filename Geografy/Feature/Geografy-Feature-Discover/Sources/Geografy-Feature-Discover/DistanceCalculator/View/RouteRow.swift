@@ -35,3 +35,25 @@ private extension RouteRow {
         return "\(countries), \(DistanceFormat.number(metrics.distanceKm)) kilometers"
     }
 }
+
+// MARK: - Menu
+extension RowListMenu where Item == CapitalRoute {
+    /// A route's long press: its two capitals and how far apart they are, then Open, Copy, Share, and Remove.
+    static func routes(open: @escaping (CapitalRoute) -> Void, remove: ((CapitalRoute) -> Void)? = nil) -> Self {
+        RowListMenu(open: open, text: shareText, remove: remove) { route in
+            FlagPairPreview(
+                leftFlagCode: route.origin.code,
+                rightFlagCode: route.destination.code,
+                title: "\(route.origin.name) → \(route.destination.name)",
+                subtitle: "\(route.origin.routePlaceName) to \(route.destination.routePlaceName)",
+                figure: route.metrics.map { DistanceFormat.kilometers($0.distanceKm) }
+            )
+        }
+    }
+
+    private static func shareText(_ route: CapitalRoute) -> String {
+        let places = "\(route.origin.routePlaceName) to \(route.destination.routePlaceName)"
+        guard let metrics = route.metrics else { return places }
+        return "\(places): \(DistanceFormat.kilometers(metrics.distanceKm))"
+    }
+}

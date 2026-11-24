@@ -2,7 +2,8 @@ import SwiftUI
 
 /// A row in a card that swipes left to show a red Remove, as a `List` row's trailing swipe does. The system's
 /// swipe actions work only in a `List`, so cards in a scroll view use this instead (article 1): it opens and
-/// closes like the system's, offers the same Remove in its long press, and to VoiceOver as an action.
+/// closes like the system's, and offers the same Remove to VoiceOver as an action. The long press is the row's
+/// `RowListMenu`.
 struct SwipeToRemoveRow<Content: View>: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -44,9 +45,6 @@ struct SwipeToRemoveRow<Content: View>: View {
             )
         )
         #endif
-        .contextMenu {
-            Button("Remove", systemImage: "trash", role: .destructive, action: onRemove)
-        }
         .accessibilityAction(named: Text("Remove", bundle: .module), onRemove)
     }
 }

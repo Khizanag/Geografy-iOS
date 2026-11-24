@@ -14,7 +14,7 @@ struct CurrencyPairList: View {
         RowListCard(
             pairs,
             dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth),
-            onRemove: onRemove
+            menu: .currencyPairs(open: onSelect, remove: onRemove)
         ) { pair in
             FlagPairRow(
                 leftFlagCode: pair.from.flagCode,
@@ -26,5 +26,27 @@ struct CurrencyPairList: View {
                 onSelect(pair)
             }
         }
+    }
+}
+
+// MARK: - Menu
+extension RowListMenu where Item == CurrencyEntryPair {
+    /// A currency pair's long press: both currencies, then Open, Copy, Share, and Remove when it can be removed.
+    static func currencyPairs(
+        open: @escaping (CurrencyEntryPair) -> Void,
+        remove: ((CurrencyEntryPair) -> Void)? = nil
+    ) -> Self {
+        RowListMenu(open: open, text: shareText, remove: remove) { pair in
+            FlagPairPreview(
+                leftFlagCode: pair.from.flagCode,
+                rightFlagCode: pair.to.flagCode,
+                title: "\(pair.from.code) → \(pair.to.code)",
+                subtitle: "\(pair.from.name) to \(pair.to.name)"
+            )
+        }
+    }
+
+    private static func shareText(_ pair: CurrencyEntryPair) -> String {
+        "\(pair.from.code) → \(pair.to.code)"
     }
 }
