@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            bottomBar,
+            everyGameLocalPlay,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var bottomBar: BuildNote {
+    var everyGameLocalPlay: BuildNote {
         BuildNote(
-            commit: "d7884504",
-            title: "Bottom buttons sit lower",
+            commit: "de99c5a5",
+            title: "Every game in Local Play",
             howToTest: """
-                Open a game's guide with ? and check Next: it sits just above the home indicator, with no extra \
-                gap. Check Start on Quiz, Map Puzzle, and Pin Drop, a quiz's results, and Local Play: the same \
-                small gap everywhere.
+                With a second phone, host a Local Play game: the game picker has Quiz, Map Puzzle, Pin Drop, Speed \
+                Run, and Word Search. Play Map Puzzle (same countries, the other's score under the map), then Word \
+                Search and Speed Run, which end the moment one of you finishes. Each ends on the shared result.
                 """,
-            systemImage: "rectangle.bottomthird.inset.filled",
-            color: DesignSystem.Color.blue
+            systemImage: "person.2.fill",
+            color: DesignSystem.Color.teal
         ) {
-            go.open(.dailyChallenge)
+            go.open(.multiplayer)
         }
     }
 }
