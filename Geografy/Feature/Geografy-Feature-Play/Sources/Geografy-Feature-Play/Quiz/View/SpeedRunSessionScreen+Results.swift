@@ -68,10 +68,11 @@ extension SpeedRunSessionScreen {
 
             RowListCard(
                 countries,
-                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth),
+                menu: .countries(open: openCountry)
             ) { country in
                 Button {
-                    coordinator.sheet(CountryRoute.countryDetail(country))
+                    openCountry(country)
                 } label: {
                     CountryListRow(country: country) { RowChevron() }
                         .rowListCardRow()
@@ -86,6 +87,10 @@ extension SpeedRunSessionScreen {
 
 // MARK: - Helpers
 extension SpeedRunSessionScreen {
+    func openCountry(_ country: Country) {
+        coordinator.sheet(CountryRoute.countryDetail(country))
+    }
+
     var isComplete: Bool {
         !targetCountries.isEmpty && completedCodes.count == targetCountries.count
     }
