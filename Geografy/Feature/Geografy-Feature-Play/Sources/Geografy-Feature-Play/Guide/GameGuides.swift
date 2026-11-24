@@ -149,9 +149,10 @@ extension GameGuide {
         ]
     )
 
-    static let localPlay = GameGuide(
+    /// Its id predates the name, and stays so the guide isn't shown again to someone who has seen it.
+    static let multiplayer = GameGuide(
         id: "localPlay",
-        title: String(localized: "Local Play", bundle: .module),
+        title: String(localized: "Multiplayer", bundle: .module),
         systemImage: "person.2.fill",
         color: DesignSystem.Color.teal,
         pages: [

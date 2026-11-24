@@ -59,9 +59,9 @@ private extension LocalMultiplayerEntryScreen {
         .scrollBounceBehavior(.basedOnSize)
         .scrollDismissesKeyboard(.interactively)
         .screenBackground()
-        .navigationTitle("Local Play")
+        .navigationTitle("Multiplayer")
         .navigationBarTitleDisplayMode(.inline)
-        .gameGuide(.localPlay)
+        .gameGuide(.multiplayer)
         .bottomActionBar { roleButtons }
     }
 

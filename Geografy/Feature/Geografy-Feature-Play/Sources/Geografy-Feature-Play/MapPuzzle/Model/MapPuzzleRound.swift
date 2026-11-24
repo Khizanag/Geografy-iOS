@@ -1,7 +1,7 @@
 import Geografy_Core_Common
 
 /// One Map Puzzle round: the country the map highlights and the names offered for it. Codes, not countries, so a
-/// Local Play host can send the same rounds to the other phone.
+/// multiplayer host can send the same rounds to the other phone.
 public struct MapPuzzleRound: Codable, Equatable, Sendable {
     public let answerCode: String
     /// Every answer shown, the right one among them, in display order.

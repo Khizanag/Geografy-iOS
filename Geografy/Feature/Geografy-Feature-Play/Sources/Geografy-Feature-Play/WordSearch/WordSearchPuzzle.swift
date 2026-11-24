@@ -21,7 +21,7 @@ public struct WordSearchPuzzle: Identifiable, Codable, Sendable {
 }
 
 // MARK: - Codable
-/// Sent to the other phone in a Local Play match; each row of letters travels as one string.
+/// Sent to the other phone in a multiplayer match; each row of letters travels as one string.
 extension WordSearchPuzzle {
     private enum CodingKeys: String, CodingKey {
         case id

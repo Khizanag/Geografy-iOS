@@ -3,7 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 /// Pin Drop's choices: the region, then the rounds, how small the countries get, and whether borders show.
-/// The solo setup and the Local Play lobby both use it.
+/// The solo setup and the multiplayer lobby both use it.
 struct PinDropSettingsSections: View {
     // MARK: - Properties
     @Binding var configuration: PinDropConfiguration

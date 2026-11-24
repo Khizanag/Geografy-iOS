@@ -1,4 +1,4 @@
-/// A Local Play match as a game's own screen sees it: how the other player is doing, and where to report this
+/// A multiplayer match as a game's own screen sees it: how the other player is doing, and where to report this
 /// player's rounds. Every game plays a match through its normal screen with one of these; on its own, it has none.
 @MainActor
 protocol LocalMatch: AnyObject {

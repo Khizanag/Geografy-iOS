@@ -31,7 +31,7 @@ struct LocalMultiplayerEndingView: View {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .screenBackground()
-        .navigationTitle("Local Play")
+        .navigationTitle("Multiplayer")
         .navigationBarTitleDisplayMode(.inline)
         .bottomActionBar { buttons }
         .onAppear {

@@ -47,7 +47,7 @@ public struct SpeedRunSessionScreen: View {
         self.init(region: region, match: nil)
     }
 
-    /// Plays a Local Play race when `match` is set: reports each named country and gives no solo rewards.
+    /// Plays a multiplayer race when `match` is set: reports each named country and gives no solo rewards.
     init(region: QuizRegion, match: (any LocalMatch)?) {
         self.region = region
         self.match = match

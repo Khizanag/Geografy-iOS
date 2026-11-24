@@ -1,7 +1,7 @@
 #if !os(tvOS)
 import SwiftUI
 
-/// What a Local Play match plays. Every game the app has is here, so two phones can play any of them.
+/// What a multiplayer match plays. Every game the app has is here, so two phones can play any of them.
 public enum LocalGame: String, CaseIterable, Codable, Identifiable, Sendable {
     case quiz
     case mapPuzzle

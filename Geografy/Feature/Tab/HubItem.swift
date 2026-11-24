@@ -107,7 +107,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .dailyChallenge: "New puzzle every day"
         case .compare: "Side-by-side country stats"
         case .quizPacks: "Themed packs and your own quizzes"
-        case .multiplayer: "Play with friends nearby"
+        case .multiplayer: "Play with a friend nearby"
         case .speedRun: "Name all countries, race the clock"
         case .distanceCalculator: "Great circle distance between capitals"
         case .currencyConverter: "Daily rates for 160+ currencies"

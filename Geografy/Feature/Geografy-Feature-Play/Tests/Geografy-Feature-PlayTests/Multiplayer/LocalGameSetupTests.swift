@@ -2,7 +2,7 @@ import Geografy_Core_Common
 @testable import Geografy_Feature_Play
 import Testing
 
-@Suite("Local Play game setup")
+@Suite("Multiplayer game setup")
 struct LocalGameSetupTests {
     @Test("A Word Search grid reaches the other phone letter for letter")
     func wordSearchRoundTrip() throws {
@@ -11,7 +11,7 @@ struct LocalGameSetupTests {
 
         let decoded = try PeerMessage.decode(from: message.encode())
 
-        guard case .startGame(let config, .wordSearch(let received)) = decoded else {
+        guard case let .startGame(config, .wordSearch(received)) = decoded else {
             Issue.record("Expected a Word Search start")
             return
         }
