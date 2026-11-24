@@ -232,8 +232,14 @@ private extension SpeedRunSessionScreen {
             hero: { resultsHero },
             stats: { resultsStats },
             details: {
+                if showsMap {
+                    SpeedRunMap(region: region, countries: targetCountries, namedCodes: completedCodes)
+                }
                 if !missedCountries.isEmpty {
                     missedSection
+                }
+                if !namedCountries.isEmpty {
+                    namedSection
                 }
             }
         )

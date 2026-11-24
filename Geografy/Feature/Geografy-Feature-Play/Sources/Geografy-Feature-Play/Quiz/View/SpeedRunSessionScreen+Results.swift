@@ -54,11 +54,19 @@ extension SpeedRunSessionScreen {
     }
 
     var missedSection: some View {
+        countrySection("Missed Countries", icon: "xmark.circle", countries: missedCountries)
+    }
+
+    var namedSection: some View {
+        countrySection("Named Countries", icon: "checkmark.circle", countries: namedCountries)
+    }
+
+    func countrySection(_ title: LocalizedStringKey, icon: String, countries: [Country]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Missed Countries", icon: "xmark.circle")
+            SectionHeaderView(title: title, icon: icon)
 
             RowListCard(
-                missedCountries,
+                countries,
                 dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
             ) { country in
                 CountryListRow(country: country)
@@ -78,6 +86,12 @@ extension SpeedRunSessionScreen {
     var missedCountries: [Country] {
         targetCountries
             .filter { !completedCodes.contains($0.code) }
+            .sorted(by: \.name)
+    }
+
+    var namedCountries: [Country] {
+        targetCountries
+            .filter { completedCodes.contains($0.code) }
             .sorted(by: \.name)
     }
 
