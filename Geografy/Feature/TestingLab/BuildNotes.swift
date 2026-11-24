@@ -21,39 +21,24 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            smallCountryMarkers,
-            lowerBottomButtons,
+            speedRunResults,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var smallCountryMarkers: BuildNote {
+    var speedRunResults: BuildNote {
         BuildNote(
-            commit: "9253a075",
-            title: "Small countries marked",
+            commit: "ed0cef19",
+            title: "Speed Run results list both",
             howToTest: """
-                Start a Speed Run in Europe with Show Map on: Monaco, the Vatican, San Marino, Malta, and the \
-                other tiny countries each have a white ring. Name Monaco: its ring turns into a green dot.
+                Name a few countries in a Speed Run and give up: the results list Missed Countries, then Named \
+                Countries. With Show Map on, the finished map sits above them, named countries green and tiny \
+                missed ones ringed.
                 """,
-            systemImage: "smallcircle.filled.circle",
+            systemImage: "checklist",
             color: DesignSystem.Color.pink
-        ) {
-            go.open(.speedRun)
-        }
-    }
-
-    var lowerBottomButtons: BuildNote {
-        BuildNote(
-            commit: "2f261037",
-            title: "Bottom buttons lower",
-            howToTest: """
-                Finish a Speed Run or a quiz: Done and Play Again sit right above the home indicator, with no \
-                extra gap. Start buttons on the setup pages sit just above the tab bar.
-                """,
-            systemImage: "rectangle.bottomthird.inset.filled",
-            color: DesignSystem.Color.blue
         ) {
             go.open(.speedRun)
         }
