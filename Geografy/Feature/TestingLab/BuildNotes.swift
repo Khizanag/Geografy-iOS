@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            countryFlight,
+            tabBarGap,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var countryFlight: BuildNote {
+    var tabBarGap: BuildNote {
         BuildNote(
-            commit: "9b75761d",
-            title: "Fly to a found country",
+            commit: "2d9f6a9f",
+            title: "Buttons clear the tab bar",
             howToTest: """
-                On the Map tab, tap the magnifier and pick a country, such as Chile or Japan. The map should fly \
-                there smoothly as the sheet closes: sharp the whole way, no blur, and no jump when it lands. \
-                Pinching or dragging mid-flight should take over from where the map is.
+                Open Speed Run, or any game's setup: Start sits a little above the tab bar instead of touching \
+                it. Then tap the Guide button: its Next still sits right on the home indicator, with no extra \
+                space below.
                 """,
-            systemImage: "location.magnifyingglass",
+            systemImage: "rectangle.bottomhalf.inset.filled",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.map)
+            go.open(.speedRun)
         }
     }
 }
