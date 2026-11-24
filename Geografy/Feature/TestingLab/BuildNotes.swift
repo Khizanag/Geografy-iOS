@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            recentLongPress,
+            speedRunMap,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var recentLongPress: BuildNote {
+    var speedRunMap: BuildNote {
         BuildNote(
-            commit: "480475bf",
-            title: "Long-press a recent",
+            commit: "7b79313f",
+            title: "Speed Run map",
             howToTest: """
-                In Distance Calculator, Compare, and Currency Converter, long-press an item under Recent: a \
-                preview shows both flags and, for a route, its distance; the menu offers Open, Copy, Share, and \
-                Remove in red. Swiping left still removes it too.
+                In Speed Run setup, turn on Show Map under Game and start a run in Europe. A map of Europe sits \
+                above the list, and each country turns green as you name it, so the gaps show what's left. Try \
+                Whole World too.
                 """,
-            systemImage: "hand.point.up.left",
-            color: DesignSystem.Color.blue
+            systemImage: "map",
+            color: DesignSystem.Color.pink
         ) {
-            go.open(.distanceCalculator)
+            go.open(.speedRun)
         }
     }
 }
