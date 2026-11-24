@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            oneCardCorner,
+            sharedChips,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var oneCardCorner: BuildNote {
+    var sharedChips: BuildNote {
         BuildNote(
-            commit: "f2e8fcdc",
-            title: "One card corner, glass banners",
+            commit: "17244c2e",
+            title: "One filter chip everywhere",
             howToTest: """
-                Open Profile: the Save your progress banner is now tinted glass, and it, the cards, and the \
-                statistics tiles all share one corner. Tap the banner: the glass answers the press. Also check \
-                an unlocked achievement's Unlocked panel, and a custom quiz's continent list, now one card.
+                Compare the chips in Achievements, Travel, Timeline, Landmarks, and Quiz Packs: all are glass \
+                capsules, and the chosen one is prominent glass in its colour. Travel's chosen chip shows its \
+                count. Timeline's Continent and Event Type open menus. Each choice plays a light tick.
                 """,
-            systemImage: "rectangle.roundedtop",
+            systemImage: "capsule.on.rectangle",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.profile)
+            go.open(.achievements)
         }
     }
 }
