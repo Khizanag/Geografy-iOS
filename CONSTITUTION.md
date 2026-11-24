@@ -42,6 +42,10 @@ A card, tile, or row that is itself the button takes `PressButtonStyle`: it dims
 
 At the owner's word, a press on a button or a card is a change of state that is felt: `GlassButton` taps lightly on every press and `PressButtonStyle` at half strength, each through `.sensoryFeedback` on the button itself (article 23). A screen never adds a tap of its own to a press; it adds a haptic only for what the press changed, such as a right answer, a toggled favorite, or a choice among options.
 
+### Article 107: every game plays in Local Play
+
+At the owner's word, every game the app has can be played against a nearby phone, and a new game ships with its Local Play mode. It plays through the game's own screen with a `LocalMatch`: the host picks and sends what both phones play, each round is reported, the other player shows in the shared opponent chip, and the match ends in the shared result screen. A race ends when the first player finishes; the other games once both have.
+
 ## Exceptions
 
 ### Articles 2 and 4: the zoom viewer covers the screen with a blur

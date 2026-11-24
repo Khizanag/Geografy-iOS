@@ -163,9 +163,9 @@ extension GameGuide {
             ),
             page(
                 "Head to Head",
-                "You both get the same questions at the same time.",
-                step("questionmark.bubble.fill", "Quiz", "Any quiz type; the most right answers wins"),
-                step("mappin.and.ellipse", "Pin Drop", "Find the same countries; the most points wins"),
+                "Every game plays head to head. You both get the same questions, map, or grid.",
+                step("gamecontroller.fill", "Every Game", "Quiz, Map Puzzle, Pin Drop, Speed Run, and Word Search"),
+                step("flag.checkered", "Races", "In Speed Run and Word Search, the first to finish wins"),
                 step("arrow.counterclockwise", "Rematch", "Ask for another round when it's over")
             ),
         ]

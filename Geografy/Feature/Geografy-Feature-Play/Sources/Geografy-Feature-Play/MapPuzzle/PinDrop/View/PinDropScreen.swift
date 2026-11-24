@@ -21,7 +21,9 @@ struct PinDropScreen: View {
 
     let configuration: PinDropConfiguration
     /// Set when playing against another phone; the match then picks the countries and paces the rounds.
-    let match: (any PinDropMatch)?
+    let match: (any LocalMatch)?
+    /// The host's countries, in the host's order, when playing a match.
+    private let matchCountryCodes: [String]
 
     @State private var game: PinDropGame?
     @State private var allShapes: [CountryShape] = []
@@ -56,9 +58,10 @@ struct PinDropScreen: View {
     /// Room the reveal card takes at the bottom, for framing the answer above it before it's measured.
     private let revealCardHeight: CGFloat = 230
 
-    init(configuration: PinDropConfiguration, match: (any PinDropMatch)? = nil) {
+    init(configuration: PinDropConfiguration, match: (any LocalMatch)? = nil, matchCountryCodes: [String] = []) {
         self.configuration = configuration
         self.match = match
+        self.matchCountryCodes = matchCountryCodes
     }
 
     // MARK: - Body
@@ -175,7 +178,7 @@ private extension PinDropScreen {
     var overlay: some View {
         if let game {
             if game.phase == .finished, let match {
-                waitingCard(String(localized: "Waiting for \(match.pinDropOpponentName) to finish...", bundle: .module))
+                MatchWaitingCard(opponentName: match.opponentName)
                     .frame(maxHeight: .infinity, alignment: .bottom)
                     .padding(DesignSystem.Spacing.md)
             } else if game.phase == .finished {
@@ -259,39 +262,22 @@ private extension PinDropScreen {
     }
 
     /// The other player's total and whether they've locked in this round.
-    func opponentChip(_ match: any PinDropMatch, round: Int) -> some View {
-        let isLocked = match.hasOpponentLockedIn(round: round)
-        let points = PinDropStyle.points(Double(match.pinDropOpponentScore), locale: locale)
-        return Label(
-            isLocked
-                ? "\(match.pinDropOpponentName) · \(points) · Locked in"
-                : "\(match.pinDropOpponentName) · \(points) · Aiming",
+    func opponentChip(_ match: any LocalMatch, round: Int) -> some View {
+        let isLocked = match.hasOpponentScored(round: round)
+        return MatchOpponentChip(
+            name: match.opponentName,
+            score: PinDropStyle.points(Double(match.opponentScore), locale: locale),
+            status: isLocked
+                ? String(localized: "Locked in", bundle: .module)
+                : String(localized: "Aiming", bundle: .module),
             systemImage: isLocked ? "checkmark.circle.fill" : "scope"
         )
-        .font(DesignSystem.Font.caption)
-        .fontWeight(.semibold)
-        .foregroundStyle(DesignSystem.Color.textPrimary)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .glassEffect(.regular, in: .capsule)
-        .contentTransition(.opacity)
-        .animation(reduceMotion ? nil : .smooth, value: isLocked)
-    }
-
-    func waitingCard(_ text: String) -> some View {
-        Label(text, systemImage: "hourglass")
-            .font(DesignSystem.Font.subheadline)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.md)
-            .glassEffect(.regular, in: .rect(cornerRadius: DesignSystem.CornerRadius.large))
     }
 
     /// Who the next round waits for, when the other player hasn't locked this one in yet.
     func waitingName(round: Int) -> String? {
-        guard let match, !match.hasOpponentLockedIn(round: round) else { return nil }
-        return match.pinDropOpponentName
+        guard let match, !match.hasOpponentScored(round: round) else { return nil }
+        return match.opponentName
     }
 
     func tapHint(picksCountries: Bool) -> some View {
@@ -489,9 +475,9 @@ private extension PinDropScreen {
     }
 
     /// The host's countries, in the host's order, so both phones find the same ones.
-    func matchRounds(_ match: any PinDropMatch) -> [PinDropGame.Round] {
+    func matchRounds(_ match: any LocalMatch) -> [PinDropGame.Round] {
         let shapesByCode = Dictionary(allShapes.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-        return match.pinDropCountryCodes.compactMap { code in
+        return matchCountryCodes.compactMap { code in
             guard let country = countryDataService.country(for: code),
                   let shape = shapesByCode[code]
             else { return nil }
@@ -501,7 +487,7 @@ private extension PinDropScreen {
 
     func lockIn() {
         guard let game, let result = game.lockIn() else { return }
-        match?.didLockIn(round: game.currentIndex, points: result.score.total)
+        match?.didScore(round: game.currentIndex, points: result.score.total)
         if let guess = result.guessedCountryCode, !result.isInside {
             // Grey, not a rating color, so only the answer carries how the round went.
             let missTint = DesignSystem.Color.mapLandMuted.mix(with: DesignSystem.Color.textPrimary, by: 0.5)

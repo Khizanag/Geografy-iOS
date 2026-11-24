@@ -8,9 +8,12 @@ public enum PeerMessage: Codable {
     case lobbySettings(config: MatchConfig)
     case lobbyReady
     case startMatch(config: MatchConfig, questions: [SerializableQuestion])
-    /// A Pin Drop match: the countries to find, in order.
-    case startPinDrop(config: MatchConfig, countryCodes: [String])
-    case pinDropLocked(round: Int, points: Int)
+    /// Any game but a quiz, with what the host picked for it.
+    case startGame(config: MatchConfig, setup: LocalGameSetup)
+    /// A round played in a game other than a quiz: a pin locked in, a puzzle answered, a word or country found.
+    case roundScored(round: Int, points: Int)
+    /// The sender has played every round.
+    case finishedRounds
     case answerSubmitted(questionIndex: Int, optionID: UUID, timeSpent: TimeInterval)
     case timedOut(questionIndex: Int)
     case advanceToNext(questionIndex: Int)
@@ -31,6 +34,10 @@ extension PeerMessage {
         public let difficulty: QuizDifficulty
         public let questionCount: Int
         public let comparisonMetric: ComparisonMetric
+        /// Nil for the whole world.
+        public let mapPuzzleContinent: Country.Continent?
+        public let mapPuzzleQuestionCount: QuestionCount
+        public let wordSearchTheme: WordSearchTheme
     }
 }
 

@@ -36,16 +36,39 @@ private extension LocalMultiplayerFlowView {
         case .countdown:
             LocalMultiplayerCountdownView(coordinator: coordinator)
         case .playing:
-            switch coordinator.activeGame {
-            case .quiz:
-                LocalMultiplayerMatchScreen(coordinator: coordinator)
-            case .pinDrop:
-                PinDropScreen(configuration: coordinator.activePinDropConfiguration, match: coordinator)
-            }
+            matchScreen
         case .finished:
             LocalMultiplayerResultScreen(coordinator: coordinator)
         case .disconnected:
             LocalMultiplayerEndingView(coordinator: coordinator)
+        }
+    }
+
+    /// Each game plays a match on its own screen, given the match to report to and what the host picked.
+    @ViewBuilder
+    var matchScreen: some View {
+        switch coordinator.activeGame {
+        case .quiz:
+            LocalMultiplayerMatchScreen(coordinator: coordinator)
+        case .mapPuzzle:
+            MapPuzzleScreen(
+                continent: coordinator.activeMapPuzzleContinent,
+                questionCount: .ten,
+                match: coordinator,
+                matchRounds: coordinator.mapPuzzleRounds
+            )
+        case .pinDrop:
+            PinDropScreen(
+                configuration: coordinator.activePinDropConfiguration,
+                match: coordinator,
+                matchCountryCodes: coordinator.pinDropCountryCodes
+            )
+        case .speedRun:
+            SpeedRunSessionScreen(region: coordinator.activeRegion, match: coordinator)
+        case .wordSearch:
+            if let puzzle = coordinator.wordSearchPuzzle {
+                WordSearchGameScreen(theme: puzzle.theme, match: coordinator, matchPuzzle: puzzle)
+            }
         }
     }
 

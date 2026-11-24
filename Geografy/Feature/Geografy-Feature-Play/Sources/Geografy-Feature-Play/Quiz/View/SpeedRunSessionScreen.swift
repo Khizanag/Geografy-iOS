@@ -11,18 +11,20 @@ public struct SpeedRunSessionScreen: View {
     @Environment(SoundService.self) private var soundService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
-    @Environment(AchievementService.self) private var achievementService
+    @Environment(AchievementService.self) var achievementService
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     public let region: QuizRegion
+    /// Set when racing another phone; the match's own result screen and Give Up then replace the solo ones.
+    let match: (any LocalMatch)?
 
-    @State private var targetCountries: [Country] = []
+    @State var targetCountries: [Country] = []
     @State private var nameIndex = SpeedRunNameIndex(countries: [])
     @State private var startDate = Date.now
-    @State private var elapsedTime: TimeInterval = 0
+    @State var elapsedTime: TimeInterval = 0
     @State private var inputText = ""
-    @State private var completedCodes: Set<String> = []
+    @State var completedCodes: Set<String> = []
     @State private var completedCountries: [Country] = []
     @State private var flashingCode: String?
     @State private var inputFeedback: AnswerField.Feedback = .none
@@ -35,11 +37,17 @@ public struct SpeedRunSessionScreen: View {
 
     @FocusState private var isInputFocused: Bool
 
-    @ScaledMetric(relativeTo: .largeTitle) private var resultTimeFontSize: CGFloat = 40
+    @ScaledMetric(relativeTo: .largeTitle) var resultTimeFontSize: CGFloat = 40
 
     // MARK: - Init
     public init(region: QuizRegion) {
+        self.init(region: region, match: nil)
+    }
+
+    /// Plays a Local Play race when `match` is set: reports each named country and gives no solo rewards.
+    init(region: QuizRegion, match: (any LocalMatch)?) {
         self.region = region
+        self.match = match
     }
 
     // MARK: - Body
@@ -49,7 +57,8 @@ public struct SpeedRunSessionScreen: View {
             .navigationTitle("Speed Run · \(region.displayName)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
-            .hideNavigationCloseButton()
+            // A match brings its own Give Up; on its own, Give Up replaces the cover's close button.
+            .hideNavigationCloseButton(match == nil)
             .onAppear { isInputFocused = true }
             .onChange(of: countryDataService.countries.count, initial: true) {
                 loadCountries()
@@ -84,6 +93,10 @@ private extension SpeedRunSessionScreen {
             VStack(spacing: DesignSystem.Spacing.md) {
                 timerSection
 
+                if let match {
+                    matchChip(match)
+                }
+
                 progressSection
 
                 completedList
@@ -98,7 +111,7 @@ private extension SpeedRunSessionScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        if !isFinished {
+        if match == nil, !isFinished {
             ToolbarItem(placement: .topBarLeading) {
                 LeaveGameButton { showGiveUpAlert = true }
             }
@@ -109,6 +122,16 @@ private extension SpeedRunSessionScreen {
     var timerSection: some View {
         SpeedRunClock(startDate: startDate, isComplete: isComplete)
             .frame(maxWidth: .infinity)
+    }
+
+    /// No waiting state: the first player to name every country ends the race for both.
+    func matchChip(_ match: any LocalMatch) -> some View {
+        MatchOpponentChip(
+            name: match.opponentName,
+            score: "\(match.opponentScore)/\(targetCountries.count)",
+            status: String(localized: "Racing", bundle: .module),
+            systemImage: "hare.fill"
+        )
     }
 
     var progressSection: some View {
@@ -208,69 +231,6 @@ private extension SpeedRunSessionScreen {
             }
         )
     }
-
-    var resultShare: ResultShare {
-        ResultShare(
-            game: String(localized: "Speed Run"),
-            score: "\(completedCodes.count)/\(targetCountries.count)",
-            caption: SpeedRunClock.formatted(elapsedTime),
-            fraction: Double(progressFraction),
-            details: [ResultShare.Detail(region.displayName, systemImage: "globe")],
-            onShare: achievementService.recordShare
-        )
-    }
-
-    var resultsHero: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            IconBadge("trophy.fill", color: DesignSystem.Color.warning, size: .hero)
-                .symbolEffect(.bounce, isActive: !reduceMotion)
-                .accessibilityHidden(true)
-            Text(SpeedRunClock.formatted(elapsedTime))
-                .font(DesignSystem.Font.system(size: resultTimeFontSize, weight: .bold, design: .monospaced))
-                .foregroundStyle(DesignSystem.Color.pink)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-                .accessibilityLabel("Time")
-                .accessibilityValue(SpeedRunClock.spokenValue(elapsedTime, isComplete: isComplete))
-        }
-    }
-
-    @ViewBuilder
-    var resultsStats: some View {
-        StatTile(
-            value: "\(completedCodes.count)",
-            label: "Named",
-            icon: "checkmark.circle.fill",
-            color: DesignSystem.Color.success
-        )
-        StatTile(
-            value: "\(targetCountries.count - completedCodes.count)",
-            label: "Missed",
-            icon: "xmark.circle.fill",
-            color: DesignSystem.Color.error
-        )
-        StatTile(
-            value: "\(Int(progressFraction * 100))%",
-            label: "Done",
-            icon: "chart.bar.fill",
-            color: DesignSystem.Color.blue
-        )
-    }
-
-    var missedSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Missed Countries", icon: "xmark.circle")
-
-            RowListCard(
-                missedCountries,
-                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
-            ) { country in
-                CountryListRow(country: country)
-                    .rowListCardRow()
-                    .accessibilityElement(children: .combine)
-            }
-        }
-    }
 }
 
 // MARK: - Actions
@@ -290,19 +250,20 @@ private extension SpeedRunSessionScreen {
             ? String(localized: "Already named", bundle: .module, in: locale)
             : nil
         guard normalized.count >= 2,
-              let match = remainingCountry(named: normalized)
+              let country = remainingCountry(named: normalized)
         else { return }
 
         withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
-            completedCodes.insert(match.code)
-            completedCountries.insert(match, at: 0)
+            completedCodes.insert(country.code)
+            completedCountries.insert(country, at: 0)
         }
+        match?.didScore(round: matchRound(for: country), points: 1)
         inputText = ""
         inputMessage = nil
         inputFeedback = .correct
-        flashingCode = match.code
+        flashingCode = country.code
         soundService.play(.correct)
-        let announcement = "\(match.name). \(completedCodes.count) of \(targetCountries.count)."
+        let announcement = "\(country.name). \(completedCodes.count) of \(targetCountries.count)."
         AccessibilityNotification.Announcement(announcement).post()
 
         Task {
@@ -312,8 +273,18 @@ private extension SpeedRunSessionScreen {
         }
 
         if completedCodes.count == targetCountries.count {
-            finishRun()
+            if let match {
+                isInputFocused = false
+                match.didFinishRounds()
+            } else {
+                finishRun()
+            }
         }
+    }
+
+    /// The country's place in the region sorted by code, which both phones agree on whatever their language.
+    func matchRound(for country: Country) -> Int {
+        targetCountries.map(\.code).sorted().firstIndex(of: country.code) ?? 0
     }
 
     /// Return only arrives when nothing matched, so it explains why and keeps the keyboard up.
@@ -400,43 +371,5 @@ private extension SpeedRunSessionScreen {
         flashingCode = nil
         startDate = .now
         isInputFocused = true
-    }
-}
-
-// MARK: - Helpers
-private extension SpeedRunSessionScreen {
-    var isComplete: Bool {
-        !targetCountries.isEmpty && completedCodes.count == targetCountries.count
-    }
-
-    var missedCountries: [Country] {
-        targetCountries
-            .filter { !completedCodes.contains($0.code) }
-            .sorted(by: \.name)
-    }
-
-    var progressFraction: CGFloat {
-        guard !targetCountries.isEmpty else { return 0 }
-        return CGFloat(completedCodes.count) / CGFloat(targetCountries.count)
-    }
-
-    var completionMessage: String {
-        let fraction = Double(completedCodes.count) / Double(targetCountries.count)
-        if fraction >= 1.0 { return "Perfect" }
-        if fraction >= 0.8 { return "Impressive" }
-        if fraction >= 0.5 { return "Good Run" }
-        return "Keep Training"
-    }
-
-    var speedRunLeaderboardID: String {
-        switch region {
-        case .world: GameCenterService.LeaderboardID.speedRunWorld
-        case .africa: GameCenterService.LeaderboardID.speedRunAfrica
-        case .asia: GameCenterService.LeaderboardID.speedRunAsia
-        case .europe: GameCenterService.LeaderboardID.speedRunEurope
-        case .northAmerica: GameCenterService.LeaderboardID.speedRunNorthAmerica
-        case .southAmerica: GameCenterService.LeaderboardID.speedRunSouthAmerica
-        case .oceania: GameCenterService.LeaderboardID.speedRunOceania
-        }
     }
 }

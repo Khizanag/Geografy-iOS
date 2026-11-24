@@ -47,11 +47,17 @@ public final class LocalMultiplayerCoordinator {
     public var comparisonMetric: ComparisonMetric = .population { didSet { shareSettings() } }
     public var game: LocalGame = .quiz { didSet { shareSettings() } }
     public var pinDropConfiguration = PinDropConfiguration(region: .world) { didSet { shareSettings() } }
+    /// Nil for the whole world.
+    var mapPuzzleContinent: Country.Continent? { didSet { shareSettings() } }
+    var mapPuzzleQuestionCount: QuestionCount = .ten { didSet { shareSettings() } }
+    var wordSearchTheme: WordSearchTheme = .countries { didSet { shareSettings() } }
 
     /// The countries a Pin Drop match finds, in order, chosen by the host.
-    private(set) var pinDropCodes: [String] = []
-    private var opponentLockedRounds: Set<Int> = []
-    private var hasFinishedPinDropRounds = false
+    /// What the host picked for a game other than a quiz.
+    private(set) var gameSetup: LocalGameSetup?
+    private var opponentScoredRounds: Set<Int> = []
+    private var hasFinishedRounds = false
+    private var opponentHasFinishedRounds = false
 
     var activeGame: LocalGame {
         isHost ? game : matchConfig?.game ?? game
@@ -68,6 +74,15 @@ public final class LocalMultiplayerCoordinator {
 
     var activeDifficulty: QuizDifficulty {
         isHost ? difficulty : matchConfig?.difficulty ?? difficulty
+    }
+
+    /// The quiz's region, which a Speed Run races through too.
+    var activeRegion: QuizRegion {
+        isHost ? region : matchConfig?.region ?? region
+    }
+
+    var activeMapPuzzleContinent: Country.Continent? {
+        isHost ? mapPuzzleContinent : matchConfig?.mapPuzzleContinent
     }
 
     private let countryDataService: CountryDataService
@@ -107,8 +122,19 @@ extension LocalMultiplayerCoordinator {
 
     public func startMatch() {
         guard isHost, opponent?.isReady == true else { return }
-        if game == .pinDrop {
+        switch game {
+        case .quiz: break
+        case .mapPuzzle:
+            startMapPuzzleMatch()
+            return
+        case .pinDrop:
             startPinDropMatch()
+            return
+        case .speedRun:
+            start(.speedRun)
+            return
+        case .wordSearch:
+            start(.wordSearch(WordSearchService().makePuzzle(theme: wordSearchTheme)))
             return
         }
 
@@ -225,8 +251,9 @@ private extension LocalMultiplayerCoordinator {
         case .lobbySettings(let config): handleLobbySettings(config)
         case .lobbyReady: handleLobbyReady()
         case let .startMatch(config, serialized): handleStartMatch(config, serialized)
-        case let .startPinDrop(config, codes): handleStartPinDrop(config, codes)
-        case let .pinDropLocked(round, points): handlePinDropLocked(round, points: points)
+        case let .startGame(config, setup): handleStartGame(config, setup)
+        case let .roundScored(round, points): handleRoundScored(round, points: points)
+        case .finishedRounds: handleFinishedRounds()
         case let .answerSubmitted(index, optionID, _): handleOpponentAnswer(index, optionID: optionID)
         case .timedOut(let index): handleOpponentTimeout(index)
         case .advanceToNext(let index): handleAdvance(index)
@@ -243,18 +270,23 @@ private extension LocalMultiplayerCoordinator {
         opponent?.displayName = name
     }
 
-    func handleStartPinDrop(_ config: PeerMessage.MatchConfig, _ codes: [String]) {
-        guard state == .lobby, !codes.isEmpty else { return }
+    func handleStartGame(_ config: PeerMessage.MatchConfig, _ setup: LocalGameSetup) {
+        guard state == .lobby else { return }
         matchConfig = config
-        pinDropCodes = codes
+        gameSetup = setup
         beginCountdown()
     }
 
-    func handlePinDropLocked(_ round: Int, points: Int) {
-        guard state == .playing, !opponentLockedRounds.contains(round) else { return }
-        opponentLockedRounds.insert(round)
+    func handleRoundScored(_ round: Int, points: Int) {
+        guard state == .playing, !opponentScoredRounds.contains(round) else { return }
+        opponentScoredRounds.insert(round)
         opponentScore += points
-        finishPinDropIfDone()
+    }
+
+    func handleFinishedRounds() {
+        guard state == .playing else { return }
+        opponentHasFinishedRounds = true
+        finishIfDone()
     }
 
     func handleLobbySettings(_ config: PeerMessage.MatchConfig) {
@@ -480,7 +512,10 @@ private extension LocalMultiplayerCoordinator {
             region: region,
             difficulty: difficulty,
             questionCount: questionCount.rawValue,
-            comparisonMetric: comparisonMetric
+            comparisonMetric: comparisonMetric,
+            mapPuzzleContinent: mapPuzzleContinent,
+            mapPuzzleQuestionCount: mapPuzzleQuestionCount,
+            wordSearchTheme: wordSearchTheme
         )
     }
 
@@ -497,43 +532,71 @@ private extension LocalMultiplayerCoordinator {
         questions = []
         xpAwarded = false
         isReady = false
-        pinDropCodes = []
-        opponentLockedRounds = []
-        hasFinishedPinDropRounds = false
+        gameSetup = nil
+        opponentScoredRounds = []
+        hasFinishedRounds = false
+        opponentHasFinishedRounds = false
         rematchRequested = false
         isAwaitingRematch = false
         rematchDeclined = false
         opponentLeftAfterMatch = false
     }
 }
-// MARK: - Pin Drop
-extension LocalMultiplayerCoordinator: PinDropMatch {
-    var pinDropCountryCodes: [String] { pinDropCodes }
-
-    var pinDropOpponentName: String {
+// MARK: - Games Other Than a Quiz
+extension LocalMultiplayerCoordinator: LocalMatch {
+    var opponentName: String {
         opponent?.displayName ?? String(localized: "Opponent", bundle: .module)
     }
 
-    var pinDropOpponentScore: Int { opponentScore }
-
-    func hasOpponentLockedIn(round: Int) -> Bool {
-        opponentLockedRounds.contains(round)
+    func hasOpponentScored(round: Int) -> Bool {
+        opponentScoredRounds.contains(round)
     }
 
-    func didLockIn(round: Int, points: Int) {
+    func didScore(round: Int, points: Int) {
         guard state == .playing else { return }
         playerScore += points
-        sessionManager.send(.pinDropLocked(round: round, points: points))
+        sessionManager.send(.roundScored(round: round, points: points))
     }
 
     func didFinishRounds() {
-        hasFinishedPinDropRounds = true
-        finishPinDropIfDone()
+        guard state == .playing, !hasFinishedRounds else { return }
+        hasFinishedRounds = true
+        sessionManager.send(.finishedRounds)
+        finishIfDone()
+    }
+
+    /// The countries to find in Pin Drop, in order.
+    var pinDropCountryCodes: [String] {
+        guard case .pinDrop(let codes) = gameSetup else { return [] }
+        return codes
+    }
+
+    var mapPuzzleRounds: [MapPuzzleRound] {
+        guard case .mapPuzzle(let rounds) = gameSetup else { return [] }
+        return rounds
+    }
+
+    /// Every country a Speed Run in the match's region asks for.
+    var speedRunCountryCount: Int {
+        activeRegion.filter(countryDataService.countries).count
+    }
+
+    var wordSearchPuzzle: WordSearchPuzzle? {
+        guard case .wordSearch(let puzzle) = gameSetup else { return nil }
+        return puzzle
     }
 }
 
 private extension LocalMultiplayerCoordinator {
-    /// Picks the countries once the map's shapes are loaded, the same way a solo game does, then sends them.
+    /// Sends what the host picked and starts the countdown on both phones.
+    func start(_ setup: LocalGameSetup) {
+        gameSetup = setup
+        matchConfig = currentConfig
+        sessionManager.send(.startGame(config: currentConfig, setup: setup))
+        beginCountdown()
+    }
+
+    /// Picks the countries once the map's shapes are loaded, the same way a solo game does.
     func startPinDropMatch() {
         startTask?.cancel()
         startTask = Task { [weak self] in
@@ -548,20 +611,37 @@ private extension LocalMultiplayerCoordinator {
                 using: &generator
             )
             guard !rounds.isEmpty else { return }
-            pinDropCodes = rounds.map(\.country.code)
-            matchConfig = currentConfig
-            sessionManager.send(.startPinDrop(config: currentConfig, countryCodes: pinDropCodes))
-            beginCountdown()
+            start(.pinDrop(countryCodes: rounds.map(\.country.code)))
         }
     }
 
-    /// Ends the match once both players have played every round.
-    func finishPinDropIfDone() {
-        guard activeGame == .pinDrop,
-              hasFinishedPinDropRounds,
-              opponentLockedRounds.count >= pinDropCodes.count
-        else { return }
-        state = .finished
+    /// Asks only about countries drawn on the puzzle's map, as a solo puzzle does.
+    func startMapPuzzleMatch() {
+        startTask?.cancel()
+        startTask = Task { [weak self] in
+            guard let self else { return }
+            let shapes = await geoJSONCache.loadShapes()
+            let outline = await ContinentOutline.puzzleOutline(for: mapPuzzleContinent, shapes: shapes)
+            guard !Task.isCancelled, state == .lobby, let outline else { return }
+            let mappedCodes = Set(outline.countryPaths.keys)
+            let countries = countryDataService.countries.filter { country in
+                mappedCodes.contains(country.code) && (mapPuzzleContinent.map { country.continent == $0 } ?? true)
+            }
+            let rounds = MapPuzzleRules.makeRounds(from: countries, requested: mapPuzzleQuestionCount)
+            guard !rounds.isEmpty else { return }
+            start(.mapPuzzle(rounds: rounds))
+        }
+    }
+
+    /// A race ends as soon as either player finishes; the other games once both have.
+    func finishIfDone() {
+        guard activeGame != .quiz else { return }
+        let isDone = activeGame.isRace
+            ? hasFinishedRounds || opponentHasFinishedRounds
+            : hasFinishedRounds && opponentHasFinishedRounds
+        if isDone {
+            state = .finished
+        }
     }
 }
 #endif

@@ -111,17 +111,58 @@ private extension LocalMultiplayerLobbyScreen {
     var hostConfigSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Game")
+            // Five games are glyphs, each keeping its name for VoiceOver; the chosen one is named below.
             Picker("Game", selection: $coordinator.game) {
                 ForEach(LocalGame.allCases) { game in
-                    Label(game.title, systemImage: game.systemImage).tag(game)
+                    Label(game.title, systemImage: game.systemImage)
+                        .labelStyle(.iconOnly)
+                        .tag(game)
                 }
             }
             .pickerStyle(.segmented)
+            Text(coordinator.game.title)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
 
             switch coordinator.game {
             case .quiz: quizSettings
+            case .mapPuzzle: mapPuzzleSettings
             case .pinDrop: PinDropSettingsSections(configuration: $coordinator.pinDropConfiguration)
+            case .speedRun: RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
+            case .wordSearch: wordSearchSettings
             }
+        }
+    }
+
+    @ViewBuilder
+    var mapPuzzleSettings: some View {
+        RegionPicker(
+            selection: $coordinator.mapPuzzleContinent,
+            regions: [nil] + Country.Continent.allCases.filter { $0 != .antarctica },
+            color: LocalMultiplayerEntryScreen.color,
+            continent: { $0 }
+        )
+        CardView {
+            OptionPickerRow(
+                "Rounds",
+                selection: $coordinator.mapPuzzleQuestionCount,
+                options: QuestionCount.allCases,
+                label: \.displayName
+            )
+            .padding(DesignSystem.Spacing.md)
+        }
+    }
+
+    var wordSearchSettings: some View {
+        CardView {
+            OptionPickerRow(
+                "Theme",
+                selection: $coordinator.wordSearchTheme,
+                options: WordSearchTheme.allCases,
+                style: .menu,
+                label: \.rawValue
+            )
+            .padding(DesignSystem.Spacing.md)
         }
     }
 
@@ -317,15 +358,32 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     func gameIcon(_ config: PeerMessage.MatchConfig) -> String {
-        config.game == .quiz ? config.quizType.icon : LocalGame.pinDrop.systemImage
+        config.game == .quiz ? config.quizType.icon : config.game.systemImage
     }
 
     func gameTitle(_ config: PeerMessage.MatchConfig) -> String {
-        config.game == .quiz ? config.quizType.displayName : String(localized: "Pin Drop", bundle: .module)
+        switch config.game {
+        case .quiz: config.quizType.displayName
+        case .mapPuzzle: String(localized: "Map Puzzle", bundle: .module)
+        case .pinDrop: String(localized: "Pin Drop", bundle: .module)
+        case .speedRun: String(localized: "Speed Run", bundle: .module)
+        case .wordSearch: String(localized: "Word Search", bundle: .module)
+        }
     }
 
     func settingsSummary(_ config: PeerMessage.MatchConfig) -> String {
-        if config.game == .pinDrop {
+        switch config.game {
+        case .quiz:
+            let region = config.region.displayName
+            let difficulty = config.difficulty.displayName
+            return String(
+                localized: "\(region) · \(difficulty) · \(config.questionCount) questions",
+                bundle: .module
+            )
+        case .mapPuzzle:
+            let region = config.mapPuzzleContinent?.displayName ?? String(localized: "Whole World", bundle: .module)
+            return String(localized: "\(region) · \(config.mapPuzzleQuestionCount.rawValue) rounds", bundle: .module)
+        case .pinDrop:
             let pinDrop = config.pinDrop
             let map = pinDrop.showsBorders
                 ? String(localized: "Borders", bundle: .module)
@@ -334,10 +392,12 @@ private extension LocalMultiplayerLobbyScreen {
                 localized: "\(pinDrop.region.displayName) · \(pinDrop.roundCount) rounds · \(map)",
                 bundle: .module
             )
+        case .speedRun:
+            return String(localized: "\(config.region.displayName) · First to name them all wins", bundle: .module)
+        case .wordSearch:
+            let theme = config.wordSearchTheme.rawValue
+            return String(localized: "\(theme) · First to find them all wins", bundle: .module)
         }
-        let region = config.region.displayName
-        let difficulty = config.difficulty.displayName
-        return String(localized: "\(region) · \(difficulty) · \(config.questionCount) questions", bundle: .module)
     }
 
     /// The host's choices, so the guest knows what they're about to play.

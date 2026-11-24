@@ -24,6 +24,10 @@ struct MapPuzzleScreen: View {
     let continent: Country.Continent?
     /// The rounds chosen in setup; a region with fewer countries asks about each of them once.
     let questionCount: QuestionCount
+    /// Set when playing against another phone; the match then brings the rounds and its own Give Up.
+    let match: (any LocalMatch)?
+    /// The host's rounds, in the host's order, when playing a match.
+    private let matchRounds: [MapPuzzleRound]
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
@@ -39,6 +43,18 @@ struct MapPuzzleScreen: View {
 
     private let gameColor = DesignSystem.Color.purple
 
+    init(
+        continent: Country.Continent?,
+        questionCount: QuestionCount,
+        match: (any LocalMatch)? = nil,
+        matchRounds: [MapPuzzleRound] = []
+    ) {
+        self.continent = continent
+        self.questionCount = questionCount
+        self.match = match
+        self.matchRounds = matchRounds
+    }
+
     // MARK: - Body
     var body: some View {
         mainContent
@@ -48,7 +64,7 @@ struct MapPuzzleScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .toolbar { toolbarContent }
-            .hideNavigationCloseButton(isPlaying || showSummary)
+            .hideNavigationCloseButton(match == nil && (isPlaying || showSummary))
             .alert("Give Up?", isPresented: $showQuitAlert) {
                 Button("Give Up", role: .destructive) { dismiss() }
                 Button("Continue", role: .cancel) {}
@@ -65,8 +81,18 @@ struct MapPuzzleScreen: View {
 private extension MapPuzzleScreen {
     @ViewBuilder
     var mainContent: some View {
-        if showSummary {
-            summaryView
+        if showSummary, let match {
+            MatchWaitingCard(opponentName: match.opponentName)
+                .padding(DesignSystem.Spacing.md)
+                .frame(maxHeight: .infinity)
+                .readableContentWidth()
+        } else if showSummary {
+            MapPuzzleSummaryView(
+                correctCount: correctCount,
+                questionCount: questions.count,
+                onPlayAgain: { reset() },
+                onDone: { dismiss() }
+            )
         } else if let question = currentQuestion {
             puzzleContent(question)
         } else if hasLoaded {
@@ -85,7 +111,7 @@ private extension MapPuzzleScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        if isPlaying {
+        if match == nil, isPlaying {
             ToolbarItem(placement: .topBarLeading) {
                 LeaveGameButton { showQuitAlert = true }
             }
@@ -98,6 +124,10 @@ private extension MapPuzzleScreen {
             VStack(spacing: 0) {
                 Spacer(minLength: DesignSystem.Spacing.md)
                 mapPrompt(question)
+                if let match {
+                    opponentChip(match)
+                        .padding(.top, DesignSystem.Spacing.sm)
+                }
                 Spacer(minLength: DesignSystem.Spacing.lg)
                 QuizOptionList(
                     options: question.options,
@@ -166,60 +196,24 @@ private extension MapPuzzleScreen {
         .accessibilityHidden(true)
     }
 
+    /// The other player's score and whether they've answered this question yet.
+    func opponentChip(_ match: any LocalMatch) -> some View {
+        let hasAnswered = match.hasOpponentScored(round: currentIndex)
+        return MatchOpponentChip(
+            name: match.opponentName,
+            score: "\(match.opponentScore)/\(questions.count)",
+            status: hasAnswered
+                ? String(localized: "Answered", bundle: .module)
+                : String(localized: "Thinking", bundle: .module),
+            systemImage: hasAnswered ? "checkmark.circle.fill" : "ellipsis.circle"
+        )
+    }
+
     var questionTransition: AnyTransition {
         guard !reduceMotion else { return .opacity }
         return .asymmetric(
             insertion: .move(edge: .trailing).combined(with: .opacity),
             removal: .move(edge: .leading).combined(with: .opacity)
-        )
-    }
-}
-
-// MARK: - Summary
-private extension MapPuzzleScreen {
-    var summaryView: some View {
-        let isPassing = correctCount >= questions.count / 2
-        return GameResultLayout(
-            title: Text(summaryTitle),
-            message: Text("You got \(correctCount) out of \(questions.count) correct"),
-            xpEarned: XPRules.mapPuzzle(questions: questions.count, correct: correctCount),
-            primaryAction: .playAgain { reset() },
-            onDone: { dismiss() },
-            hero: {
-                IconBadge(
-                    isPassing ? "star.fill" : "arrow.counterclockwise",
-                    color: isPassing ? DesignSystem.Color.warning : gameColor,
-                    size: .hero
-                )
-                .accessibilityHidden(true)
-            },
-            stats: { summaryStats }
-        )
-        .onAppear {
-            let announcement = "\(summaryTitle) You got \(correctCount) out of \(questions.count) correct."
-            AccessibilityNotification.Announcement(announcement).post()
-        }
-    }
-
-    @ViewBuilder
-    var summaryStats: some View {
-        StatTile(
-            value: "\(correctCount)",
-            label: "Correct",
-            icon: "checkmark.circle.fill",
-            color: DesignSystem.Color.success
-        )
-        StatTile(
-            value: "\(questions.count - correctCount)",
-            label: "Wrong",
-            icon: "xmark.circle.fill",
-            color: DesignSystem.Color.error
-        )
-        StatTile(
-            value: "\(Int((Double(correctCount) / Double(max(questions.count, 1))) * 100))%",
-            label: "Accuracy",
-            icon: "chart.bar.fill",
-            color: gameColor
         )
     }
 }
@@ -233,6 +227,7 @@ private extension MapPuzzleScreen {
         if isCorrect {
             correctCount += 1
         }
+        match?.didScore(round: currentIndex, points: isCorrect ? 1 : 0)
         checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: isCorrect,
             announcement: isCorrect ? nil : AnswerFeedback.incorrectAnnouncement(answer: question.country.name)
@@ -256,6 +251,11 @@ private extension MapPuzzleScreen {
     }
 
     func finish() {
+        if let match {
+            match.didFinishRounds()
+            showSummary = true
+            return
+        }
         #if !os(tvOS)
         xpService.award(
             XPRules.mapPuzzle(questions: questions.count, correct: correctCount),
@@ -274,25 +274,32 @@ private extension MapPuzzleScreen {
         hasLoaded = true
     }
 
-    /// Only countries drawn on the continent's map can be asked about. The answers are names only: a flag would
-    /// turn the map question into a flag question.
+    /// Only countries drawn on the continent's map can be asked about; a match asks the host's rounds instead, so
+    /// both phones see the same countries with the same answers in the same order.
     func buildQuestions() {
-        guard let mappedCodes = outline.map({ Set($0.countryPaths.keys) }) else { return }
-        let continentCountries = countryDataService.countries.filter { country in
-            mappedCodes.contains(country.code) && (continent.map { country.continent == $0 } ?? true)
+        let rounds: [MapPuzzleRound]
+        if match != nil {
+            rounds = matchRounds
+        } else {
+            guard let mappedCodes = outline.map({ Set($0.countryPaths.keys) }) else { return }
+            let continentCountries = countryDataService.countries.filter { country in
+                mappedCodes.contains(country.code) && (continent.map { country.continent == $0 } ?? true)
+            }
+            rounds = MapPuzzleRules.makeRounds(from: continentCountries, requested: questionCount)
         }
-        let questionCount = MapPuzzleRules.questionCount(
-            requested: questionCount,
-            countryCount: continentCountries.count
-        )
-        guard questionCount > 0 else { return }
+        questions = rounds.compactMap { question(for: $0) }
+    }
 
-        questions = continentCountries.shuffled().prefix(questionCount).map { country in
-            let pool = continentCountries.filter { $0.code != country.code }.shuffled()
-            let others = pool.prefix(MapPuzzleRules.optionsPerQuestion - 1).map { QuizOption(text: $0.name) }
-            let answer = QuizOption(text: country.name)
-            return PuzzleQuestion(country: country, options: (others + [answer]).shuffled(), correctOptionID: answer.id)
+    /// The answers are names only: a flag would turn the map question into a flag question.
+    func question(for round: MapPuzzleRound) -> PuzzleQuestion? {
+        guard let country = countryDataService.country(for: round.answerCode) else { return nil }
+        let answerID = UUID()
+        let options = round.optionCodes.compactMap { code in
+            countryDataService.country(for: code).map { option in
+                QuizOption(id: code == round.answerCode ? answerID : UUID(), text: option.name)
+            }
         }
+        return PuzzleQuestion(country: country, options: options, correctOptionID: answerID)
     }
 
     func reset() {
@@ -333,15 +340,5 @@ private extension MapPuzzleScreen {
 
     var isPlaying: Bool {
         !showSummary && currentQuestion != nil
-    }
-
-    var summaryTitle: String {
-        let fraction = Double(correctCount) / Double(max(questions.count, 1))
-        return switch fraction {
-        case 0.8...: "Excellent"
-        case 0.6..<0.8: "Well Done"
-        case 0.4..<0.6: "Good Try"
-        default: "Keep Practicing"
-        }
     }
 }

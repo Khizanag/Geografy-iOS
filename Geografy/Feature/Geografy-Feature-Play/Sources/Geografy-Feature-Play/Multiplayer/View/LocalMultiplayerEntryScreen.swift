@@ -81,7 +81,7 @@ private extension LocalMultiplayerEntryScreen {
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .accessibilityAddTraits(.isHeader)
-                Text("One of you hosts and picks the quiz. The other joins from their phone.")
+                Text("One of you hosts and picks the game. The other joins from their phone.")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)

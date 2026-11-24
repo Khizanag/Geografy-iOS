@@ -77,11 +77,14 @@ private extension LocalMultiplayerResultScreen {
 
 // MARK: - Helpers
 private extension LocalMultiplayerResultScreen {
-    /// Right answers out of the questions in a quiz; points in Pin Drop.
+    /// Points in Pin Drop; elsewhere what was got right or found, out of all there was.
     func scoreText(_ score: Int) -> String {
         switch coordinator.activeGame {
         case .quiz: "\(score)/\(coordinator.questions.count)"
+        case .mapPuzzle: "\(score)/\(coordinator.mapPuzzleRounds.count)"
         case .pinDrop: PinDropStyle.points(Double(score), locale: locale)
+        case .speedRun: "\(score)/\(coordinator.speedRunCountryCount)"
+        case .wordSearch: "\(score)/\(coordinator.wordSearchPuzzle?.words.count ?? 0)"
         }
     }
 

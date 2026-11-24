@@ -15,10 +15,16 @@ public struct WordSearchGameScreen: View {
     #endif
 
     public let theme: WordSearchTheme
+    /// Set when racing another phone; the first player to find every word wins.
+    let match: (any LocalMatch)?
+    /// The host's puzzle, played on both phones so they search the same grid.
+    private let matchPuzzle: WordSearchPuzzle?
 
     // MARK: - Init
-    public init(theme: WordSearchTheme) {
+    init(theme: WordSearchTheme, match: (any LocalMatch)? = nil, matchPuzzle: WordSearchPuzzle? = nil) {
         self.theme = theme
+        self.match = match
+        self.matchPuzzle = matchPuzzle
     }
 
     @State private var puzzle: WordSearchPuzzle?
@@ -42,7 +48,8 @@ public struct WordSearchGameScreen: View {
             .navigationTitle("Word Search")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
-            .hideNavigationCloseButton(puzzle != nil)
+            // A match brings its own Give Up; on its own, Give Up replaces the cover's close button once it's playing.
+            .hideNavigationCloseButton(match == nil && puzzle != nil)
             .alert("Give Up?", isPresented: $showQuitAlert) {
                 Button("Give Up", role: .destructive) { dismiss() }
                 Button("Continue", role: .cancel) {}
@@ -77,7 +84,7 @@ public struct WordSearchGameScreen: View {
 private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        if puzzle != nil, !gameFinished {
+        if match == nil, puzzle != nil, !gameFinished {
             ToolbarItem(placement: .topBarLeading) {
                 LeaveGameButton { showQuitAlert = true }
             }
@@ -87,7 +94,7 @@ private extension WordSearchGameScreen {
             WordSearchClockLabel(stopwatch: stopwatch)
                 .fixedSize()
         }
-        if timerActive {
+        if timerActive, match == nil {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
                     isPaused ? "Resume" : "Pause",
@@ -123,6 +130,10 @@ private extension WordSearchGameScreen {
             VStack(spacing: DesignSystem.Spacing.md) {
                 progressSection(puzzle)
 
+                if let match {
+                    opponentChip(match, wordCount: puzzle.words.count)
+                }
+
                 if gameFinished {
                     resultCard(puzzle)
                 }
@@ -131,21 +142,11 @@ private extension WordSearchGameScreen {
 
                 wordList(puzzle)
 
-                if !gameFinished {
-                    VStack(spacing: DesignSystem.Spacing.sm) {
-                        if let nextHintWord = nextUnrevealedWord(puzzle) {
-                            GlassButton(
-                                "Reveal \"\(nextHintWord.word)\"",
-                                systemImage: "eye",
-                                role: .secondary,
-                                fullWidth: true
-                            ) {
-                                revealHint(nextHintWord)
-                            }
-                        }
-                        GlassButton("Reveal All", systemImage: "eye.slash", role: .secondary, fullWidth: true) {
-                            showRevealAllAlert = true
-                        }
+                if match == nil, !gameFinished {
+                    WordSearchHelpButtons(nextHintWord: nextUnrevealedWord(puzzle)) {
+                        revealHint($0)
+                    } onRevealAll: {
+                        showRevealAllAlert = true
                     }
                 }
             }
@@ -154,7 +155,7 @@ private extension WordSearchGameScreen {
             .readableContentWidth()
         }
         .bottomActionBar {
-            if gameFinished {
+            if gameFinished, match == nil {
                 resultFooter
             }
         }
@@ -166,7 +167,7 @@ private extension WordSearchGameScreen {
             foundIDs: foundWordIDs,
             hintRevealedIDs: hintRevealedIDs,
             showsAll: isRevealed,
-            canReveal: !gameFinished
+            canReveal: match == nil && !gameFinished
         ) { revealHint($0) }
     }
 
@@ -190,6 +191,16 @@ private extension WordSearchGameScreen {
         }
     }
 
+    /// The other player's words found so far; they're always searching, since a race ends when either finds all.
+    func opponentChip(_ match: any LocalMatch, wordCount: Int) -> some View {
+        MatchOpponentChip(
+            name: match.opponentName,
+            score: "\(match.opponentScore)/\(wordCount)",
+            status: String(localized: "Searching", bundle: .module),
+            systemImage: "magnifyingglass"
+        )
+    }
+
     func progressSection(_ puzzle: WordSearchPuzzle) -> some View {
         SessionProgressView(
             progress: progressFraction(puzzle),
@@ -211,7 +222,7 @@ private extension WordSearchGameScreen {
                 .accessibilityHidden(isPaused)
                 .overlay {
                     if isPaused {
-                        pauseOverlay
+                        WordSearchPauseOverlay { isPaused = false }
                             .transition(.opacity)
                             .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
                     }
@@ -241,27 +252,6 @@ private extension WordSearchGameScreen {
                 checkSelection(from: start, to: end, puzzle: puzzle)
             }
         }
-    }
-
-    var pauseOverlay: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            .fill(DesignSystem.Color.background.opacity(reduceTransparency ? 1 : 0.6))
-            .overlay {
-                VStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "pause.circle.fill")
-                        .font(DesignSystem.Font.displaySmall)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .accessibilityHidden(true)
-                    Text("Paused")
-                        .font(DesignSystem.Font.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
-                    GlassButton("Continue", systemImage: "play.fill") {
-                        isPaused = false
-                    }
-                }
-            }
     }
 
     func wordCapsules(puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
@@ -314,7 +304,7 @@ private extension WordSearchGameScreen {
     }
 
     func startPuzzle() {
-        let newPuzzle = service.makePuzzle(theme: theme)
+        let newPuzzle = matchPuzzle ?? service.makePuzzle(theme: theme)
         foundWordIDs = []
         hintRevealedIDs = []
         stopwatch = WordSearchStopwatch()
@@ -335,18 +325,15 @@ private extension WordSearchGameScreen {
 
     func checkSelection(from start: GridCoord, to end: GridCoord, puzzle: WordSearchPuzzle) {
         let cells = GridCoord.line(from: start, to: end)
-        for wordItem in puzzle.words where !foundWordIDs.contains(wordItem.id) {
+        for (round, wordItem) in puzzle.words.enumerated() where !foundWordIDs.contains(wordItem.id) {
             let wordCells = wordCoversCells(wordItem)
             guard wordCells.count == cells.count else { continue }
             // Either way along the word counts: a drag from its last letter to its first finds it too.
             guard wordCells == cells || Array(wordCells.reversed()) == cells else { continue }
             foundWordIDs.insert(wordItem.id)
+            match?.didScore(round: round, points: 1)
             if allFound(puzzle) {
-                timerActive = false
-                xpService.award(
-                    XPRules.wordSearch(wordsFound: foundWordIDs.count, foundAll: true),
-                    source: .wordSearchCompleted
-                )
+                finish()
                 soundService.play(.complete)
                 let announcement = "Found \(wordItem.word). All words found in \(formattedTime)."
                 AccessibilityNotification.Announcement(announcement).post()
@@ -365,6 +352,18 @@ private extension WordSearchGameScreen {
             announcement: String(localized: "Not one of the words.", bundle: .module)
         )
         #endif
+    }
+
+    func finish() {
+        timerActive = false
+        if let match {
+            match.didFinishRounds()
+        } else {
+            xpService.award(
+                XPRules.wordSearch(wordsFound: foundWordIDs.count, foundAll: true),
+                source: .wordSearchCompleted
+            )
+        }
     }
 
     func nextUnrevealedWord(_ puzzle: WordSearchPuzzle) -> WordSearchWord? {
