@@ -21,24 +21,24 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            glassFormFields,
+            multiplayerName,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var glassFormFields: BuildNote {
+    var multiplayerName: BuildNote {
         BuildNote(
-            commit: "79010846",
-            title: "Glass capsule text fields",
+            commit: "0c3378ab",
+            title: "Multiplayer, one name",
             howToTest: """
-                Open Local Play: Your Name is a glass capsule, the height of the buttons below. Then check the \
-                same field in Edit Profile, a custom quiz's name, a journal trip's title and notes, and a bucket \
-                list note: one line is a capsule, notes are glass with the card corner.
+                Open Play, then Multiplayer: the tile says Play with a friend nearby, and the screen, its guide, \
+                and the end of a match are titled Multiplayer, with Play Nearby as the way in. Local Play no \
+                longer appears anywhere.
                 """,
-            systemImage: "character.cursor.ibeam",
-            color: DesignSystem.Color.blue
+            systemImage: "person.2.fill",
+            color: DesignSystem.Color.teal
         ) {
             go.open(.multiplayer)
         }
