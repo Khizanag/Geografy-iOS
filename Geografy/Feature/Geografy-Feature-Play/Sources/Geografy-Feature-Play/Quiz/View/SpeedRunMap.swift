@@ -16,6 +16,8 @@ struct SpeedRunMap: View {
     @ScaledMetric(relativeTo: .body) private var height: CGFloat = 190
 
     let region: QuizRegion
+    /// Every country the run asks for, so the small ones can be marked.
+    let countries: [Country]
     let namedCodes: Set<String>
 
     @State private var outline: ContinentOutline?
@@ -27,7 +29,8 @@ struct SpeedRunMap: View {
                 ContinentOutlineView(
                     outline: outline,
                     fill: DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.half),
-                    countryColors: namedColors
+                    countryColors: namedColors,
+                    markers: markers
                 )
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: namedCodes)
             } else {
@@ -48,6 +51,20 @@ private extension SpeedRunMap {
     /// Named countries in green, the colour of a right answer (Geografy article 101).
     var namedColors: [String: Color] {
         Dictionary(uniqueKeysWithValues: namedCodes.map { ($0, DesignSystem.Color.success) })
+    }
+
+    /// A country too small to see shows as a ring while it's missing and a green dot once named, so a tiny one
+    /// such as Monaco can't hide.
+    var markers: [String: ContinentOutlineView.Marker] {
+        Dictionary(uniqueKeysWithValues: countries.map { country in
+            let isNamed = namedCodes.contains(country.code)
+            let marker = ContinentOutlineView.Marker(
+                style: isNamed ? .dot : .ring,
+                color: isNamed ? DesignSystem.Color.success : DesignSystem.Color.textPrimary,
+                fallbackPoint: country.capitalCoordinate.map(MapProjection.project)
+            )
+            return (country.code, marker)
+        })
     }
 
     func loadOutline() async {

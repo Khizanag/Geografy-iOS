@@ -102,7 +102,7 @@ private extension SpeedRunSessionScreen {
                 progressSection
 
                 if showsMap {
-                    SpeedRunMap(region: region, namedCodes: completedCodes)
+                    SpeedRunMap(region: region, countries: targetCountries, namedCodes: completedCodes)
                         .padding(.horizontal, DesignSystem.Spacing.md)
                 }
 

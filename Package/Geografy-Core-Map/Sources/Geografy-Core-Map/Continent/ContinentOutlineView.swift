@@ -15,25 +15,50 @@ public struct ContinentOutlineView: View {
         }
     }
 
+    // MARK: - Marker
+    /// A mark on a country too small to see at this size, so it can still be found: a ring, or a filled dot.
+    public struct Marker {
+        public enum Style {
+            case ring
+            case dot
+        }
+
+        let style: Style
+        let color: Color
+        /// Where to mark a country with no shape on the map, in map space, such as its projected capital.
+        let fallbackPoint: CGPoint?
+
+        public init(style: Style, color: Color, fallbackPoint: CGPoint? = nil) {
+            self.style = style
+            self.color = color
+            self.fallbackPoint = fallbackPoint
+        }
+    }
+
     // MARK: - Properties
     let outline: ContinentOutline
     let fill: Color
     var highlight: Highlight?
     var countryColors: [String: Color] = [:]
+    var markers: [String: Marker] = [:]
 
     // MARK: - Init
-    /// - Parameter countryColors: Fills for any number of countries, such as each one's mastery; the rest take
-    ///   `fill`.
+    /// - Parameters:
+    ///   - countryColors: Fills for any number of countries, such as each one's mastery; the rest take `fill`.
+    ///   - markers: Marks for countries that may be too small to see; each shows only where its country is tiny
+    ///     on screen or has no shape at all.
     public init(
         outline: ContinentOutline,
         fill: Color,
         highlight: Highlight? = nil,
-        countryColors: [String: Color] = [:]
+        countryColors: [String: Color] = [:],
+        markers: [String: Marker] = [:]
     ) {
         self.outline = outline
         self.fill = fill
         self.highlight = highlight
         self.countryColors = countryColors
+        self.markers = markers
     }
 
     // MARK: - Body
@@ -60,6 +85,10 @@ public struct ContinentOutlineView: View {
                 with: .color(DesignSystem.Color.cardBackground),
                 lineWidth: Self.borderWidth / transform.a
             )
+
+            for (countryCode, marker) in markers {
+                draw(marker, for: countryCode, transform: transform, size: size, in: &context)
+            }
         }
         .accessibilityHidden(true)
     }
@@ -72,6 +101,8 @@ private extension ContinentOutlineView {
     /// whole world anything about Guyana's size.
     static let tinyCountrySize: CGFloat = 14
     static let markerRadius: CGFloat = 12
+    /// Small enough that neighbours such as Monaco, San Marino, and the Vatican keep their own marks.
+    static let smallMarkerRadius: CGFloat = 4
 
     func drawMarkerIfTiny(
         _ countryPath: CGPath,
@@ -88,5 +119,33 @@ private extension ContinentOutlineView {
             height: Self.markerRadius * 2
         )
         context.stroke(Path(ellipseIn: ring), with: .color(color), lineWidth: 2)
+    }
+
+    /// A marker sits at the middle of a country too small to see, or at its fallback point when it has no shape;
+    /// a country large enough to see needs none.
+    func draw(
+        _ marker: Marker,
+        for countryCode: String,
+        transform: CGAffineTransform,
+        size: CGSize,
+        in context: inout GraphicsContext
+    ) {
+        let center: CGPoint
+        if let countryPath = outline.countryPaths[countryCode] {
+            let screenBounds = countryPath.boundingBoxOfPath.applying(transform)
+            guard max(screenBounds.width, screenBounds.height) < Self.tinyCountrySize else { return }
+            center = CGPoint(x: screenBounds.midX, y: screenBounds.midY)
+        } else if let fallbackPoint = marker.fallbackPoint {
+            center = fallbackPoint.applying(transform)
+        } else {
+            return
+        }
+        guard CGRect(origin: .zero, size: size).contains(center) else { return }
+        let radius = Self.smallMarkerRadius
+        let circle = Path(ellipseIn: CGRect(origin: center, size: .zero).insetBy(dx: -radius, dy: -radius))
+        switch marker.style {
+        case .ring: context.stroke(circle, with: .color(marker.color), lineWidth: 1.5)
+        case .dot: context.fill(circle, with: .color(marker.color))
+        }
     }
 }
