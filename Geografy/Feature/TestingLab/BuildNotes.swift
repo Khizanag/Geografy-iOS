@@ -21,23 +21,23 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            everyGameLocalPlay,
+            lobbySections,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var everyGameLocalPlay: BuildNote {
+    var lobbySections: BuildNote {
         BuildNote(
-            commit: "de99c5a5",
-            title: "Every game in Local Play",
+            commit: "42052e40",
+            title: "Lobby settings in sections",
             howToTest: """
-                With a second phone, host a Local Play game: the game picker has Quiz, Map Puzzle, Pin Drop, Speed \
-                Run, and Word Search. Play Map Puzzle (same countries, the other's score under the map), then Word \
-                Search and Speed Run, which end the moment one of you finishes. Each ends on the shared result.
+                Host a Local Play game and switch through the five games: the chosen game names the top section, \
+                and its settings follow in titled sections, Region first where there is one, as on Pin Drop. Word \
+                Search picks its theme from the same tiles as its own setup.
                 """,
-            systemImage: "person.2.fill",
+            systemImage: "list.bullet.rectangle",
             color: DesignSystem.Color.teal
         ) {
             go.open(.multiplayer)
