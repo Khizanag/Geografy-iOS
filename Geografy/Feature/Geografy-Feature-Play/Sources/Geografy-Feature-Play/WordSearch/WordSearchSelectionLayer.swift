@@ -45,12 +45,17 @@ private extension WordSearchSelectionLayer {
     var dragGesture: some Gesture {
         DragGesture(minimumDistance: 0)
             .onChanged { value in
-                let coord = clampedCoord(at: value.location)
+                let start = selectionStart ?? clampedCoord(at: value.startLocation)
                 if selectionStart == nil {
-                    selectionStart = coord
+                    selectionStart = start
                 }
-                if selectionEnd != coord {
-                    selectionEnd = coord
+                let end = GridCoord.snappedEnd(
+                    from: start,
+                    offset: offset(of: value.location, from: start),
+                    gridSize: gridSize
+                )
+                if selectionEnd != end {
+                    selectionEnd = end
                 }
             }
             .onEnded { _ in
@@ -62,7 +67,15 @@ private extension WordSearchSelectionLayer {
             }
     }
 
-    func clampedCoord(at location: CGPoint) -> GridCoord {
+    /// How far `location` is from the center of `cell`, in cells.
+    func offset(of location: CGPoint, from cell: GridCoord) -> CGVector {
+        CGVector(
+            dx: location.x / cellSize - (CGFloat(cell.col) + 0.5),
+            dy: location.y / cellSize - (CGFloat(cell.row) + 0.5)
+        )
+    }
+
+        func clampedCoord(at location: CGPoint) -> GridCoord {
         let row = Int(location.y / cellSize)
         let col = Int(location.x / cellSize)
         return GridCoord(
