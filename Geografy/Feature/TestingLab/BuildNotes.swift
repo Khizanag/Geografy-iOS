@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            sharedChips,
+            glassFormFields,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var sharedChips: BuildNote {
+    var glassFormFields: BuildNote {
         BuildNote(
-            commit: "17244c2e",
-            title: "One filter chip everywhere",
+            commit: "79010846",
+            title: "Glass capsule text fields",
             howToTest: """
-                Compare the chips in Achievements, Travel, Timeline, Landmarks, and Quiz Packs: all are glass \
-                capsules, and the chosen one is prominent glass in its colour. Travel's chosen chip shows its \
-                count. Timeline's Continent and Event Type open menus. Each choice plays a light tick.
+                Open Local Play: Your Name is a glass capsule, the height of the buttons below. Then check the \
+                same field in Edit Profile, a custom quiz's name, a journal trip's title and notes, and a bucket \
+                list note: one line is a capsule, notes are glass with the card corner.
                 """,
-            systemImage: "capsule.on.rectangle",
+            systemImage: "character.cursor.ibeam",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.achievements)
+            go.open(.multiplayer)
         }
     }
 }
