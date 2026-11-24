@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            countryLongPress,
+            countryFlight,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var countryLongPress: BuildNote {
+    var countryFlight: BuildNote {
         BuildNote(
-            commit: "fe4b2fdc",
-            title: "Long-press a country",
+            commit: "9b75761d",
+            title: "Fly to a found country",
             howToTest: """
-                Finish or give up a Speed Run, then long-press a country under Missed or Named: a preview shows \
-                its flag, continent, capital, population, and area, with Open, Copy, and Share below. Open shows \
-                its page in a sheet, as a tap does.
+                On the Map tab, tap the magnifier and pick a country, such as Chile or Japan. The map should fly \
+                there smoothly as the sheet closes: sharp the whole way, no blur, and no jump when it lands. \
+                Pinching or dragging mid-flight should take over from where the map is.
                 """,
-            systemImage: "hand.point.up.left",
-            color: DesignSystem.Color.pink
+            systemImage: "location.magnifyingglass",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.speedRun)
+            go.selectTab(.map)
         }
     }
 }
