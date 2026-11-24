@@ -19,6 +19,8 @@ public struct SpeedRunSessionScreen: View {
     /// Set when racing another phone; the match's own result screen and Give Up then replace the solo ones.
     let match: (any LocalMatch)?
 
+    @AppStorage(SpeedRunMap.storageKey) private var showsMap = false
+
     @State var targetCountries: [Country] = []
     @State private var nameIndex = SpeedRunNameIndex(countries: [])
     @State private var startDate = Date.now
@@ -98,6 +100,11 @@ private extension SpeedRunSessionScreen {
                 }
 
                 progressSection
+
+                if showsMap {
+                    SpeedRunMap(region: region, namedCodes: completedCodes)
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                }
 
                 completedList
             }

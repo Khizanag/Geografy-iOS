@@ -97,7 +97,8 @@ extension GameGuide {
                 "Compete",
                 "Your best times go to Game Center, so you can race your friends.",
                 step("trophy.fill", "Leaderboards", "See how your times rank against other players"),
-                step("map.fill", "Start Small", "A continent is a good first run")
+                step("map.fill", "Start Small", "A continent is a good first run"),
+                step("map", "Show the Map", "Turn it on in setup to watch each country fill in")
             ),
         ]
     )

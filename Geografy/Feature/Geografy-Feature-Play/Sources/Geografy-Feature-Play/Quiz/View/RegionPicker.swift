@@ -111,7 +111,8 @@ private extension RegionPicker {
 }
 
 // MARK: - Continent
-private extension QuizRegion {
+extension QuizRegion {
+    /// The continent a region covers, or nil for the whole world.
     var continent: Country.Continent? {
         switch self {
         case .world: nil

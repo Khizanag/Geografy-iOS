@@ -11,6 +11,7 @@ public struct SpeedRunSetupScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
 
     @AppStorage("speedrun_selectedRegion") private var selectedRegion: QuizRegion = .world
+    @AppStorage(SpeedRunMap.storageKey) private var showsMap = false
 
     private let color = DesignSystem.Color.pink
 
@@ -36,6 +37,7 @@ private extension SpeedRunSetupScreen {
                 header
                 personalBestCard
                 regionSection
+                optionsSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.xs)
@@ -90,6 +92,27 @@ private extension SpeedRunSetupScreen {
             SectionHeaderView(title: "Region")
                 .id(SetupSection.region)
             RegionPicker(selectedRegion: $selectedRegion, color: color)
+        }
+    }
+
+    var optionsSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Game")
+                .id(SetupSection.game)
+            CardView {
+                Toggle(isOn: $showsMap.animation()) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text("Show Map")
+                            .font(DesignSystem.Font.body)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text("Each country fills in on the map as you name it")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                }
+                .tint(color)
+                .padding(DesignSystem.Spacing.md)
+            }
         }
     }
 
