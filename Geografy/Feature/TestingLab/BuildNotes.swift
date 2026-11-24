@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            straightWordSearchDrag,
+            oneCardCorner,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var straightWordSearchDrag: BuildNote {
+    var oneCardCorner: BuildNote {
         BuildNote(
-            commit: "d9e1c81d",
-            title: "Word Search drags run straight",
+            commit: "f2e8fcdc",
+            title: "One card corner, glass banners",
             howToTest: """
-                Start a Word Search and drag at an odd angle, between a diagonal and a column. The highlight \
-                snaps to the nearest straight line, across, down, or diagonal, and never slants between cells. \
-                Drag past the edge: it stops at the last cell.
+                Open Profile: the Save your progress banner is now tinted glass, and it, the cards, and the \
+                statistics tiles all share one corner. Tap the banner: the glass answers the press. Also check \
+                an unlocked achievement's Unlocked panel, and a custom quiz's continent list, now one card.
                 """,
-            systemImage: "line.diagonal",
+            systemImage: "rectangle.roundedtop",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.wordSearch)
+            go.open(.profile)
         }
     }
 }
