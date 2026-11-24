@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            tabBarGap,
+            straightWordSearchDrag,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var tabBarGap: BuildNote {
+    var straightWordSearchDrag: BuildNote {
         BuildNote(
-            commit: "2d9f6a9f",
-            title: "Buttons clear the tab bar",
+            commit: "d9e1c81d",
+            title: "Word Search drags run straight",
             howToTest: """
-                Open Speed Run, or any game's setup: Start sits a little above the tab bar instead of touching \
-                it. Then tap the Guide button: its Next still sits right on the home indicator, with no extra \
-                space below.
+                Start a Word Search and drag at an odd angle, between a diagonal and a column. The highlight \
+                snaps to the nearest straight line, across, down, or diagonal, and never slants between cells. \
+                Drag past the edge: it stops at the last cell.
                 """,
-            systemImage: "rectangle.bottomhalf.inset.filled",
+            systemImage: "line.diagonal",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.speedRun)
+            go.open(.wordSearch)
         }
     }
 }
