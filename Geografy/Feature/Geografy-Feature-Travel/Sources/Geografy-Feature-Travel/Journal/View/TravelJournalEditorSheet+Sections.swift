@@ -90,7 +90,7 @@ extension TravelJournalEditorSheet {
         label: String,
         date: Binding<Date>
     ) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             VStack(
                 alignment: .leading,
                 spacing: DesignSystem.Spacing.xxs
@@ -128,7 +128,7 @@ extension TravelJournalEditorSheet {
     }
 
     var ratingPicker: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(1...5, id: \.self) { star in
                     Button {

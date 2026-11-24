@@ -234,38 +234,8 @@ private extension CustomQuizBuilderScreen {
             let countries = countryDataService.countries.filter {
                 selectedCountryCodes.contains($0.code)
             }
-            let grouped = Dictionary(grouping: countries, by: \.continent)
-
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-                ForEach(
-                    grouped.keys.sorted(by: { $0.displayName < $1.displayName }),
-                    id: \.self
-                ) { continent in
-                    continentSummaryRow(continent, count: grouped[continent]?.count ?? 0)
-                }
-            }
+            ContinentCountCard(countries: countries)
         }
-    }
-
-    func continentSummaryRow(_ continent: Country.Continent, count: Int) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.small) {
-            HStack {
-                Text(continent.displayName)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Spacer()
-
-                Text("\(count)")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(continent.displayName)
-        .accessibilityValue("\(count) countries")
     }
 }
 

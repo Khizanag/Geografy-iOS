@@ -34,7 +34,7 @@ public struct CountryFlagTile: View {
     }
 
     private var tile: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 flag
                 Text(country.name)

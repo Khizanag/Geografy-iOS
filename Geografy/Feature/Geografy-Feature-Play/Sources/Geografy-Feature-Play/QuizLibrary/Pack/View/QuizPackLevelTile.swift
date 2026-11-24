@@ -21,15 +21,15 @@ struct QuizPackLevelTile: View {
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
+            in: .rect(cornerRadius: DesignSystem.CornerRadius.card)
         )
         .overlay {
             if isNext {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.card)
                     .strokeBorder(color, lineWidth: 2)
             }
         }
-        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.card))
         .opacity(isLocked ? 0.55 : 1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Level \(level.levelIndex)"))

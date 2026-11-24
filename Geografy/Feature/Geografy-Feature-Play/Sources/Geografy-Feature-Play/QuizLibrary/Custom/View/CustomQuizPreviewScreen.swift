@@ -98,7 +98,7 @@ private extension CustomQuizPreviewScreen {
     }
 
     func questionTypeRow(_ type: QuizType) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: type.icon)
                     .font(DesignSystem.Font.headline)

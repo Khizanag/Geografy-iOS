@@ -49,7 +49,7 @@ private extension LocalMultiplayerLobbyScreen {
 // MARK: - Connection Status
 private extension LocalMultiplayerLobbyScreen {
     var connectionStatus: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             connectionStatusContent
                 .padding(DesignSystem.Spacing.sm)
         }

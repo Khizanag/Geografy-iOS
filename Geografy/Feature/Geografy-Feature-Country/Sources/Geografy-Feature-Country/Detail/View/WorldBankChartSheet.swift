@@ -214,7 +214,7 @@ private extension WorldBankChartSheet {
     }
 
     func statCard(label: String, value: String, detail: String, color: Color) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             statCardContent(label: label, value: value, detail: detail, color: color)
         }
     }

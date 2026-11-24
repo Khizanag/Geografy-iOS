@@ -108,7 +108,7 @@ private extension AchievementDetailSheet {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
-            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            CardView {
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Image(systemName: "target")
                         .font(DesignSystem.Font.caption)
@@ -159,6 +159,13 @@ private extension AchievementDetailSheet {
     }
 
     var unlockedView: some View {
+        Callout(tint: DesignSystem.Color.success) {
+            unlockedLabel
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    var unlockedLabel: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "checkmark.seal.fill")
@@ -177,19 +184,11 @@ private extension AchievementDetailSheet {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
-        .padding(DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity)
-        .background(DesignSystem.Color.success.opacity(DesignSystem.Opacity.faint))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .strokeBorder(DesignSystem.Color.success.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
-        )
-        .accessibilityElement(children: .combine)
     }
 
     var progressView: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Image(systemName: "chart.bar.fill")

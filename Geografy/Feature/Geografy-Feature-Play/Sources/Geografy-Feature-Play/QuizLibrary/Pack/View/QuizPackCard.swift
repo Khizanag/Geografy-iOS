@@ -52,8 +52,8 @@ public struct QuizPackCard: View {
         }
         .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
         .padding(DesignSystem.Spacing.md)
-        .background(DesignSystem.Color.cardBackground, in: .rect(cornerRadius: DesignSystem.CornerRadius.large))
-        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .background(DesignSystem.Color.cardBackground, in: .rect(cornerRadius: DesignSystem.CornerRadius.card))
+        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.card))
         .opacity(isUnlocked ? 1 : 0.6)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(pack.name)

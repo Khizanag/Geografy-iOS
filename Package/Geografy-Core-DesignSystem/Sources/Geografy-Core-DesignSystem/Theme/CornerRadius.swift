@@ -9,9 +9,11 @@ public extension DesignSystem {
         public static let large: CGFloat = 16
         public static let extraLarge: CGFloat = 24
         public static let pill: CGFloat = 50
+        /// Every card and callout on a page, so their curves match; a panel inside a card takes `nested(inset:)`.
+        public static let card: CGFloat = extraLarge
 
         /// The radius for a panel inset inside a rounded container, so both curves stay parallel.
-        public static func nested(in outer: CGFloat = extraLarge, inset: CGFloat) -> CGFloat {
+        public static func nested(in outer: CGFloat = card, inset: CGFloat) -> CGFloat {
             max(outer - inset, 0)
         }
     }

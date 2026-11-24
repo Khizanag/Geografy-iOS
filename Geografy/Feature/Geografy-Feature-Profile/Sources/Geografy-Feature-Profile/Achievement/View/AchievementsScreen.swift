@@ -121,7 +121,7 @@ private extension AchievementsScreen {
         let isUnlocked = achievementService.isUnlocked(definition.id)
         let progress = achievementService.progress(for: definition.id)
 
-        return CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        return CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 achievementIcon(definition, isUnlocked: isUnlocked)
                 achievementInfo(definition, isUnlocked: isUnlocked, progress: progress)

@@ -4,20 +4,20 @@ public struct CardView<Content: View>: View {
     // MARK: - Properties
     @Environment(\.colorSchemeContrast) private var contrast
 
-    private let cornerRadius: CGFloat
     private let shadow: DesignSystem.Shadow?
     private let content: Content
 
     // MARK: - Init
+    /// Every card has the one card corner, so cards side by side on a page always match.
     public init(
-        cornerRadius: CGFloat = DesignSystem.CornerRadius.extraLarge,
         shadow: DesignSystem.Shadow? = nil,
         @ViewBuilder content: () -> Content
     ) {
-        self.cornerRadius = cornerRadius
         self.shadow = shadow
         self.content = content()
     }
+
+    private let cornerRadius = DesignSystem.CornerRadius.card
 
     // MARK: - Body
     public var body: some View {

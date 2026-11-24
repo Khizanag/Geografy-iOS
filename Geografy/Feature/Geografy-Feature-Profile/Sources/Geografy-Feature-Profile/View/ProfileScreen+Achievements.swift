@@ -90,7 +90,7 @@ private extension ProfileScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.card, style: .continuous)
         )
     }
 }

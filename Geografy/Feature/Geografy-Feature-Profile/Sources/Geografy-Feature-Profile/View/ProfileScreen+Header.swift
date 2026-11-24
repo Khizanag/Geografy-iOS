@@ -6,12 +6,11 @@ import SwiftUI
 // MARK: - Guest Banner
 extension ProfileScreen {
     public var guestBanner: some View {
-        Button {
-            coordinator.push(ProfileLocalRoute.signIn)
-        } label: {
-            guestBannerLabel
-        }
-        .buttonStyle(PressButtonStyle())
+        Callout(
+            tint: DesignSystem.Color.warning,
+            action: { coordinator.push(ProfileLocalRoute.signIn) },
+            content: { guestBannerLabel }
+        )
     }
 }
 
@@ -67,15 +66,6 @@ private extension ProfileScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.warning)
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .fill(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.faint))
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                        .strokeBorder(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
-                )
-        )
     }
 }
 

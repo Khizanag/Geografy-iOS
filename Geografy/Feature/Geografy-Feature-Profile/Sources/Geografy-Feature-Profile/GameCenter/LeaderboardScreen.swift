@@ -64,7 +64,7 @@ private extension LeaderboardScreen {
     }
 
     var statusCard: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             statusContent
                 .padding(DesignSystem.Spacing.sm)
         }

@@ -46,6 +46,10 @@ At the owner's word, a press on a button or a card is a change of state that is 
 
 At the owner's word, every game the app has can be played against a nearby phone, and a new game ships with its Local Play mode. It plays through the game's own screen with a `LocalMatch`: the host picks and sends what both phones play, each round is reported, the other player shows in the shared opponent chip, and the match ends in the shared result screen. A race ends when the first player finishes; the other games once both have.
 
+### Article 108: one card corner
+
+Every card and callout has the one card corner, `DesignSystem.CornerRadius.card` (24 pt), so cards side by side on a page always match: `CardView` has no corner of its own to pass. A callout or banner is the shared `Callout`, system glass tinted in its tone, never a fill and a border drawn on the spot. A panel inside a card takes `CornerRadius.nested(inset:)`, so its curve runs parallel to the card's. From the Profile screen, whose banner, cards, and statistics tiles had three different corners.
+
 ## Exceptions
 
 ### Articles 2 and 4: the zoom viewer covers the screen with a blur

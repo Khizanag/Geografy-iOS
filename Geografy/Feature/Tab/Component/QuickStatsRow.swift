@@ -57,7 +57,7 @@ private extension QuickStatsRow {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            CardView {
                 VStack(spacing: DesignSystem.Spacing.xxs) {
                     HStack(spacing: DesignSystem.Spacing.xxs) {
                         Image(systemName: icon)

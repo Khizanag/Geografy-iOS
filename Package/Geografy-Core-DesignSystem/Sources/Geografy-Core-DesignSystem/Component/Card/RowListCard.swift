@@ -26,7 +26,7 @@ public struct RowListCard<Item: Identifiable, Row: View>: View {
 
     // MARK: - Body
     public var body: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+        CardView {
             // Lazy, so a list of every country only builds the rows on screen.
             LazyVStack(spacing: 0) {
                 ForEach(items) { item in

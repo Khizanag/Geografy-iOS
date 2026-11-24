@@ -109,7 +109,7 @@ private extension LevelUpSheet {
             .padding(DesignSystem.Spacing.md)
             .background(
                 DesignSystem.Color.cardBackgroundHighlighted.opacity(DesignSystem.Opacity.half),
-                in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
+                in: .rect(cornerRadius: DesignSystem.CornerRadius.card)
             )
         } else {
             Text("That's the top level. Well travelled.")

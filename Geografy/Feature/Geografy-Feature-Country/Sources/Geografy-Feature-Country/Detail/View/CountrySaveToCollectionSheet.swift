@@ -57,7 +57,7 @@ private extension CountrySaveToCollectionSheet {
     }
 
     var itemHeader: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: countryCode, height: 28)
 

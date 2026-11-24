@@ -95,7 +95,7 @@ private extension StorageScreen {
 // MARK: - Subviews
 private extension StorageScreen {
     var summaryCard: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(verbatim: formatted(usage?.total ?? 0))

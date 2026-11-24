@@ -35,7 +35,7 @@ private extension SearchResultsView {
             Button {
                 onOpen(row)
             } label: {
-                CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+                CardView {
                     HStack(spacing: DesignSystem.Spacing.md) {
                         SearchRowSymbol(row: row, size: .hero)
                         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
@@ -65,7 +65,7 @@ private extension SearchResultsView {
     func resultSection(_ section: SearchResultSection) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: section.title)
-            CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+            CardView {
                 LazyVStack(spacing: 0) {
                     ForEach(section.rows) { row in
                         resultRow(row)

@@ -36,7 +36,7 @@ public struct CustomQuizShareScreen: View {
 private extension CustomQuizShareScreen {
     var scrollContent: some View {
         ScrollView {
-            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            CardView {
                 Text(quiz.shareableJSON)
                     .font(DesignSystem.Font.textStyle(.caption, design: .monospaced))
                     .foregroundStyle(DesignSystem.Color.textPrimary)

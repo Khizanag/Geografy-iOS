@@ -51,53 +51,13 @@ private extension CustomQuizDetailSheet {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Countries", icon: "globe")
 
-            let grouped = Dictionary(
-                grouping: selectedCountries,
-                by: \.continent,
-            )
-
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(
-                    grouped.keys.sorted(by: \.displayName),
-                    id: \.self
-                ) { continent in
-                    continentRow(continent, count: grouped[continent]?.count ?? 0)
-                }
-            }
+            ContinentCountCard(countries: selectedCountries)
         }
     }
 
     var selectedCountries: [Country] {
         countryDataService.countries
             .filter { quiz.countryCodes.contains($0.code) }
-    }
-
-    func continentRow(_ continent: Country.Continent, count: Int) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.small) {
-            HStack {
-                Image(systemName: continent.icon)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
-                    .frame(width: 24)
-                    .accessibilityHidden(true)
-
-                Text(continent.displayName)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Spacer()
-
-                Text("\(count)")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(continent.displayName)
-        .accessibilityValue("\(count) countries")
     }
 }
 
@@ -116,7 +76,7 @@ private extension CustomQuizDetailSheet {
     }
 
     func questionTypeRow(_ type: QuizType) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: type.icon)
                     .font(DesignSystem.Font.headline)
@@ -161,7 +121,7 @@ private extension CustomQuizDetailSheet {
     }
 
     func infoPill(value: String, label: String, icon: String) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.caption)

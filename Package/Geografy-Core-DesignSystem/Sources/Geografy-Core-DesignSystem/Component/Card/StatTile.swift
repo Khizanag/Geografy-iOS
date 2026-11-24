@@ -45,7 +45,7 @@ public struct StatTile: View {
         Group {
             switch style {
             case .card:
-                CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+                CardView {
                     content
                         .padding(.vertical, DesignSystem.Spacing.md)
                         .padding(.horizontal, DesignSystem.Spacing.xs)

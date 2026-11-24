@@ -153,7 +153,7 @@ private extension QuizTypingInputView {
     }
 
     var suggestionsList: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+        CardView {
             VStack(spacing: 0) {
                 ForEach(suggestions) { country in
                     Button {

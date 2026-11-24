@@ -128,7 +128,7 @@ private extension GuideSheet {
     }
 
     func stepCard(_ step: GuideStep) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: step.icon)
                     .font(DesignSystem.Font.headline)

@@ -154,7 +154,7 @@ private extension QuizQuestionView {
     }
 
     var promptDetailsList: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 ForEach(question.promptDetails, id: \.self) { detail in
                     Text(detail)
