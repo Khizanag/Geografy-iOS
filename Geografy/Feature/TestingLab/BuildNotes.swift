@@ -21,22 +21,23 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            speedRunCountrySheet,
+            countryLongPress,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var speedRunCountrySheet: BuildNote {
+    var countryLongPress: BuildNote {
         BuildNote(
-            commit: "794cbc72",
-            title: "Open a country from results",
+            commit: "fe4b2fdc",
+            title: "Long-press a country",
             howToTest: """
-                Finish or give up a Speed Run, then tap any country under Missed or Named: its page opens in a \
-                sheet over the results, and closing it returns to them. Each row now ends in a chevron.
+                Finish or give up a Speed Run, then long-press a country under Missed or Named: a preview shows \
+                its flag, continent, capital, population, and area, with Open, Copy, and Share below. Open shows \
+                its page in a sheet, as a tap does.
                 """,
-            systemImage: "doc.text.magnifyingglass",
+            systemImage: "hand.point.up.left",
             color: DesignSystem.Color.pink
         ) {
             go.open(.speedRun)
