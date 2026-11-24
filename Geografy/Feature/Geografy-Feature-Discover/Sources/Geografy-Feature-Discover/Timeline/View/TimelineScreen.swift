@@ -50,25 +50,23 @@ private extension TimelineScreen {
     }
 
     var filterBar: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            GlassEffectContainer(spacing: DesignSystem.Spacing.xs) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    continentMenu
-                    eventTypeMenu
-                    if filter.isActive {
-                        clearFilterButton
-                    }
-                }
+        ChipScrollRow(inset: DesignSystem.Spacing.md) {
+            continentMenu
+            eventTypeMenu
+            if filter.isActive {
+                clearFilterButton
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .readableContentWidth()
         }
-        .scrollClipDisabled()
+        .padding(.vertical, DesignSystem.Spacing.xxs)
+        .readableContentWidth()
     }
 
     var continentMenu: some View {
-        Menu {
+        MenuChip(
+            filter.continent?.displayName ?? "Continent",
+            systemImage: "globe",
+            isActive: filter.continent != nil
+        ) {
             Picker("Continent", selection: $filter.continent) {
                 Label("All Continents", systemImage: "globe")
                     .tag(Country.Continent?.none)
@@ -77,19 +75,17 @@ private extension TimelineScreen {
                         .tag(Optional(continent))
                 }
             }
-        } label: {
-            filterLabel(
-                title: filter.continent?.displayName ?? "Continent",
-                icon: "globe",
-                isActive: filter.continent != nil
-            )
         }
         .accessibilityLabel("Continent")
         .accessibilityValue(filter.continent?.displayName ?? "All")
     }
 
     var eventTypeMenu: some View {
-        Menu {
+        MenuChip(
+            filter.eventType?.displayName ?? "Event Type",
+            systemImage: "line.3.horizontal.decrease",
+            isActive: filter.eventType != nil
+        ) {
             Picker("Event Type", selection: $filter.eventType) {
                 Label("All Types", systemImage: "list.bullet")
                     .tag(HistoricalEvent.EventType?.none)
@@ -98,12 +94,6 @@ private extension TimelineScreen {
                         .tag(Optional(type))
                 }
             }
-        } label: {
-            filterLabel(
-                title: filter.eventType?.displayName ?? "Event Type",
-                icon: "line.3.horizontal.decrease",
-                isActive: filter.eventType != nil
-            )
         }
         .accessibilityLabel("Event type")
         .accessibilityValue(filter.eventType?.displayName ?? "All")
@@ -120,26 +110,6 @@ private extension TimelineScreen {
         .buttonStyle(.glass)
         .buttonBorderShape(.circle)
         .accessibilityLabel("Clear Filters")
-    }
-
-    /// A glass capsule that takes the accent tint while its filter is on.
-    func filterLabel(title: String, icon: String, isActive: Bool) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .accessibilityHidden(true)
-            Text(title)
-            Image(systemName: "chevron.down")
-                .font(DesignSystem.Font.caption2.weight(.semibold))
-                .accessibilityHidden(true)
-        }
-        .font(DesignSystem.Font.subheadline.weight(.medium))
-        .foregroundStyle(DesignSystem.Color.textPrimary)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .frame(minHeight: 36)
-        .glassEffect(
-            isActive ? .regular.tint(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half)) : .regular,
-            in: .capsule
-        )
     }
 
     var eventList: some View {

@@ -421,7 +421,7 @@ private extension BucketListCountryDetailView {
             .padding(DesignSystem.Spacing.sm)
         }
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.card, style: .continuous)
                 .strokeBorder(isSelected ? DesignSystem.Color.accent : .clear, lineWidth: 2)
         )
     }

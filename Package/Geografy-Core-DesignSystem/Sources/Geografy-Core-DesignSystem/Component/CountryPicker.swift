@@ -203,32 +203,14 @@ private extension CountryPicker {
     }
 
     var continentChips: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                continentChip(nil, label: "All")
-                ForEach(continents, id: \.self) { continent in
-                    continentChip(continent, label: continent.displayName)
+        ChipScrollRow(inset: DesignSystem.Spacing.md) {
+            SelectableChip("All", isSelected: continentFilter == nil) { continentFilter = nil }
+            ForEach(continents, id: \.self) { continent in
+                SelectableChip(continent.displayName, isSelected: continentFilter == continent) {
+                    continentFilter = continent
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
-    }
-
-    func continentChip(_ continent: Country.Continent?, label: String) -> some View {
-        let isSelected = continentFilter == continent
-        return Button {
-            continentFilter = continent
-        } label: {
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textSecondary)
-                .padding(.horizontal, DesignSystem.Spacing.sm)
-                .padding(.vertical, DesignSystem.Spacing.xxs)
-                .background(isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground, in: Capsule())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     var continents: [Country.Continent] {

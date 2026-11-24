@@ -50,7 +50,7 @@ public struct CountryFlagTile: View {
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .overlay {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.card, style: .continuous)
                 .strokeBorder(
                     isHighlighted ? DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half) : .clear,
                     lineWidth: 1.5
