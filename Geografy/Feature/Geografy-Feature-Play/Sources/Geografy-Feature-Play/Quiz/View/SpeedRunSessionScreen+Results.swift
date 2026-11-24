@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -69,9 +70,15 @@ extension SpeedRunSessionScreen {
                 countries,
                 dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
             ) { country in
-                CountryListRow(country: country)
-                    .rowListCardRow()
-                    .accessibilityElement(children: .combine)
+                Button {
+                    coordinator.sheet(CountryRoute.countryDetail(country))
+                } label: {
+                    CountryListRow(country: country) { RowChevron() }
+                        .rowListCardRow()
+                }
+                .buttonStyle(PressButtonStyle())
+                .accessibilityElement(children: .combine)
+                .accessibilityHint(Text("Opens the country", bundle: .module))
             }
         }
     }

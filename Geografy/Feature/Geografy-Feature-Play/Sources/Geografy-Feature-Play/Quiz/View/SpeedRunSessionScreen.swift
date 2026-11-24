@@ -13,6 +13,7 @@ public struct SpeedRunSessionScreen: View {
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) var achievementService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(Navigator.self) var coordinator
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     public let region: QuizRegion
