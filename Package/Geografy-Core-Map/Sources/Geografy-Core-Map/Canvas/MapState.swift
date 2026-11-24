@@ -20,6 +20,7 @@ public final class MapState {
     public var contentBounds: CGRect = .zero
     /// The frame the map stays drawn at while a pan or pinch runs; nil when no gesture is in progress.
     public private(set) var gestureFrame: MapFrame?
+    @ObservationIgnored private var flight: MapFlight?
 
     public var selectedShape: CountryShape? {
         countryShapes.first { $0.id == selectedCountryCode }
@@ -166,6 +167,49 @@ public extension MapState {
     func redrawGestureFrame() {
         guard gestureFrame != nil else { return }
         gestureFrame = currentFrame
+    }
+}
+
+// MARK: - Flight
+public extension MapState {
+    /// Flies the map to `target` over `duration`, stepping it every frame as a pinch would and redrawing it sharp
+    /// whenever it would blur or show an edge, then draws it sharp where it lands. With no duration it jumps there.
+    func fly(
+        to target: MapFrame,
+        in viewSize: CGSize,
+        duration: TimeInterval,
+        completion: @escaping @MainActor () -> Void = {}
+    ) {
+        cancelFlight()
+        beginGesture()
+        let flight = MapFlight(from: currentFrame, to: target, duration: duration) { [weak self] frame in
+            guard let self else { return }
+            scale = frame.scale
+            offset = frame.offset
+            if needsRedraw(in: viewSize) {
+                redrawGestureFrame()
+            }
+        } completion: { [weak self] in
+            guard let self else { return }
+            scale = target.scale
+            offset = target.offset
+            lastScale = target.scale
+            lastOffset = target.offset
+            flight = nil
+            endGesture()
+            completion()
+        }
+        self.flight = flight
+        flight.run()
+    }
+
+    /// Stops a flight where the map is, so a pan or pinch that starts mid-flight moves the map from there.
+    func cancelFlight() {
+        guard let flight else { return }
+        flight.cancel()
+        self.flight = nil
+        lastScale = scale
+        lastOffset = offset
     }
 }
 

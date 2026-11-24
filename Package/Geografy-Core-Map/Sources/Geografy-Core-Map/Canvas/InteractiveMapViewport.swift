@@ -55,6 +55,7 @@ private extension InteractiveMapViewport {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
+                mapState.cancelFlight()
                 mapState.beginGesture()
                 let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), MapState.maxScale)
                 let scaleRatio = newScale / mapState.scale
@@ -78,6 +79,7 @@ private extension InteractiveMapViewport {
     var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
+                mapState.cancelFlight()
                 mapState.beginGesture()
                 mapState.offset = CGSize(
                     width: mapState.lastOffset.width + value.translation.width,

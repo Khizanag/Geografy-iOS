@@ -364,17 +364,23 @@ private extension MapScreen {
         focus(on: shape)
     }
 
+    /// Selects the country, then flies the map to it frame by frame, as a pinch moves it, so the map stays sharp
+    /// and covered the whole way instead of stretching one picture and snapping sharp at the end.
     func focus(on shape: CountryShape) {
-        mapState.beginGesture()
-        withAnimation(reduceMotion ? nil : .smooth(duration: 0.6)) {
-            mapState.focus(on: shape.boundingBox, in: screenSize)
-            clampOffset()
+        let start = mapState.currentFrame
+        mapState.focus(on: shape.boundingBox, in: screenSize)
+        clampOffset()
+        let target = mapState.currentFrame
+        mapState.scale = start.scale
+        mapState.offset = start.offset
+
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
             mapState.selectedCountryCode = shape.id
-        } completion: {
-            mapState.lastOffset = mapState.offset
-            mapState.endGesture()
         }
+        mapState.fly(to: target, in: screenSize, duration: reduceMotion ? 0 : Self.flightDuration)
     }
+
+    static let flightDuration: TimeInterval = 1.1
 
     func handleTap(at point: CGPoint, in size: CGSize) {
         let mapPoint = mapState.mapPoint(for: point, in: size, wrapping: wrapsWorld)
