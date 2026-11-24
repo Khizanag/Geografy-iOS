@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            lobbySections,
+            swipeRecents,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var lobbySections: BuildNote {
+    var swipeRecents: BuildNote {
         BuildNote(
-            commit: "42052e40",
-            title: "Lobby settings in sections",
+            commit: "35e54bcf",
+            title: "Swipe a recent away",
             howToTest: """
-                Host a Local Play game and switch through the five games: the chosen game names the top section, \
-                and its settings follow in titled sections, Region first where there is one, as on Pin Drop. Word \
-                Search picks its theme from the same tiles as its own setup.
+                In Distance Calculator, Compare, and Currency Converter, open two routes or pairs, then swipe one \
+                under Recent to the left: a red Remove appears, and tapping it removes only that one. Long-press a \
+                recent for the same Remove. The page still scrolls when you drag up and down over Recent.
                 """,
-            systemImage: "list.bullet.rectangle",
-            color: DesignSystem.Color.teal
+            systemImage: "trash",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.multiplayer)
+            go.open(.distanceCalculator)
         }
     }
 }
