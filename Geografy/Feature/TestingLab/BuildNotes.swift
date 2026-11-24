@@ -21,23 +21,23 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            swipeRecents,
+            recentLongPress,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var swipeRecents: BuildNote {
+    var recentLongPress: BuildNote {
         BuildNote(
-            commit: "35e54bcf",
-            title: "Swipe a recent away",
+            commit: "480475bf",
+            title: "Long-press a recent",
             howToTest: """
-                In Distance Calculator, Compare, and Currency Converter, open two routes or pairs, then swipe one \
-                under Recent to the left: a red Remove appears, and tapping it removes only that one. Long-press a \
-                recent for the same Remove. The page still scrolls when you drag up and down over Recent.
+                In Distance Calculator, Compare, and Currency Converter, long-press an item under Recent: a \
+                preview shows both flags and, for a route, its distance; the menu offers Open, Copy, Share, and \
+                Remove in red. Swiping left still removes it too.
                 """,
-            systemImage: "trash",
+            systemImage: "hand.point.up.left",
             color: DesignSystem.Color.blue
         ) {
             go.open(.distanceCalculator)
