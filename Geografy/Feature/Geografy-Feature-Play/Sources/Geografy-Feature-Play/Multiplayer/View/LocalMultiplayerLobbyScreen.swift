@@ -29,7 +29,7 @@ private extension LocalMultiplayerLobbyScreen {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 connectionStatus
                 if coordinator.isHost {
-                    hostConfigSection
+                    LocalMultiplayerHostSettings(coordinator: coordinator)
                 }
                 if let opponent = coordinator.opponent {
                     opponentCard(opponent)
@@ -103,109 +103,6 @@ private extension LocalMultiplayerLobbyScreen {
     func openSettings() {
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         openURL(url)
-    }
-}
-
-// MARK: - Host Config
-private extension LocalMultiplayerLobbyScreen {
-    var hostConfigSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Game")
-            // Five games are glyphs, each keeping its name for VoiceOver; the chosen one is named below.
-            Picker("Game", selection: $coordinator.game) {
-                ForEach(LocalGame.allCases) { game in
-                    Label(game.title, systemImage: game.systemImage)
-                        .labelStyle(.iconOnly)
-                        .tag(game)
-                }
-            }
-            .pickerStyle(.segmented)
-            Text(coordinator.game.title)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            switch coordinator.game {
-            case .quiz: quizSettings
-            case .mapPuzzle: mapPuzzleSettings
-            case .pinDrop: PinDropSettingsSections(configuration: $coordinator.pinDropConfiguration)
-            case .speedRun: RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
-            case .wordSearch: wordSearchSettings
-            }
-        }
-    }
-
-    @ViewBuilder
-    var mapPuzzleSettings: some View {
-        RegionPicker(
-            selection: $coordinator.mapPuzzleContinent,
-            regions: [nil] + Country.Continent.allCases.filter { $0 != .antarctica },
-            color: LocalMultiplayerEntryScreen.color,
-            continent: { $0 }
-        )
-        CardView {
-            OptionPickerRow(
-                "Rounds",
-                selection: $coordinator.mapPuzzleQuestionCount,
-                options: QuestionCount.allCases,
-                label: \.displayName
-            )
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    var wordSearchSettings: some View {
-        CardView {
-            OptionPickerRow(
-                "Theme",
-                selection: $coordinator.wordSearchTheme,
-                options: WordSearchTheme.allCases,
-                style: .menu,
-                label: \.rawValue
-            )
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    @ViewBuilder
-    var quizSettings: some View {
-        TypeSelectionGrid(
-            items: QuizType.allCases,
-            selectedIDs: [coordinator.quizType.id],
-            color: LocalMultiplayerEntryScreen.color,
-            layout: .grid,
-            onSelect: { coordinator.quizType = $0 }
-        )
-        RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
-        matchOptionsCard
-    }
-
-    var matchOptionsCard: some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
-                OptionPickerRow(
-                    "Difficulty",
-                    selection: $coordinator.difficulty,
-                    options: QuizDifficulty.allCases,
-                    label: \.displayName
-                )
-                OptionPickerRow(
-                    "Questions",
-                    selection: $coordinator.questionCount,
-                    options: QuestionCount.allCases,
-                    label: \.displayName
-                )
-                if coordinator.quizType.hasComparisonMetric {
-                    OptionPickerRow(
-                        "Metric",
-                        selection: $coordinator.comparisonMetric,
-                        options: ComparisonMetric.allCases,
-                        style: .menu,
-                        label: \.rawValue
-                    )
-                }
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
     }
 }
 
