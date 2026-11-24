@@ -68,6 +68,8 @@ public struct GuideSheet<Illustration: View>: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             // The controls keep one height on every page, so the pages never resize as they change.
             .bottomActionBar { controls }
+            // Always a sheet, so never above the tab bar, whichever tab opens it.
+            .sitsAboveTabBar(false)
             .screenBackground()
             .navigationTitle(title)
             #if !os(tvOS)

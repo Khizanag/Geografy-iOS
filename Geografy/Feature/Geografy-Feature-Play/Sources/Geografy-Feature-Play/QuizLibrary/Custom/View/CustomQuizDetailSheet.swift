@@ -20,6 +20,8 @@ struct CustomQuizDetailSheet: View {
             .navigationTitle(quiz.name)
             .navigationBarTitleDisplayMode(.inline)
             .bottomActionBar { playButton }
+            // Always a sheet, so never above the tab bar, whichever tab opens it.
+            .sitsAboveTabBar(false)
             .toolbar { toolbarContent }
     }
 }

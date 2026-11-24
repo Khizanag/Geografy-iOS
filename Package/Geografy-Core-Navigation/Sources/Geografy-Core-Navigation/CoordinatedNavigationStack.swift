@@ -52,6 +52,9 @@ public struct CoordinatedNavigationStack<Root: View>: View {
             DestinationCoverView(destination: destination)
         }
         .environment(navigator)
+        // A tab's stack sits above the tab bar; a sheet or cover's stack, which owns its navigator, never does,
+        // even when presented from a tab.
+        .sitsAboveTabBar(providedNavigator != nil)
         // Icons, menus, and alerts default to the label color; controls that should carry the
         // accent (switches, sliders, progress, prominent buttons) set it themselves.
         .tint(DesignSystem.Color.iconPrimary)
