@@ -21,23 +21,22 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            speedRunResults,
+            speedRunCountrySheet,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var speedRunResults: BuildNote {
+    var speedRunCountrySheet: BuildNote {
         BuildNote(
-            commit: "ed0cef19",
-            title: "Speed Run results list both",
+            commit: "794cbc72",
+            title: "Open a country from results",
             howToTest: """
-                Name a few countries in a Speed Run and give up: the results list Missed Countries, then Named \
-                Countries. With Show Map on, the finished map sits above them, named countries green and tiny \
-                missed ones ringed.
+                Finish or give up a Speed Run, then tap any country under Missed or Named: its page opens in a \
+                sheet over the results, and closing it returns to them. Each row now ends in a chevron.
                 """,
-            systemImage: "checklist",
+            systemImage: "doc.text.magnifyingglass",
             color: DesignSystem.Color.pink
         ) {
             go.open(.speedRun)
