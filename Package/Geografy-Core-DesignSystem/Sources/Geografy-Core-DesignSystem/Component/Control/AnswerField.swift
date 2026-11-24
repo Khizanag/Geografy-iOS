@@ -8,7 +8,7 @@ public struct AnswerField: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorSchemeContrast) private var contrast
 
-    @ScaledMetric(relativeTo: .body) private var minHeight: CGFloat = 52
+    @ScaledMetric(relativeTo: .body) private var minHeight = TextFieldMetrics.minHeight
     @ScaledMetric(relativeTo: .body) private var sendDiameter: CGFloat = 36
 
     @State private var shakeCount = 0
