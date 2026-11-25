@@ -21,25 +21,25 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            profileToolbarAndStats,
+            snugSheets,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var profileToolbarAndStats: BuildNote {
+    var snugSheets: BuildNote {
         BuildNote(
-            commit: "bde08315",
-            title: "Settings gear, glass stats",
+            commit: "c3e38ec8",
+            title: "Sheets end where they end",
             howToTest: """
-                Open the Profile tab: Settings is the gear at the top right, and the App section is gone. The \
-                streak, level, and explored stats are glass buttons that swell and tick when pressed.
+                Open any achievement: below Pin to Showcase there's only the padding the sides have, and the \
+                sheet doesn't jump. Check a country's Travel Status sheet and a fun fact too.
                 """,
-            systemImage: "gearshape",
+            systemImage: "rectangle.bottomhalf.filled",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.profile)
+            go.open(.achievements)
         }
     }
 }
