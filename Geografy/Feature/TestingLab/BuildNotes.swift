@@ -21,25 +21,24 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            mapSettingsNames,
+            mapMenuNames,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var mapSettingsNames: BuildNote {
+    var mapMenuNames: BuildNote {
         BuildNote(
-            commit: "b698241a",
-            title: "Shorter Map settings",
+            commit: "bc4924e0",
+            title: "Shorter Map menu",
             howToTest: """
-                Open Profile, then Settings: under Map the rows read Projection, Colors, and Latitude & \
-                longitude, without repeating Map.
+                On the Map tab, open the More menu: it reads Projection and Colors, without repeating Map.
                 """,
-            systemImage: "gearshape",
+            systemImage: "ellipsis.circle",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.profile)
+            go.selectTab(.map)
         }
     }
 }
