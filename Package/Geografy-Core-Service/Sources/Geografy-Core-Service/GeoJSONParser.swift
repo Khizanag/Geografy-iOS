@@ -29,7 +29,7 @@ public enum GeoJSONParser {
     }
 
     private static let filteredTerritories: Set<String> = [
-        "Bir Tawil", "Siachen Glacier",
+        "Siachen Glacier",
         "Bajo Nuevo Bank", "Scarborough Reef", "Serranilla Bank", "Spratly Is.",
         "Southern Patagonian Ice Field", "Brazilian I.",
         "Akrotiri", "Dhekelia", "Baikonur", "USNB Guantanamo Bay",
@@ -203,8 +203,11 @@ private extension GeoJSONParser {
         return nil
     }
 
+    /// Land drawn inside a country, so the map shows no hole where it lies. Bir Tawil, which neither Egypt nor Sudan
+    /// claims, lies south of the 22nd parallel that the UN's map draws as their border, so it's drawn as Sudan.
     static let alwaysMerge: [String: String] = [
         "Cyprus U.N. Buffer Zone": "CY",
+        "Bir Tawil": "SD",
     ]
 
     static func resolveCountryCode(rawCode: String, name: String, mergeMap: [String: String]) -> String {
@@ -252,8 +255,8 @@ private extension GeoJSONParser {
                         id: shape.id,
                         name: shape.name,
                         continent: shape.continent,
-                        polygons: shape.polygons + existing.polygons,
-                        detailPaths: combine(shape.detailPaths, existing.detailPaths),
+                        polygons: dissolve(shape.polygons, existing.polygons),
+                        detailPaths: dissolvedDetailPaths(shape.polygons, existing.polygons),
                         centroid: shape.centroid,
                         boundingBox: shape.boundingBox.union(existing.boundingBox),
                         color: shape.color
@@ -264,8 +267,8 @@ private extension GeoJSONParser {
                         id: existing.id,
                         name: existing.name,
                         continent: existing.continent,
-                        polygons: existing.polygons + shape.polygons,
-                        detailPaths: combine(existing.detailPaths, shape.detailPaths),
+                        polygons: dissolve(existing.polygons, shape.polygons),
+                        detailPaths: dissolvedDetailPaths(existing.polygons, shape.polygons),
                         centroid: existing.centroid,
                         boundingBox: existing.boundingBox.union(shape.boundingBox),
                         color: existing.color
@@ -300,13 +303,72 @@ private extension GeoJSONParser {
         return levels
     }
 
-    static func combine(_ paths: [CGPath], _ otherPaths: [CGPath]) -> [CGPath] {
-        zip(paths, otherPaths).map { path, otherPath in
-            let combined = CGMutablePath()
-            combined.addPath(path)
-            combined.addPath(otherPath)
-            return combined
+    /// Every detail level of a merged country, simplified from its dissolved outline, so no level draws the old
+    /// border: pieces simplified apart no longer meet along it.
+    static func dissolvedDetailPaths(_ polygons: [CGPath], _ otherPolygons: [CGPath]) -> [CGPath] {
+        makeDetailPaths(rings: dissolve(polygons, otherPolygons).flatMap(rings(in:)))
+    }
+
+    /// The closed rings a path is drawn from, as points.
+    static func rings(in path: CGPath) -> [[CGPoint]] {
+        var rings: [[CGPoint]] = []
+        var ring: [CGPoint] = []
+        path.applyWithBlock { element in
+            let element = element.pointee
+            switch element.type {
+            case .moveToPoint:
+                if ring.count >= 3 { rings.append(ring) }
+                ring = [element.points[0]]
+            case .addLineToPoint:
+                ring.append(element.points[0])
+            case .addQuadCurveToPoint:
+                ring.append(element.points[1])
+            case .addCurveToPoint:
+                ring.append(element.points[2])
+            case .closeSubpath:
+                if ring.count >= 3 { rings.append(ring) }
+                ring = []
+            @unknown default:
+                break
+            }
         }
+        if ring.count >= 3 { rings.append(ring) }
+        return rings
+    }
+
+    /// A country's polygons with a territory merged into it, the border between them dissolved, so the country's
+    /// outline runs around the territory instead of through it, as Sudan's runs around Bir Tawil.
+    static func dissolve(_ polygons: [CGPath], _ otherPolygons: [CGPath]) -> [CGPath] {
+        let path = CGMutablePath()
+        polygons.forEach { path.addPath($0) }
+        let otherPath = CGMutablePath()
+        otherPolygons.forEach { otherPath.addPath($0) }
+        let rings = rings(in: path.union(otherPath))
+        return PathSimplifier.makePath(rings: withoutSlivers(rings)).componentsSeparated()
+    }
+
+    /// Drops the hairline holes a union leaves where two borders don't quite meet: rings far smaller than the
+    /// largest that lie inside another ring. Islands lie outside the mainland, and an enclave such as Lesotho is
+    /// far larger, so both stay.
+    static func withoutSlivers(_ rings: [[CGPoint]]) -> [[CGPoint]] {
+        let areas = rings.map { abs(signedArea(of: $0)) }
+        guard let largest = areas.max(), largest > 0 else { return rings }
+        let paths = rings.map { PathSimplifier.makePath(rings: [$0]) }
+        return rings.indices.compactMap { index in
+            let isTiny = areas[index] < largest * sliverFraction
+            let isInsideAnother = rings.indices.contains { other in
+                other != index && areas[other] > areas[index] && paths[other].contains(rings[index][0])
+            }
+            return isTiny && isInsideAnother ? nil : rings[index]
+        }
+    }
+
+    static let sliverFraction: CGFloat = 0.0001
+
+    static func signedArea(of ring: [CGPoint]) -> CGFloat {
+        zip(ring, ring.dropFirst() + ring.prefix(1)).reduce(0) { area, pair in
+            area + pair.0.x * pair.1.y - pair.1.x * pair.0.y
+        } / 2
     }
 }
 

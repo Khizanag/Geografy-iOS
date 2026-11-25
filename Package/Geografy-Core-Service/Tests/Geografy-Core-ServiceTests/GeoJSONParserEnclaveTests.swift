@@ -23,4 +23,13 @@ struct GeoJSONParserEnclaveTests {
 
         #expect(enclaveIndex > surroundingIndex)
     }
+
+    @Test("Bir Tawil, which no country claims, is drawn inside Sudan, so the map has no hole there")
+    func birTawilIsLand() throws {
+        let shapes = GeoJSONParser.parse(data: try Data(contentsOf: Self.mapURL), projection: .mercator)
+        let sudan = try #require(shapes.first { $0.id == "SD" })
+        let birTawil = MapProjection.project(longitude: 33.6, latitude: 21.85, kind: .mercator)
+
+        #expect(sudan.polygons.contains { $0.contains(birTawil) })
+    }
 }
