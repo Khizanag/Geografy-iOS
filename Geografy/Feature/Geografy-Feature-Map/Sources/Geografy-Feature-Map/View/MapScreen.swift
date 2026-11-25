@@ -217,7 +217,7 @@ private extension MapScreen {
                     Text(kind.title).tag(kind.rawValue)
                 }
             } label: {
-                Label("Map Projection", systemImage: "map")
+                Label("Projection", systemImage: "map")
             }
             .pickerStyle(.menu)
         }
@@ -227,7 +227,7 @@ private extension MapScreen {
                     Text(option.title).tag(option.rawValue)
                 }
             } label: {
-                Label("Map Colors", systemImage: "paintpalette")
+                Label("Colors", systemImage: "paintpalette")
             }
             .pickerStyle(.menu)
         }
