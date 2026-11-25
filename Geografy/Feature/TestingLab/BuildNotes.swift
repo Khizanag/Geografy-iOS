@@ -21,41 +21,25 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            collectionRows,
-            travelPickerToggle,
+            centeredMapLoader,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var collectionRows: BuildNote {
+    var centeredMapLoader: BuildNote {
         BuildNote(
-            commit: "954d9b9d",
-            title: "Collection rows act like rows",
+            commit: "4d69b42a",
+            title: "Map loader where the map appears",
             howToTest: """
-                Open Saved, then Collections, then a collection with a country. Tap the country to open it, \
-                long-press it for its preview with Open, Copy, Share, and Remove, and swipe it to remove it.
+                Relaunch the app, or switch the map's Projection: the loading globe sits at the centre the world \
+                fills, with Loading map and the data credit below it, and the map fades in around it.
                 """,
-            systemImage: "folder",
+            systemImage: "globe.americas",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.favorites)
-        }
-    }
-
-    var travelPickerToggle: BuildNote {
-        BuildNote(
-            commit: "954d9b9d",
-            title: "Add and remove in the travel picker",
-            howToTest: """
-                In Travel, choose Want to Visit and tap Add Country. Tap a country: its plus morphs into a check. \
-                Tap it again: it comes off the list and the check turns back into a plus.
-                """,
-            systemImage: "plus.circle",
-            color: DesignSystem.Color.orange
-        ) {
-            go.open(.travel)
+            go.selectTab(.map)
         }
     }
 }
