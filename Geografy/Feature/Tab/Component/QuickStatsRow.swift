@@ -2,10 +2,13 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
 
+/// The greeting's stats, each a glass button that opens what it counts.
 struct QuickStatsRow: View {
     // MARK: - Properties
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    @State private var pressCount = 0
 
     let streakDays: Int
     let level: Int
@@ -19,31 +22,39 @@ struct QuickStatsRow: View {
         let layout = dynamicTypeSize.isAccessibilitySize
             ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
             : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
-        return layout {
-            statPill(
-                icon: "flame.fill",
-                value: "\(streakDays)",
-                label: String(localized: "streak", in: locale),
-                color: DesignSystem.Color.orange,
-                action: onStreakTap
-            )
-
-            statPill(
-                icon: "star.fill",
-                value: String(localized: "Lv. \(level)", in: locale),
-                label: String(localized: "level", in: locale),
-                color: DesignSystem.Color.warning,
-                action: onLevelTap
-            )
-
-            statPill(
-                icon: "globe.americas.fill",
-                value: "\(countriesExplored)",
-                label: String(localized: "explored", in: locale),
-                color: DesignSystem.Color.blue,
-                action: onCountriesTap
-            )
+        return GlassEffectContainer(spacing: DesignSystem.Spacing.sm) {
+            layout {
+                stats
+            }
         }
+        .haptic(.impact(weight: .light), trigger: pressCount)
+    }
+
+    @ViewBuilder
+    var stats: some View {
+        statPill(
+            icon: "flame.fill",
+            value: "\(streakDays)",
+            label: String(localized: "streak", in: locale),
+            color: DesignSystem.Color.orange,
+            action: onStreakTap
+        )
+
+        statPill(
+            icon: "star.fill",
+            value: String(localized: "Lv. \(level)", in: locale),
+            label: String(localized: "level", in: locale),
+            color: DesignSystem.Color.warning,
+            action: onLevelTap
+        )
+
+        statPill(
+            icon: "globe.americas.fill",
+            value: "\(countriesExplored)",
+            label: String(localized: "explored", in: locale),
+            color: DesignSystem.Color.blue,
+            action: onCountriesTap
+        )
     }
 }
 
@@ -56,30 +67,31 @@ private extension QuickStatsRow {
         color: Color,
         action: @escaping () -> Void
     ) -> some View {
-        Button(action: action) {
-            CardView {
-                VStack(spacing: DesignSystem.Spacing.xxs) {
-                    HStack(spacing: DesignSystem.Spacing.xxs) {
-                        Image(systemName: icon)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(color)
-                            .accessibilityHidden(true)
+        Button {
+            pressCount += 1
+            action()
+        } label: {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
+                    Image(systemName: icon)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(color)
+                        .accessibilityHidden(true)
 
-                        Text(value)
-                            .font(DesignSystem.Font.caption.weight(.semibold))
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                    }
-
-                    Text(label)
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Text(value)
+                        .font(DesignSystem.Font.caption.weight(.semibold))
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .padding(.horizontal, DesignSystem.Spacing.sm)
+
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.xxs)
         }
-        .buttonStyle(PressButtonStyle())
+        .buttonStyle(.glass)
+        .buttonBorderShape(.capsule)
         .accessibilityLabel("\(label): \(value)")
     }
 }

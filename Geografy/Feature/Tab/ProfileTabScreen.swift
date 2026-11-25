@@ -12,6 +12,8 @@ struct ProfileTabScreen: View {
     @Environment(StreakService.self) private var streakService
     @Environment(ExplorationService.self) private var explorationService
 
+    @State private var settingsPressCount = 0
+
     // MARK: - Body
     var body: some View {
         HubScreen(title: "Profile", sections: Self.sections) {
@@ -27,6 +29,15 @@ struct ProfileTabScreen: View {
                 )
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Settings", systemImage: "gearshape") {
+                    settingsPressCount += 1
+                    coordinator.push(ProfileRoute.settings)
+                }
+            }
+        }
+        .haptic(.selection, trigger: settingsPressCount)
     }
 }
 
@@ -35,7 +46,6 @@ private extension ProfileTabScreen {
     static let sections = [
         HubSection(title: "You", items: [.profile, .favorites, .travel]),
         HubSection(title: "Progress", items: [.achievements, .leaderboards]),
-        HubSection(title: "App", items: [.settings]),
     ]
 }
 
