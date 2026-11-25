@@ -187,6 +187,7 @@ private extension SpeedRunSessionScreen {
                 .readableContentWidth()
             }
             // The named countries scroll under the field, softened by the bar's edge effect, as under any bar.
+            .scrollEdgeEffectStyle(.soft, for: .bottom)
             .safeAreaBar(edge: .bottom) {
                 inputField
                     .padding(.horizontal, DesignSystem.Spacing.md)
