@@ -65,6 +65,7 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
             .readableContentWidth()
         }
         .scrollBounceBehavior(.basedOnSize)
+        .sectionScrolling()
         .bottomActionBar { buttons }
         .onAppear { soundService.play(sound) }
     }

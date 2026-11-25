@@ -52,7 +52,7 @@ private extension QuizSetupScreen {
             .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: layoutID)
         }
         .scrollEdgeEffectStyle(.soft, for: .bottom)
-        .setupSectionScrolling()
+        .sectionScrolling()
     }
 
     var header: some View {

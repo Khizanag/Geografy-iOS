@@ -52,7 +52,7 @@ private extension MapPuzzleSetupScreen {
             .readableContentWidth()
         }
         .scrollEdgeEffectStyle(.soft, for: .bottom)
-        .setupSectionScrolling()
+        .sectionScrolling()
     }
 
     var header: some View {

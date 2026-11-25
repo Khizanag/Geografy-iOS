@@ -19,7 +19,7 @@ public struct GameIntroHeader: View {
         }
 
         /// A fact the player can change: it's a button that scrolls to `section`, a view given the same `.id`
-        /// inside a scroll view that has `.setupSectionScrolling()`.
+        /// inside a scroll view that has `.sectionScrolling()`.
         public init(_ title: String, systemImage: String, showing section: some Hashable) {
             self.title = title
             self.systemImage = systemImage
@@ -29,7 +29,7 @@ public struct GameIntroHeader: View {
 
     // MARK: - Properties
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.showSetupSection) private var showSetupSection
+    @Environment(\.showSection) private var showSection
     @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 56
 
     private let title: Text
@@ -96,9 +96,9 @@ public struct GameIntroHeader: View {
 private extension GameIntroHeader {
     @ViewBuilder
     func factPill(_ fact: Fact) -> some View {
-        if let section = fact.section, let showSetupSection {
+        if let section = fact.section, let showSection {
             Button {
-                showSetupSection(section)
+                showSection(section)
             } label: {
                 InfoPill(
                     fact.title,
@@ -145,24 +145,25 @@ private extension GameIntroHeader {
 
 // MARK: - Scrolling to a Section
 public extension EnvironmentValues {
-    /// Scrolls a setup screen to the section with the given id; set by `setupSectionScrolling()`.
-    @Entry var showSetupSection: ((AnyHashable) -> Void)?
+    /// Scrolls the screen to the section with the given id; set by `sectionScrolling()`.
+    @Entry var showSection: ((AnyHashable) -> Void)?
 }
 
 public extension View {
-    /// Lets the facts in a `GameIntroHeader` inside this scroll view scroll to the sections they name.
-    func setupSectionScrolling() -> some View {
-        modifier(SetupSectionScrolling())
+    /// Lets what names a section inside this scroll view scroll to it: a `GameIntroHeader`'s facts, or a
+    /// `StatTile` that counts what a section lists.
+    func sectionScrolling() -> some View {
+        modifier(SectionScrolling())
     }
 }
 
-private struct SetupSectionScrolling: ViewModifier {
+private struct SectionScrolling: ViewModifier {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
         ScrollViewReader { proxy in
             content
-                .environment(\.showSetupSection) { section in
+                .environment(\.showSection) { section in
                     withAnimation(reduceMotion ? nil : .smooth) {
                         proxy.scrollTo(section, anchor: .top)
                     }

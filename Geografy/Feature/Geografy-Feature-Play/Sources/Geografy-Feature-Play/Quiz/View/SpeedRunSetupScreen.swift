@@ -44,7 +44,7 @@ private extension SpeedRunSetupScreen {
             .padding(.bottom, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
-        .setupSectionScrolling()
+        .sectionScrolling()
     }
 
     var header: some View {

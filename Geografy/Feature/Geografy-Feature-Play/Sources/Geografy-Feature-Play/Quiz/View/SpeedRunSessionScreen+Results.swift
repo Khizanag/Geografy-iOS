@@ -38,13 +38,15 @@ extension SpeedRunSessionScreen {
             value: "\(completedCodes.count)",
             label: "Named",
             icon: "checkmark.circle.fill",
-            color: DesignSystem.Color.success
+            color: DesignSystem.Color.success,
+            showing: namedCountries.isEmpty ? nil : ResultSection.named
         )
         StatTile(
             value: "\(targetCountries.count - completedCodes.count)",
             label: "Missed",
             icon: "xmark.circle.fill",
-            color: DesignSystem.Color.error
+            color: DesignSystem.Color.error,
+            showing: missedCountries.isEmpty ? nil : ResultSection.missed
         )
         StatTile(
             value: "\(Int(progressFraction * 100))%",
@@ -56,10 +58,18 @@ extension SpeedRunSessionScreen {
 
     var missedSection: some View {
         countrySection("Missed Countries", icon: "xmark.circle", countries: missedCountries)
+            .id(ResultSection.missed)
     }
 
     var namedSection: some View {
         countrySection("Named Countries", icon: "checkmark.circle", countries: namedCountries)
+            .id(ResultSection.named)
+    }
+
+    /// The lists the Named and Missed tiles scroll to.
+    enum ResultSection {
+        case missed
+        case named
     }
 
     func countrySection(_ title: LocalizedStringKey, icon: String, countries: [Country]) -> some View {
