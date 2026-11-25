@@ -21,25 +21,25 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            centeredMapLoader,
+            profileToolbarAndStats,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var centeredMapLoader: BuildNote {
+    var profileToolbarAndStats: BuildNote {
         BuildNote(
-            commit: "4d69b42a",
-            title: "Map loader where the map appears",
+            commit: "bde08315",
+            title: "Settings gear, glass stats",
             howToTest: """
-                Relaunch the app, or switch the map's Projection: the loading globe sits at the centre the world \
-                fills, with Loading map and the data credit below it, and the map fades in around it.
+                Open the Profile tab: Settings is the gear at the top right, and the App section is gone. The \
+                streak, level, and explored stats are glass buttons that swell and tick when pressed.
                 """,
-            systemImage: "globe.americas",
+            systemImage: "gearshape",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.map)
+            go.selectTab(.profile)
         }
     }
 }
