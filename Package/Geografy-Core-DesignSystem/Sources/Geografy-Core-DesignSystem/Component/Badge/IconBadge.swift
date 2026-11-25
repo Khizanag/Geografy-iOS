@@ -13,7 +13,7 @@ public struct IconBadge: View {
         /// The single icon heading a screen, sheet, or result.
         case hero
 
-        var diameter: CGFloat {
+        public var diameter: CGFloat {
             switch self {
             case .small: 36
             case .medium: 44

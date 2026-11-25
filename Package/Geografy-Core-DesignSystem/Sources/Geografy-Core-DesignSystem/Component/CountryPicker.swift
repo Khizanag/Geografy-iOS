@@ -60,8 +60,8 @@ public extension CountryPicker where Accessory == EmptyView {
 }
 
 public extension CountryPicker {
-    /// Runs an action for each tapped country and stays open. Checked countries show a checkmark;
-    /// the rest show `accessory`.
+    /// Runs an action for each tapped country and stays open. `accessory` draws each row's mark, such as a
+    /// `SelectionMark` that turns from a plus into a check; `checkedCodes` tells VoiceOver which are chosen.
     init(
         _ title: LocalizedStringKey,
         countries: [Country],
@@ -156,16 +156,9 @@ private extension CountryPicker {
                 checkmark
             }
         case .multiple:
-            Image(systemName: isChecked(country) ? "checkmark.circle.fill" : "circle")
-                .font(DesignSystem.Font.title3)
-                .foregroundStyle(isChecked(country) ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
-                .accessibilityHidden(true)
+            SelectionMark(isSelected: isChecked(country))
         case .action:
-            if isChecked(country) {
-                checkmark
-            } else {
-                accessory(country)
-            }
+            accessory(country)
         }
     }
 

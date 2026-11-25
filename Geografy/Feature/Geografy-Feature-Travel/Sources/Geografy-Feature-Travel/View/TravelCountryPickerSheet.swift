@@ -31,6 +31,7 @@ public struct TravelCountryPickerSheet: View {
         ) { country in
             trailingView(travelService.status(for: country.code))
         }
+        .haptic(trigger: checkedCodes) { old, new in new.count > old.count ? .success : .selection }
         .sheet(item: $statusCountry) { country in
             TravelStatusPickerSheet(country: country)
         }
@@ -39,15 +40,17 @@ public struct TravelCountryPickerSheet: View {
 
 // MARK: - Subviews
 private extension TravelCountryPickerSheet {
+    /// The list being added to shows a plus that turns into a check; a country on the other list shows its badge.
     @ViewBuilder
     func trailingView(_ status: TravelStatus?) -> some View {
-        if let status {
+        if let status, status != preferredStatus {
             statusBadge(status)
         } else {
-            Image(systemName: "plus.circle")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .accessibilityHidden(true)
+            SelectionMark(
+                isSelected: status != nil && status == preferredStatus,
+                color: preferredStatus?.color ?? DesignSystem.Color.accent,
+                kind: .add
+            )
         }
     }
 
@@ -75,8 +78,11 @@ private extension TravelCountryPickerSheet {
             statusCountry = country
             return
         }
-        guard travelService.status(for: country.code) != status else { return }
-        recorder.record(status, for: country.code)
+        if travelService.status(for: country.code) == status {
+            travelService.set(status: nil, for: country.code)
+        } else {
+            recorder.record(status, for: country.code)
+        }
     }
 
     var recorder: TravelStatusRecorder {

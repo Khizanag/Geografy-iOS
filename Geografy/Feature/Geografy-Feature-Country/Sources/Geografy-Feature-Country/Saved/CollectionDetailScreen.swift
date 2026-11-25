@@ -53,9 +53,9 @@ private extension CollectionDetailScreen {
 
     func itemList(groups: [TypeGroup]) -> some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 ForEach(groups, id: \.type) { group in
-                    typeSection(group.type, items: group.items, isFirst: group.type == groups.first?.type)
+                    typeSection(group)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -80,85 +80,120 @@ private extension CollectionDetailScreen {
         }
     }
 
-    // Rows sit directly in the lazy stack so they load as they scroll in; the header's top
-    // padding restores the wider gap that used to separate sections.
-    func typeSection(
-        _ type: CollectionItem.ItemType,
-        items: [CollectionItem],
-        isFirst: Bool
-    ) -> some View {
-        Section {
-            ForEach(items, id: \.itemID) { item in
-                itemRow(item)
+    func typeSection(_ group: TypeGroup) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: group.type.pluralName, icon: group.type.icon)
+            if group.type == .country {
+                CountryRowListCard(
+                    group.items.compactMap { countryDataService.country(for: $0.itemID) },
+                    open: { coordinator.push(CountryRoute.countryDetail($0)) },
+                    remove: { remove(itemID: $0.code, type: .country) }
+                )
+            } else {
+                RowListCard(group.items, dividerInset: Self.itemDividerInset, menu: itemMenu) { item in
+                    itemRow(item)
+                }
             }
-        } header: {
-            SectionHeaderView(title: type.pluralName, icon: type.icon)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, isFirst ? 0 : DesignSystem.Spacing.sm - DesignSystem.Spacing.xs)
         }
     }
 
+    /// A saved ocean, language, or organization: it opens where it has a page of its own.
+    @ViewBuilder
     func itemRow(_ item: CollectionItem) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                itemIcon(item)
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
-                    Text(itemName(for: item))
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    Text(item.type.displayName)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-
-                Spacer()
-
-                Button {
-                    withAnimation(reduceMotion ? nil : .default) {
-                        collectionService.remove(
-                            itemID: item.itemID,
-                            type: item.type,
-                            from: collectionName
-                        )
-                    }
-                } label: {
-                    Image(systemName: "minus.circle.fill")
-                        .font(DesignSystem.Font.title3)
-                        .foregroundStyle(DesignSystem.Color.error)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Remove \(itemName(for: item)) from collection")
+        if let open = opener(for: item) {
+            Button(action: open) {
+                itemLabel(item) { RowChevron() }
             }
-            .padding(DesignSystem.Spacing.sm)
+            .buttonStyle(PressButtonStyle())
+            .accessibilityElement(children: .combine)
+        } else {
+            itemLabel(item) { EmptyView() }
+                .accessibilityElement(children: .combine)
         }
+    }
+
+    func itemLabel(_ item: CollectionItem, @ViewBuilder trailing: () -> some View) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            IconBadge(item.type.icon, size: .small)
+            CollectionItemTitle(name: itemName(for: item), type: item.type)
+            Spacer(minLength: 0)
+            trailing()
+        }
+        .rowListCardRow()
+    }
+
+    var itemMenu: RowListMenu<CollectionItem> {
+        let name = itemName(for:)
+        return RowListMenu(
+            open: nil,
+            text: name,
+            remove: { remove(itemID: $0.itemID, type: $0.type) },
+            preview: { item in CollectionItemPreview(name: name(item), type: item.type) }
+        )
+    }
+
+    static let itemDividerInset = RowListCardLayout.dividerInset(after: IconBadge.Size.small.diameter)
+}
+
+// MARK: - Actions
+private extension CollectionDetailScreen {
+    func remove(itemID: String, type: CollectionItem.ItemType) {
+        withAnimation(reduceMotion ? nil : .default) {
+            collectionService.remove(itemID: itemID, type: type, from: collectionName)
+        }
+    }
+
+    func opener(for item: CollectionItem) -> (() -> Void)? {
+        guard item.type == .organization, let organization = Organization.find(item.itemID) else { return nil }
+        return { coordinator.push(DiscoverRoute.organizationDetail(organization)) }
     }
 }
 
 // MARK: - Helpers
 private extension CollectionDetailScreen {
-    @ViewBuilder
-    func itemIcon(_ item: CollectionItem) -> some View {
-        switch item.type {
-        case .country:
-            FlagView(countryCode: item.itemID, height: DesignSystem.Size.lg, fixedWidth: true)
-        default:
-            IconBadge(item.type.icon, size: .small)
-        }
-    }
-
     func itemName(for item: CollectionItem) -> String {
         switch item.type {
         case .country:
             countryDataService.country(for: item.itemID)?.name ?? item.itemID
-        case .ocean:
-            item.itemID
-        case .language:
-            item.itemID
         case .organization:
+            Organization.find(item.itemID)?.displayName ?? item.itemID
+        case .ocean, .language:
             item.itemID
+        }
+    }
+}
+
+// MARK: - Item Preview
+/// What a long press on a saved item lifts: its badge, name, and kind.
+private struct CollectionItemPreview: View {
+    let name: String
+    let type: CollectionItem.ItemType
+
+    var body: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            IconBadge(type.icon, size: .medium)
+            CollectionItemTitle(name: name, type: type)
+            Spacer(minLength: 0)
+        }
+        .padding(DesignSystem.Spacing.md)
+    }
+}
+
+// MARK: - Item Title
+/// A saved item's name over its kind.
+private struct CollectionItemTitle: View {
+    let name: String
+    let type: CollectionItem.ItemType
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
+            Text(name)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text(type.displayName)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 }

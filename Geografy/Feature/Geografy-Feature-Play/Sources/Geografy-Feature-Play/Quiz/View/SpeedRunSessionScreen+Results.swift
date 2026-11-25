@@ -66,21 +66,7 @@ extension SpeedRunSessionScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title, icon: icon)
 
-            RowListCard(
-                countries,
-                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth),
-                menu: .countries(open: openCountry)
-            ) { country in
-                Button {
-                    openCountry(country)
-                } label: {
-                    CountryListRow(country: country) { RowChevron() }
-                        .rowListCardRow()
-                }
-                .buttonStyle(PressButtonStyle())
-                .accessibilityElement(children: .combine)
-                .accessibilityHint(Text("Opens the country", bundle: .module))
-            }
+            CountryRowListCard(countries, open: openCountry)
         }
     }
 }

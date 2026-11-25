@@ -4,7 +4,8 @@ import SwiftUI
 /// Open, Copy, and Share, and Remove last when the row can be removed. Each kind of item defines this once.
 public struct RowListMenu<Item> {
     // MARK: - Properties
-    let open: (Item) -> Void
+    /// Nil for an item that has no page of its own to open.
+    let open: ((Item) -> Void)?
     /// What Copy puts on the pasteboard and Share sends.
     let text: (Item) -> String
     let remove: ((Item) -> Void)?
@@ -14,7 +15,7 @@ public struct RowListMenu<Item> {
     /// - Parameter preview: The item as its own screen opens. It's drawn outside the screen's environment, so it
     ///   takes values, never services.
     public init<Preview: View>(
-        open: @escaping (Item) -> Void,
+        open: ((Item) -> Void)?,
         text: @escaping (Item) -> String,
         remove: ((Item) -> Void)? = nil,
         @ViewBuilder preview: @escaping (Item) -> Preview
@@ -64,10 +65,12 @@ private struct RowListMenuItems<Item>: View {
 
     var body: some View {
         Section {
-            Button {
-                menu.open(item)
-            } label: {
-                Label { Text("Open", bundle: .module) } icon: { Image(systemName: "arrow.up.forward.app") }
+            if let open = menu.open {
+                Button {
+                    open(item)
+                } label: {
+                    Label { Text("Open", bundle: .module) } icon: { Image(systemName: "arrow.up.forward.app") }
+                }
             }
             #if os(iOS)
             Button {
