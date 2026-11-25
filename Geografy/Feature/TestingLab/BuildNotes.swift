@@ -21,26 +21,41 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            steadySheets,
+            collectionRows,
+            travelPickerToggle,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var steadySheets: BuildNote {
+    var collectionRows: BuildNote {
         BuildNote(
-            commit: "a7a07786",
-            title: "Sheets open at their height",
+            commit: "954d9b9d",
+            title: "Collection rows act like rows",
             howToTest: """
-                Open any achievement: its sheet rises straight to its height, with no shrink after it lands. \
-                Check the other sheets sized to their content too: a country fact, a fun fact, a timeline \
-                event, and the travel status picker.
+                Open Saved, then Collections, then a collection with a country. Tap the country to open it, \
+                long-press it for its preview with Open, Copy, Share, and Remove, and swipe it to remove it.
                 """,
-            systemImage: "rectangle.bottomhalf.filled",
+            systemImage: "folder",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.achievements)
+            go.open(.favorites)
+        }
+    }
+
+    var travelPickerToggle: BuildNote {
+        BuildNote(
+            commit: "954d9b9d",
+            title: "Add and remove in the travel picker",
+            howToTest: """
+                In Travel, choose Want to Visit and tap Add Country. Tap a country: its plus morphs into a check. \
+                Tap it again: it comes off the list and the check turns back into a plus.
+                """,
+            systemImage: "plus.circle",
+            color: DesignSystem.Color.orange
+        ) {
+            go.open(.travel)
         }
     }
 }
