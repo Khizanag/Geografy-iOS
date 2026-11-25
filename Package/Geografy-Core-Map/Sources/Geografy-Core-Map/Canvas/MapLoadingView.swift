@@ -15,8 +15,8 @@ public struct MapLoadingView: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .background { oceanBackground }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background { oceanBackground }
             .onAppear {
                 isAnimating = true
                 blobAnimating = true
@@ -26,17 +26,19 @@ public struct MapLoadingView: View {
 
 // MARK: - Subviews
 private extension MapLoadingView {
+    /// The globe sits at the view's centre, where the world map appears once it loads, so the map fades in around
+    /// it; the words and the data credit hang below it without pushing it up. The view runs under the bars, so the
+    /// credit stays with the words rather than at the bottom edge, where the tab bar would cover it.
     var mainContent: some View {
-        VStack(spacing: 0) {
-            Spacer()
-            globeSection
-                .padding(.bottom, DesignSystem.Spacing.lg)
-            textSection
-                .padding(.bottom, 40)
-            Spacer()
-            copyrightLabel
-                .padding(.bottom, DesignSystem.Spacing.xl)
-        }
+        globeSection
+            .overlay(alignment: .bottom) {
+                VStack(spacing: DesignSystem.Spacing.xl) {
+                    textSection
+                    copyrightLabel
+                }
+                .fixedSize()
+                .alignmentGuide(.bottom) { $0[.top] - DesignSystem.Spacing.lg }
+            }
     }
 
     var oceanBackground: some View {
