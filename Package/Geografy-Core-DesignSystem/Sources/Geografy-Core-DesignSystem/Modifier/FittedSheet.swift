@@ -26,7 +26,7 @@ private struct FittedSheetModifier: ViewModifier {
                 .onGeometryChange(for: CGFloat.self) { proxy in
                     proxy.size.height
                 } action: { height in
-                    contentHeight = height
+                    contentHeight = height.rounded()
                 }
         }
         .scrollBounceBehavior(.basedOnSize)
@@ -34,7 +34,12 @@ private struct FittedSheetModifier: ViewModifier {
         .onGeometryChange(for: EdgeInsets.self) { proxy in
             proxy.safeAreaInsets
         } action: { newInsets in
-            insets = newInsets
+            insets.top = newInsets.top.rounded()
+            // While the sheet settles, its bottom inset drops to zero and eases back; following it opened the
+            // sheet that much too tall and then shrank it. The home indicator's inset never changes, so keep it.
+            if newInsets.bottom > 0 {
+                insets.bottom = newInsets.bottom.rounded()
+            }
         }
         .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(sheetHeight)])
     }
