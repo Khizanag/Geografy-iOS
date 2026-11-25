@@ -1,10 +1,20 @@
 import Geografy_Core_Common
 import SwiftUI
 
+/// What the country picker lists: a country, or a place on the map that isn't one, such as a territory.
+public protocol CountryPickerPlace: Identifiable where ID == String {
+    var code: String { get }
+    var name: String { get }
+    var capital: String { get }
+    var continent: Country.Continent { get }
+}
+
+extension Country: CountryPickerPlace {}
+
 /// A searchable, A–Z indexed country list: pick one, pick several, or act on each country in turn.
 ///
 /// Present it inside `CoordinatedNavigationStack(showCloseButton: true)` for the shared title bar and close button.
-public struct CountryPicker<Accessory: View>: View {
+public struct CountryPicker<Place: CountryPickerPlace, Accessory: View>: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
@@ -12,9 +22,9 @@ public struct CountryPicker<Accessory: View>: View {
     @State private var continentFilter: Country.Continent?
 
     private let title: LocalizedStringKey
-    private let countries: [Country]
+    private let countries: [Place]
     private let behavior: Behavior
-    private let accessory: (Country) -> Accessory
+    private let accessory: (Place) -> Accessory
 
     // MARK: - Body
     public var body: some View {
@@ -42,9 +52,9 @@ public extension CountryPicker where Accessory == EmptyView {
     /// Picks one country and closes.
     init(
         _ title: LocalizedStringKey = "Choose a Country",
-        countries: [Country],
+        countries: [Place],
         selectedCode: String? = nil,
-        onSelect: @escaping (Country) -> Void
+        onSelect: @escaping (Place) -> Void
     ) {
         self.init(title, countries, .single(selectedCode: selectedCode, onSelect: onSelect)) { _ in EmptyView() }
     }
@@ -52,7 +62,7 @@ public extension CountryPicker where Accessory == EmptyView {
     /// Toggles countries in a set and stays open.
     init(
         _ title: LocalizedStringKey = "Choose Countries",
-        countries: [Country],
+        countries: [Place],
         selection: Binding<Set<String>>
     ) {
         self.init(title, countries, .multiple(selection)) { _ in EmptyView() }
@@ -64,10 +74,10 @@ public extension CountryPicker {
     /// `SelectionMark` that turns from a plus into a check; `checkedCodes` tells VoiceOver which are chosen.
     init(
         _ title: LocalizedStringKey,
-        countries: [Country],
+        countries: [Place],
         checkedCodes: Set<String>,
-        onSelect: @escaping (Country) -> Void,
-        @ViewBuilder accessory: @escaping (Country) -> Accessory
+        onSelect: @escaping (Place) -> Void,
+        @ViewBuilder accessory: @escaping (Place) -> Accessory
     ) {
         self.init(title, countries, .action(checkedCodes: checkedCodes, onSelect: onSelect), accessory: accessory)
     }
@@ -75,16 +85,16 @@ public extension CountryPicker {
 
 private extension CountryPicker {
     enum Behavior {
-        case single(selectedCode: String?, onSelect: (Country) -> Void)
+        case single(selectedCode: String?, onSelect: (Place) -> Void)
         case multiple(Binding<Set<String>>)
-        case action(checkedCodes: Set<String>, onSelect: (Country) -> Void)
+        case action(checkedCodes: Set<String>, onSelect: (Place) -> Void)
     }
 
     init(
         _ title: LocalizedStringKey,
-        _ countries: [Country],
+        _ countries: [Place],
         _ behavior: Behavior,
-        accessory: @escaping (Country) -> Accessory
+        accessory: @escaping (Place) -> Accessory
     ) {
         self.title = title
         self.countries = countries
@@ -124,7 +134,7 @@ private extension CountryPicker {
         }
     }
 
-    func row(for country: Country) -> some View {
+    func row(for country: Place) -> some View {
         Button { select(country) } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 24, fixedWidth: true)
@@ -132,7 +142,7 @@ private extension CountryPicker {
                     Text(country.name)
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("\(country.capital) · \(country.continent.displayName)")
+                    Text(subtitle(for: country))
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                         .lineLimit(1)
@@ -148,8 +158,14 @@ private extension CountryPicker {
         .accessibilityAddTraits(isChecked(country) ? .isSelected : [])
     }
 
+    /// The capital and continent; a territory with no capital shows its continent alone.
+    func subtitle(for country: Place) -> String {
+        let continent = country.continent.displayName
+        return country.capital.isEmpty ? continent : "\(country.capital) · \(continent)"
+    }
+
     @ViewBuilder
-    func trailing(for country: Country) -> some View {
+    func trailing(for country: Place) -> some View {
         switch behavior {
         case .single:
             if isChecked(country) {
@@ -219,7 +235,7 @@ private extension CountryPicker {
         return selection.wrappedValue
     }
 
-    func select(_ country: Country) {
+    func select(_ country: Place) {
         switch behavior {
         case .single(_, let onSelect):
             onSelect(country)
@@ -235,7 +251,7 @@ private extension CountryPicker {
         }
     }
 
-    func isChecked(_ country: Country) -> Bool {
+    func isChecked(_ country: Place) -> Bool {
         switch behavior {
         case .single(let selectedCode, _): country.code == selectedCode
         case .multiple(let selection): selection.wrappedValue.contains(country.code)
@@ -248,7 +264,7 @@ private extension CountryPicker {
 private extension CountryPicker {
     struct LetterSection {
         let letter: String
-        let countries: [Country]
+        let countries: [Place]
     }
 
     var sections: [LetterSection] {
@@ -257,7 +273,7 @@ private extension CountryPicker {
         return grouped.keys.sorted().map { LetterSection(letter: $0, countries: grouped[$0] ?? []) }
     }
 
-    var visibleCountries: [Country] {
+    var visibleCountries: [Place] {
         let inContinent = continentFilter.map { continent in countries.filter { $0.continent == continent } }
             ?? countries
         let query = searchText.trimmingCharacters(in: .whitespaces)
