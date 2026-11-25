@@ -21,26 +21,25 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            multiplayerName,
+            mapSettingsNames,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var multiplayerName: BuildNote {
+    var mapSettingsNames: BuildNote {
         BuildNote(
-            commit: "0c3378ab",
-            title: "Multiplayer, one name",
+            commit: "b698241a",
+            title: "Shorter Map settings",
             howToTest: """
-                Open Play, then Multiplayer: the tile says Play with a friend nearby, and the screen, its guide, \
-                and the end of a match are titled Multiplayer, with Play Nearby as the way in. Local Play no \
-                longer appears anywhere.
+                Open Profile, then Settings: under Map the rows read Projection, Colors, and Latitude & \
+                longitude, without repeating Map.
                 """,
-            systemImage: "person.2.fill",
-            color: DesignSystem.Color.teal
+            systemImage: "gearshape",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.multiplayer)
+            go.selectTab(.profile)
         }
     }
 }
