@@ -202,7 +202,7 @@ private extension SettingsScreen {
                     SettingsNavigationRow(
                         icon: "paintpalette.fill",
                         iconColor: DesignSystem.Color.orange,
-                        title: "Map colors"
+                        title: "Colors"
                     )
                 }
                 .buttonStyle(PressButtonStyle())
@@ -212,7 +212,7 @@ private extension SettingsScreen {
                 SettingsToggleRow(
                     icon: "globe",
                     iconColor: DesignSystem.Color.blue,
-                    title: "Latitude & longitude on maps",
+                    title: "Latitude & longitude",
                     isOn: $showsGraticule.animation()
                 )
             }
@@ -256,12 +256,12 @@ private extension SettingsScreen {
     var projectionRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: "map.fill", color: DesignSystem.Color.blue)
-            Text("Map projection")
+            Text("Projection")
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
             Spacer()
             MenuPicker(
-                "Map projection",
+                "Projection",
                 selection: $projection,
                 selectedTitle: Text((MapProjectionKind(rawValue: projection) ?? .mercator).title)
             ) {
