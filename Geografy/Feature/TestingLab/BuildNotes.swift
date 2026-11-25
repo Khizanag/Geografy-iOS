@@ -21,22 +21,22 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            resultStatsScroll,
+            speedRunFieldBar,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var resultStatsScroll: BuildNote {
+    var speedRunFieldBar: BuildNote {
         BuildNote(
-            commit: "698c16de",
-            title: "Named and Missed scroll to their lists",
+            commit: "bebb039f",
+            title: "Speed Run field floats over the list",
             howToTest: """
-                Finish or give up a Speed Run: Named and Missed are glass buttons with a down chevron. Tap one: \
-                the results scroll to that list. A count with no list, such as 0 named, stays a plain tile.
+                Start a Speed Run and name enough countries to fill the list: the rows scroll under the field, \
+                softly blurred at the edge as under any bar, with no solid band behind the field.
                 """,
-            systemImage: "chevron.down.circle",
+            systemImage: "keyboard",
             color: DesignSystem.Color.pink
         ) {
             go.open(.speedRun)
