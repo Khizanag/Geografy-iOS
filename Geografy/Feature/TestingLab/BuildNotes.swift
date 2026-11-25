@@ -30,7 +30,7 @@ struct BuildNotes {
 private extension BuildNotes {
     var speedRunFieldBar: BuildNote {
         BuildNote(
-            commit: "bebb039f",
+            commit: "d214c367",
             title: "Speed Run field floats over the list",
             howToTest: """
                 Start a Speed Run and name enough countries to fill the list: the rows scroll under the field, \
