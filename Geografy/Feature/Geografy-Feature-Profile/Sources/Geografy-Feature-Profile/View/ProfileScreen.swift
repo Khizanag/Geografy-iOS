@@ -37,7 +37,6 @@ public struct ProfileScreen: View {
             .screenBackground()
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
             .confirmationDialog("Sign Out", isPresented: $showSignOutAlert, titleVisibility: .visible) {
                 Button("Sign Out", role: .destructive) { authService.signOut() }
                 Button("Cancel", role: .cancel) {}
@@ -124,15 +123,6 @@ private extension ProfileScreen {
             totalXP: xpService.totalXP,
             memberSince: authService.currentProfile?.createdAt ?? .now
         )
-    }
-
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        if !authService.isGuest {
-            ToolbarItem(placement: .topBarLeading) {
-                editButton
-            }
-        }
     }
 
     @ViewBuilder

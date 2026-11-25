@@ -16,25 +16,24 @@ extension ProfileScreen {
 
 // MARK: - Header
 extension ProfileScreen {
+    /// The name and avatar; a tap opens Edit Profile, for guests too.
     public var headerSection: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                avatarWithRing
-                userInfoStack
-                Spacer()
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    public var editButton: some View {
         Button {
             coordinator.push(ProfileLocalRoute.editProfile)
         } label: {
-            Image(systemName: "pencil")
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    avatarWithRing
+                    userInfoStack
+                    Spacer()
+                    RowChevron()
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
         }
-        .accessibilityLabel("Edit profile")
+        .buttonStyle(PressButtonStyle())
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Edits your name")
     }
 
     public var displayName: String {
