@@ -21,57 +21,25 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            birTawil,
-            sharedMapFinder,
-            editNameFromHeader,
+            resultStatsScroll,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var birTawil: BuildNote {
+    var resultStatsScroll: BuildNote {
         BuildNote(
-            commit: "76cdfe5f",
-            title: "No hole between Egypt and Sudan",
+            commit: "698c16de",
+            title: "Named and Missed scroll to their lists",
             howToTest: """
-                Zoom the map in on Egypt and Sudan: their border runs straight along the 22nd parallel, with no \
-                black wedge. Select Sudan: its outline has no loop inside it.
+                Finish or give up a Speed Run: Named and Missed are glass buttons with a down chevron. Tap one: \
+                the results scroll to that list. A count with no list, such as 0 named, stays a plain tile.
                 """,
-            systemImage: "map",
-            color: DesignSystem.Color.blue
+            systemImage: "chevron.down.circle",
+            color: DesignSystem.Color.pink
         ) {
-            go.selectTab(.map)
-        }
-    }
-
-    var sharedMapFinder: BuildNote {
-        BuildNote(
-            commit: "6c46349a",
-            title: "Find a Country, shared picker",
-            howToTest: """
-                On the Map tab, tap the magnifier: the list has letter sections, the A to Z index, and continents, \
-                like every country picker, and still lists territories such as Åland. Pick one to fly there.
-                """,
-            systemImage: "magnifyingglass",
-            color: DesignSystem.Color.blue
-        ) {
-            go.selectTab(.map)
-        }
-    }
-
-    var editNameFromHeader: BuildNote {
-        BuildNote(
-            commit: "cc7e4d2d",
-            title: "Edit your name from Profile",
-            howToTest: """
-                Open Profile, then the Profile card, and tap your name card at the top: Edit Profile opens, for a \
-                guest too. Change the name and save.
-                """,
-            systemImage: "pencil",
-            color: DesignSystem.Color.blue
-        ) {
-            go.open(.profile)
+            go.open(.speedRun)
         }
     }
 }
