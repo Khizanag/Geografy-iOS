@@ -21,25 +21,57 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            snugSheets,
+            birTawil,
+            sharedMapFinder,
+            editNameFromHeader,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var snugSheets: BuildNote {
+    var birTawil: BuildNote {
         BuildNote(
-            commit: "c3e38ec8",
-            title: "Sheets end where they end",
+            commit: "76cdfe5f",
+            title: "No hole between Egypt and Sudan",
             howToTest: """
-                Open any achievement: below Pin to Showcase there's only the padding the sides have, and the \
-                sheet doesn't jump. Check a country's Travel Status sheet and a fun fact too.
+                Zoom the map in on Egypt and Sudan: their border runs straight along the 22nd parallel, with no \
+                black wedge. Select Sudan: its outline has no loop inside it.
                 """,
-            systemImage: "rectangle.bottomhalf.filled",
+            systemImage: "map",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.achievements)
+            go.selectTab(.map)
+        }
+    }
+
+    var sharedMapFinder: BuildNote {
+        BuildNote(
+            commit: "6c46349a",
+            title: "Find a Country, shared picker",
+            howToTest: """
+                On the Map tab, tap the magnifier: the list has letter sections, the A to Z index, and continents, \
+                like every country picker, and still lists territories such as Åland. Pick one to fly there.
+                """,
+            systemImage: "magnifyingglass",
+            color: DesignSystem.Color.blue
+        ) {
+            go.selectTab(.map)
+        }
+    }
+
+    var editNameFromHeader: BuildNote {
+        BuildNote(
+            commit: "cc7e4d2d",
+            title: "Edit your name from Profile",
+            howToTest: """
+                Open Profile, then the Profile card, and tap your name card at the top: Edit Profile opens, for a \
+                guest too. Change the name and save.
+                """,
+            systemImage: "pencil",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.profile)
         }
     }
 }
