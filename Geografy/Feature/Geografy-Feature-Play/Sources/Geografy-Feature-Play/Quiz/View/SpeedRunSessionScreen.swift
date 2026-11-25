@@ -110,10 +110,6 @@ private extension SpeedRunSessionScreen {
                 completedList
             }
             .padding(.top, DesignSystem.Spacing.sm)
-
-            inputField
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.sm)
         }
     }
 
@@ -189,6 +185,12 @@ private extension SpeedRunSessionScreen {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.xs)
                 .readableContentWidth()
+            }
+            // The named countries scroll under the field, softened by the bar's edge effect, as under any bar.
+            .safeAreaBar(edge: .bottom) {
+                inputField
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.bottom, DesignSystem.Spacing.sm)
             }
             .onChange(of: completedCodes.count) { _, _ in
                 if let last = completedCountries.first {
