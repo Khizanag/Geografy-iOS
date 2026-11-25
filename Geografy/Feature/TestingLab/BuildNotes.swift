@@ -21,24 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            mapMenuNames,
+            steadySheets,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var mapMenuNames: BuildNote {
+    var steadySheets: BuildNote {
         BuildNote(
-            commit: "bc4924e0",
-            title: "Shorter Map menu",
+            commit: "a7a07786",
+            title: "Sheets open at their height",
             howToTest: """
-                On the Map tab, open the More menu: it reads Projection and Colors, without repeating Map.
+                Open any achievement: its sheet rises straight to its height, with no shrink after it lands. \
+                Check the other sheets sized to their content too: a country fact, a fun fact, a timeline \
+                event, and the travel status picker.
                 """,
-            systemImage: "ellipsis.circle",
+            systemImage: "rectangle.bottomhalf.filled",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.map)
+            go.open(.achievements)
         }
     }
 }
