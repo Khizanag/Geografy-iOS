@@ -17,6 +17,12 @@ public struct SpeakerButton: View {
         }
     }
 
+    public enum Backing {
+        case glass
+        /// A plain tinted circle, for content that turns or tilts, where glass would draw apart from it.
+        case fill
+    }
+
     // The glyph stops growing at xxxLarge, so the circle stops there too.
     private static let maximumScale: CGFloat = 1.6
 
@@ -25,13 +31,15 @@ public struct SpeakerButton: View {
     public let text: String
     public let countryCode: String
     public let buttonSize: Size
+    public let backing: Backing
     @ScaledMetric private var diameter: CGFloat
 
     // MARK: - Init
-    public init(text: String, countryCode: String, size: Size = .regular) {
+    public init(text: String, countryCode: String, size: Size = .regular, backing: Backing = .glass) {
         self.text = text
         self.countryCode = countryCode
         self.buttonSize = size
+        self.backing = backing
         _diameter = ScaledMetric(wrappedValue: size.diameter, relativeTo: .caption2)
     }
 
@@ -63,9 +71,22 @@ public struct SpeakerButton: View {
                 .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .frame(width: circleDiameter, height: circleDiameter)
         }
-        .glassEffect(.regular.interactive(), in: .circle)
+        .modifier(SpeakerBacking(backing: backing))
         .buttonStyle(.plain)
         .accessibilityLabel(isActivelySpeaking ? "Stop pronunciation" : "Pronounce \(text)")
+    }
+}
+
+private struct SpeakerBacking: ViewModifier {
+    let backing: SpeakerButton.Backing
+
+    func body(content: Content) -> some View {
+        switch backing {
+        case .glass:
+            content.glassEffect(.regular.interactive(), in: .circle)
+        case .fill:
+            content.background(DesignSystem.Color.iconPrimary.opacity(DesignSystem.Opacity.faint), in: .circle)
+        }
     }
 }
 #endif

@@ -3,200 +3,192 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
-public struct FlashcardCardView: View {
+/// One flashcard: the question on its front and the answer on its back, turned over in 3D. One angle drives both
+/// faces, and each shows only on its own half of the turn, so the flip never shows both or neither.
+struct FlashcardCardView: View {
     // MARK: - Properties
-    @Environment(PronunciationService.self) private var pronunciationService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    public let card: FlashcardItem
-    public let isFlipped: Bool
-    public let onTap: () -> Void
+    let card: FlashcardItem
+    let isFlipped: Bool
+    /// How much of the faces' content shows: a card waiting in the stack is blank until it comes forward.
+    var contentOpacity: Double = 1
+    let onShowDetails: () -> Void
 
     // MARK: - Body
-    public var body: some View {
+    var body: some View {
         ZStack {
-            frontSide
-                .opacity(isFlipped ? 0 : 1)
-                .rotation3DEffect(
-                    .degrees(reduceMotion ? 0 : (isFlipped ? 180 : 0)),
-                    axis: (x: 0, y: 1, z: 0)
-                )
-            backSide
-                .opacity(isFlipped ? 1 : 0)
-                .rotation3DEffect(
-                    .degrees(reduceMotion ? 0 : (isFlipped ? 0 : -180)),
-                    axis: (x: 0, y: 1, z: 0)
-                )
+            FlashcardFace(contentOpacity: contentOpacity) { front }
+                .modifier(FlipFace(angle: flipAngle, side: .front, perspective: perspective))
+            FlashcardFace(contentOpacity: contentOpacity) { back }
+                .modifier(FlipFace(angle: flipAngle, side: .back, perspective: perspective))
         }
-        .animation(
-            reduceMotion ? .easeInOut(duration: 0.2) : .spring(response: 0.5, dampingFraction: 0.8),
-            value: isFlipped
-        )
-        .onTapGesture(perform: onTap)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Flip card")
-        .accessibilityValue(accessibilityFaceDescription)
-        .accessibilityHint(isFlipped ? "Shows the question" : "Reveals the answer")
-        .accessibilityAddTraits(.isButton)
-        .accessibilityAction(.default, onTap)
-        .accessibilityAction(named: "Pronounce answer") { pronounceAnswer() }
     }
 }
 
-// MARK: - Accessibility
+// MARK: - Faces
 private extension FlashcardCardView {
-    var accessibilityFaceDescription: String {
-        if isFlipped {
-            let answer = card.showsFlagOnBack ? "Flag of \(card.countryName)" : card.backText
-            return "Answer: \(answer)"
-        }
-        let prompt = card.showsFlagOnFront ? "a flag" : card.frontText
-        return "\(card.type.promptLabel): \(prompt)"
-    }
-
-    func pronounceAnswer() {
-        let text = isFlipped && !card.backText.isEmpty ? card.backText : card.frontText
-        guard !text.isEmpty else { return }
-        pronunciationService.speak(text: text, countryCode: card.countryCode)
-    }
-}
-
-// MARK: - Subviews
-private extension FlashcardCardView {
-    var frontSide: some View {
-        cardFace {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                typeLabel
-                frontContent
-                tapHint
-            }
-            .padding(DesignSystem.Spacing.lg)
+    var front: some View {
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            InfoPill(card.type.promptLabel, systemImage: card.type.icon, style: .tinted(FlashcardStyle.color))
+            Spacer(minLength: 0)
+            prompt
+            Spacer(minLength: 0)
+            Label("Tap to flip", systemImage: "hand.tap.fill")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
         }
     }
 
-    var backSide: some View {
-        cardFace {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                answerLabel
-                backContent
-                #if !os(tvOS)
-                if !card.backText.isEmpty {
-                    SpeakerButton(text: card.backText, countryCode: card.countryCode)
-                }
-                #endif
-                swipeHint
-            }
-            .padding(DesignSystem.Spacing.lg)
-        }
-    }
-
-    var typeLabel: some View {
-        Text(card.type.promptLabel)
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-    }
-
-    var answerLabel: some View {
-        Text("Answer")
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-    }
-
-    var swipeHint: some View {
-        Label("Swipe to rate", systemImage: "hand.draw.fill")
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-    }
-
-    @ViewBuilder
-    var frontContent: some View {
-        if card.showsFlagOnFront {
-            FlagView(countryCode: card.countryCode, height: 80)
-        } else {
-            Text(card.frontText)
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.7)
-                .lineLimit(3)
+    var back: some View {
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            InfoPill("Answer", systemImage: "checkmark.seal.fill", style: .tinted(DesignSystem.Color.success))
+            Spacer(minLength: 0)
+            answer
+            Spacer(minLength: 0)
+            // Not glass: glass draws in its own pass, apart from the card as it turns and tilts.
+            Button("Country Details", systemImage: "info.circle", action: onShowDetails)
+                .font(DesignSystem.Font.subheadline)
+                .buttonStyle(.bordered)
+                .buttonBorderShape(.capsule)
+                .tint(FlashcardStyle.color)
         }
     }
 
     @ViewBuilder
-    var backContent: some View {
-        if card.showsFlagOnBack {
-            FlagView(countryCode: card.countryCode, height: 80)
-        } else {
-            Text(card.backText)
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .multilineTextAlignment(.center)
-                .minimumScaleFactor(0.7)
-                .lineLimit(3)
+    var prompt: some View {
+        switch card.type {
+        case .countryToCapital:
+            VStack(spacing: DesignSystem.Spacing.md) {
+                FlagView(countryCode: card.countryCode, height: FlashcardStyle.smallFlagHeight)
+                headline(card.countryName)
+            }
+        case .flagToCountry:
+            FlagView(countryCode: card.countryCode, height: FlashcardStyle.largeFlagHeight)
+        case .capitalToCountry:
+            headline(card.capital)
+        case .countryToFlag:
+            headline(card.countryName)
         }
     }
 
-    var tapHint: some View {
-        Label("Tap to reveal", systemImage: "hand.tap.fill")
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+    @ViewBuilder
+    var answer: some View {
+        switch card.type {
+        case .countryToCapital:
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                spokenHeadline(card.capital)
+                context(card.countryName)
+            }
+        case .flagToCountry, .capitalToCountry:
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                spokenHeadline(card.countryName)
+                context(card.capital)
+            }
+        case .countryToFlag:
+            VStack(spacing: DesignSystem.Spacing.md) {
+                FlagView(countryCode: card.countryCode, height: FlashcardStyle.largeFlagHeight)
+                Text(card.countryName)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+        }
     }
 
-    func cardFace<Content: View>(
-        @ViewBuilder content: () -> Content
-    ) -> some View {
-        content()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(SwipeTintFill())
-            .clipShape(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
+    func headline(_ text: String) -> some View {
+        Text(text)
+            .font(DesignSystem.Font.largeTitle)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.6)
+            .lineLimit(3)
+    }
+
+    func spokenHeadline(_ text: String) -> some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            headline(text)
+            #if !os(tvOS)
+            SpeakerButton(text: text, countryCode: card.countryCode, backing: .fill)
+            #endif
+        }
+    }
+
+    /// The country around the answer: its flag and the name the answer belongs to.
+    func context(_ text: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            FlagView(countryCode: card.countryCode, height: DesignSystem.Size.Flag.inline)
+            Text(text)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+}
+
+// MARK: - Flip
+private extension FlashcardCardView {
+    var flipAngle: Double { isFlipped ? 180 : 0 }
+
+    /// Under Reduce Motion the card doesn't turn in depth; the faces cross at the halfway mark instead.
+    var perspective: CGFloat { reduceMotion ? 0 : FlashcardStyle.perspective }
+}
+
+/// One face of a card at a point in its turn: shown only on its own half, so the swap lands exactly edge-on.
+private struct FlipFace: ViewModifier, Animatable {
+    enum Side { case front, back }
+
+    var angle: Double
+    let side: Side
+    let perspective: CGFloat
+
+    nonisolated var animatableData: Double {
+        get { angle }
+        set { angle = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        let isShowing = side == .front ? angle < 90 : angle >= 90
+        content
+            .opacity(isShowing ? 1 : 0)
+            .rotation3DEffect(
+                .degrees(perspective == 0 ? 0 : (side == .front ? angle : angle - 180)),
+                axis: (x: 0, y: 1, z: 0),
+                perspective: perspective
             )
-            .overlay(SwipeTintBorder())
+            .accessibilityHidden(!isShowing)
+    }
+}
+
+// MARK: - Face
+/// The card itself: an opaque card the content sits on, with the card corner and a lift off the page.
+private struct FlashcardFace<Content: View>: View {
+    let contentOpacity: Double
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        content()
+            .opacity(contentOpacity)
+            .padding(DesignSystem.Spacing.lg)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: FlashcardStyle.cornerRadius, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: FlashcardStyle.cornerRadius, style: .continuous)
+                    .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
+            }
             .geoShadow(.elevated)
     }
 }
 
-// MARK: - Equatable
-// The swipe tint arrives through the environment, so a drag frame redraws only the tint layers, not the faces.
-extension FlashcardCardView: Equatable {
-    nonisolated public static func == (lhs: FlashcardCardView, rhs: FlashcardCardView) -> Bool {
-        lhs.card == rhs.card && lhs.isFlipped == rhs.isFlipped
-    }
-}
-
-// MARK: - Swipe Tint
-/// How strongly a swipe in progress tints the card: green toward "knew it", red toward "wrong".
-struct FlashcardSwipeTint: Equatable {
-    var color: Color = .clear
-    var opacity: Double = 0
-}
-
-extension EnvironmentValues {
-    @Entry var flashcardSwipeTint = FlashcardSwipeTint()
-}
-
-private struct SwipeTintFill: View {
-    @Environment(\.flashcardSwipeTint) private var tint
-
-    var body: some View {
-        ZStack {
-            DesignSystem.Color.cardBackground
-            tint.color.opacity(tint.opacity)
-        }
-    }
-}
-
-private struct SwipeTintBorder: View {
-    @Environment(\.flashcardSwipeTint) private var tint
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
-            .strokeBorder(
-                tint.opacity > 0
-                    ? tint.color.opacity(tint.opacity * 2)
-                    : DesignSystem.Color.cardBackgroundHighlighted,
-                lineWidth: tint.opacity > 0 ? 2 : 1
-            )
-            .animation(.interactiveSpring(response: 0.15), value: tint.opacity)
-    }
+// MARK: - Style
+/// Flashcards' look, shared by the card, its stack, and the rating bar.
+enum FlashcardStyle {
+    /// Flashcards' own colour on the Play tab (Geografy's identity marks).
+    static let color = DesignSystem.Color.purple
+    static let cornerRadius = DesignSystem.CornerRadius.card
+    static let perspective: CGFloat = 0.45
+    static let smallFlagHeight: CGFloat = 56
+    static let largeFlagHeight: CGFloat = 120
 }

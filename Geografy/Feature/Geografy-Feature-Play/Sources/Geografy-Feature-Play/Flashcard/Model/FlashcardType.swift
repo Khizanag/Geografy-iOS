@@ -14,10 +14,10 @@ public enum FlashcardType: String, CaseIterable, Identifiable, Codable, Sendable
 extension FlashcardType: SelectableType {
     public var displayName: String {
         switch self {
-        case .countryToCapital: "Country -> Capital"
-        case .flagToCountry: "Flag -> Country"
-        case .capitalToCountry: "Capital -> Country"
-        case .countryToFlag: "Country -> Flag"
+        case .countryToCapital: "Country → Capital"
+        case .flagToCountry: "Flag → Country"
+        case .capitalToCountry: "Capital → Country"
+        case .countryToFlag: "Country → Flag"
         }
     }
 

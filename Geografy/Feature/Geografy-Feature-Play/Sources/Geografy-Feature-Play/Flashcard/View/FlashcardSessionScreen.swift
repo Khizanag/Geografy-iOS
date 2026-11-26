@@ -5,6 +5,8 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
+/// A flashcard session: the cards as a stack to flip and rate, by swipe or by the bar under it, then the result.
+/// A card rated Wrong comes back once at the end of the session, so it's seen again while it's fresh.
 public struct FlashcardSessionScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
@@ -15,19 +17,21 @@ public struct FlashcardSessionScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(SoundService.self) private var soundService
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let deck: FlashcardDeck
     public let cards: [FlashcardItem]
 
-    @State private var currentIndex = 0
+    @State private var queue: [FlashcardItem] = []
+    @State private var flippedCardID: String?
+    /// The card on its way off: the bar under it already asks about the next one.
+    @State private var releasedCardID: String?
+    @State private var pendingThrow: FlashcardThrow?
+    /// The rating a button chose, used when its card has flown off; a swipe rates by its direction instead.
+    @State private var pendingResult: FlashcardReviewResult?
+    @State private var firstAnswers: [String: Bool] = [:]
+    @State private var requeuedIDs: Set<String> = []
     @State private var checkedAnswer: CheckedAnswer?
-    @State private var nextCard = PendingAction()
-    @State private var isFlipped = false
     @State private var showResults = false
-    @State private var correctCount = 0
-    @State private var cardExit: FlashcardCardExit?
-
     @State private var showQuitAlert = false
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
@@ -40,7 +44,8 @@ public struct FlashcardSessionScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        sessionContent
+        content
+            .screenBackground()
             .navigationTitle(deck.name)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
@@ -54,75 +59,57 @@ public struct FlashcardSessionScreen: View {
                 Text("Cards you've already rated stay saved.")
             }
             .gameGuide(id: FlashcardGuide.id) { FlashcardGuideSheet() }
+            .onAppear { if queue.isEmpty, !showResults { queue = cards } }
             .onDisappear { flashcardService.persistPendingChanges() }
             .answerHaptic(checkedAnswer)
-            .haptic(.impact(weight: .light), trigger: isFlipped)
+            .haptic(.impact(weight: .light), trigger: flippedCardID)
     }
 }
 
-// MARK: - Body Subviews
+// MARK: - Content
 private extension FlashcardSessionScreen {
     @ViewBuilder
-    var sessionContent: some View {
+    var content: some View {
         if showResults {
-            resultsContent
-                .transition(.opacity)
+            FlashcardResultsView(
+                deck: deck,
+                cardCount: cards.count,
+                correctCount: correctCount,
+                averageThinkingTime: averageThinkingTime,
+                onStudyAgain: restart,
+                onDone: { dismiss() }
+            )
+            .transition(.opacity)
         } else {
-            activeSessionContent
+            studyContent
         }
     }
 
-    var activeSessionContent: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            progressSection
-            cardSection
-            ratingSection
+    var studyContent: some View {
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            SessionProgressView(progress: progress, current: min(answeredCount + 1, cards.count), total: cards.count)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+            FlashcardStack(
+                cards: queue,
+                flippedCardID: flippedCardID,
+                pendingThrow: $pendingThrow,
+                onFlip: flipTopCard,
+                onRelease: release,
+                onThrown: finishThrow,
+                onShowDetails: showCountryDetail
+            )
+            .padding(.horizontal, DesignSystem.Spacing.xl)
+            .padding(.bottom, DesignSystem.Spacing.sm)
+            FlashcardRatingBar(
+                isFlipped: isTopFlipped && queue.first?.id != releasedCardID,
+                nextReview: nextReview,
+                onShowAnswer: flipTopCard,
+                onRate: rateWithButton
+            )
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.sm)
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .screenBackground()
-    }
-
-    var resultsContent: some View {
-        GameResultLayout(
-            title: Text("Session Complete"),
-            message: Text("\(correctCount) of \(cards.count) cards correct"),
-            xpEarned: XPRules.flashcardSession(cardsReviewed: cards.count),
-            primaryAction: GameResultAction("Study Again", systemImage: "arrow.counterclockwise") { restart() },
-            onDone: { dismiss() },
-            hero: {
-                IconBadge(deck.icon, color: DesignSystem.Color.purple, size: .hero)
-                    .accessibilityHidden(true)
-            },
-            stats: { resultStats }
-        )
-        .screenBackground()
-        .onAppear {
-            flashcardService.persistPendingChanges()
-            submitFlashcardAccuracy()
-            announceResults()
-        }
-    }
-
-    @ViewBuilder
-    var resultStats: some View {
-        StatTile(
-            value: "\(correctCount)",
-            label: "Correct",
-            icon: "checkmark.circle.fill",
-            color: DesignSystem.Color.success
-        )
-        StatTile(
-            value: "\(accuracyPercent)%",
-            label: "Accuracy",
-            icon: "chart.bar.fill",
-            color: DesignSystem.Color.indigo
-        )
-        StatTile(
-            value: averageThinkingTime.formatted(.number.precision(.fractionLength(1))) + "s",
-            label: "Avg. Think Time",
-            icon: "brain.fill",
-            color: DesignSystem.Color.purple
-        )
     }
 
     @ToolbarContentBuilder
@@ -135,167 +122,27 @@ private extension FlashcardSessionScreen {
     }
 }
 
-// MARK: - Progress
-private extension FlashcardSessionScreen {
-    var progressSection: some View {
-        SessionProgressView(progress: progressFraction, current: currentIndex + 1, total: cards.count)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .accessibilityLabel("Card \(currentIndex + 1) of \(cards.count)")
-            .accessibilityValue("\(Int(progressFraction * 100)) percent complete")
-    }
-}
-
-// MARK: - Card
-private extension FlashcardSessionScreen {
-    var cardSection: some View {
-        FlashcardSwipeCard(
-            card: currentCard,
-            isFlipped: isFlipped,
-            exit: cardExit,
-            onTap: flipCard,
-            onRate: rate
-        )
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-}
-
-// MARK: - Rating
-private extension FlashcardSessionScreen {
-    @ViewBuilder
-    var ratingSection: some View {
-        if isFlipped {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                ratingButtons
-                countryInfoButton
-            }
-            .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
-            .padding(.bottom, DesignSystem.Spacing.md)
-        } else {
-            Spacer(minLength: 0)
-        }
-    }
-
-    var countryInfoButton: some View {
-        Button { showCountryDetail() } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: "info.circle")
-                    .font(DesignSystem.Font.caption)
-                Text("Country Details")
-                    .font(DesignSystem.Font.caption)
-            }
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .buttonStyle(.plain)
-    }
-
-    var ratingButtons: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(FlashcardReviewResult.allCases) { result in
-                ratingButton(for: result)
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func ratingButton(for result: FlashcardReviewResult) -> some View {
-        Button { recordReview(result) } label: {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: result.icon)
-                    .font(DesignSystem.Font.subheadline)
-                Text(result.displayName)
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(result.color)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .glassEffect(
-                .regular.tint(result.color.opacity(DesignSystem.Opacity.tint)).interactive(),
-                in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
-        }
-        .buttonStyle(.plain)
-    }
-}
-
 // MARK: - Actions
 private extension FlashcardSessionScreen {
-    func showCountryDetail() {
-        let code = currentCard.countryCode
-        guard let country = countryDataService.country(for: code) else { return }
-        coordinator.sheet(CountryRoute.countryDetail(country))
-    }
-
-    func flipCard() {
-        if !isFlipped {
-            let thinkingTime = Date.now.timeIntervalSince(cardShownAt)
-            thinkingTimes.append(thinkingTime)
+    func flipTopCard() {
+        guard let top = queue.first else { return }
+        if flippedCardID != top.id {
+            thinkingTimes.append(Date.now.timeIntervalSince(cardShownAt))
         }
-        isFlipped.toggle()
-    }
-
-    func recordReview(_ result: FlashcardReviewResult) {
-        flashcardService.recordReview(
-            cardID: currentCard.id,
-            result: result
-        )
-
-        if result != .again {
-            correctCount += 1
-        }
-
-        playFeedback(knewIt: result != .again)
-        let exitRight = result != .again
-        advanceToNext(exitRight: exitRight)
-    }
-
-    func advanceToNext(exitRight: Bool = false) {
-        exitCard(towards: exitRight ? 400 : -400, duration: 0.2, delay: 0.35)
-    }
-
-    func rate(_ feedback: SwipeFeedback) {
-        playFeedback(knewIt: feedback != .wrong)
-        flyOffAndAdvance(direction: feedback == .wrong ? .left : .right, result: feedback.reviewResult)
-    }
-
-    func flyOffAndAdvance(direction: SwipeDirection, result: FlashcardReviewResult) {
-        flashcardService.recordReview(cardID: currentCard.id, result: result)
-        if result != .again { correctCount += 1 }
-        exitCard(towards: direction == .right ? 500 : -500, duration: 0.25, delay: 0.4)
-    }
-
-    func exitCard(towards offscreenX: CGFloat, duration: Double, delay: Double) {
-        cardExit = FlashcardCardExit(offscreenX: offscreenX, duration: duration)
-
-        nextCard.schedule(after: .seconds(reduceMotion ? 0.15 : delay)) { showNextCard() }
-    }
-
-    func showNextCard() {
-        guard currentIndex + 1 < cards.count else {
-            showResults = true
-            xpService.award(XPRules.flashcardSession(cardsReviewed: cards.count), source: .flashcardSession)
-            achievementService.checkFlashcardAchievements(proficientCount: flashcardService.proficientCount)
-            return
-        }
-        var transaction = Transaction()
-        transaction.disablesAnimations = true
-        withTransaction(transaction) {
-            currentIndex += 1
-            isFlipped = false
-            cardShownAt = .now
-            cardExit = nil
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.82)) {
+            flippedCardID = flippedCardID == top.id ? nil : top.id
         }
     }
 
-    func announceResults() {
-        let message = "Session complete. \(correctCount) of \(cards.count) cards correct."
-        AccessibilityNotification.Announcement(message).post()
+    func rateWithButton(_ result: FlashcardReviewResult) {
+        pendingResult = result
+        pendingThrow = result == .again ? .left : .right
     }
 
-    enum SwipeDirection { case left, right }
-
-    /// The quiz's right-or-wrong feedback, the same for a swipe and a rating button.
-    func playFeedback(knewIt: Bool) {
+    /// The card has been let go: the right-or-wrong sound and haptic play now, as it leaves.
+    func release(_ direction: FlashcardThrow) {
+        releasedCardID = queue.first?.id
+        let knewIt = (pendingResult ?? result(for: direction)) != .again
         checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: knewIt,
             announcement: knewIt
@@ -304,65 +151,105 @@ private extension FlashcardSessionScreen {
         )
     }
 
-    func restart() {
-        nextCard.cancel()
-        currentIndex = 0
-        isFlipped = false
-        correctCount = 0
-        thinkingTimes = []
-        cardShownAt = .now
-        cardExit = nil
-        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
-            showResults = false
+    /// The card has flown off: record its rating, and bring the next one forward.
+    func finishThrow(_ direction: FlashcardThrow) {
+        guard let card = queue.first else { return }
+        let result = pendingResult ?? result(for: direction)
+        pendingResult = nil
+        flashcardService.recordReview(cardID: card.id, result: result)
+        if firstAnswers[card.id] == nil {
+            firstAnswers[card.id] = result != .again
         }
+        withAnimation(.spring(response: 0.42, dampingFraction: 0.86)) {
+            queue.removeFirst()
+            if result == .again, !requeuedIDs.contains(card.id) {
+                requeuedIDs.insert(card.id)
+                queue.append(card)
+            }
+        }
+        flippedCardID = nil
+        releasedCardID = nil
+        cardShownAt = .now
+        if queue.isEmpty { finishSession() }
     }
 
-    func submitFlashcardAccuracy() {
+    /// A swipe right before the answer shows means it was known at once; after, it was recalled.
+    func result(for direction: FlashcardThrow) -> FlashcardReviewResult {
+        guard direction == .right else { return .again }
+        return isTopFlipped ? .good : .easy
+    }
+
+    func finishSession() {
+        xpService.award(XPRules.flashcardSession(cardsReviewed: cards.count), source: .flashcardSession)
+        achievementService.checkFlashcardAchievements(proficientCount: flashcardService.proficientCount)
+        flashcardService.persistPendingChanges()
+        submitAccuracy()
+        withAnimation(.easeInOut(duration: 0.3)) { showResults = true }
+    }
+
+    func showCountryDetail() {
+        guard let code = queue.first?.countryCode, let country = countryDataService.country(for: code) else { return }
+        coordinator.sheet(CountryRoute.countryDetail(country))
+    }
+
+    func restart() {
+        queue = cards
+        flippedCardID = nil
+        pendingResult = nil
+        firstAnswers = [:]
+        requeuedIDs = []
+        thinkingTimes = []
+        cardShownAt = .now
+        withAnimation(.easeInOut(duration: 0.3)) { showResults = false }
+    }
+
+    func submitAccuracy() {
         guard !cards.isEmpty else { return }
-        let accuracyPercent = Int(
-            (Double(correctCount) / Double(cards.count)) * 100
-        )
-        Task {
-            await gameCenterService.submitScore(
-                accuracyPercent,
-                to: GameCenterService.LeaderboardID.quizHighScore
-            )
-        }
+        let accuracy = Int(Double(correctCount) / Double(cards.count) * 100)
+        Task { await gameCenterService.submitScore(accuracy, to: GameCenterService.LeaderboardID.quizHighScore) }
     }
 }
 
 // MARK: - Helpers
 private extension FlashcardSessionScreen {
-    var currentCard: FlashcardItem {
-        cards[min(currentIndex, cards.count - 1)]
+    var isTopFlipped: Bool {
+        guard let top = queue.first else { return false }
+        return flippedCardID == top.id
     }
 
-    var progressFraction: CGFloat {
+    var answeredCount: Int { firstAnswers.count }
+
+    var correctCount: Int { firstAnswers.values.filter { $0 }.count }
+
+    var progress: CGFloat {
         guard !cards.isEmpty else { return 0 }
-        return CGFloat(currentIndex) / CGFloat(cards.count)
-    }
-
-    var accuracyPercent: Int {
-        cards.isEmpty ? 0 : Int((Double(correctCount) / Double(cards.count) * 100).rounded())
+        return CGFloat(answeredCount) / CGFloat(cards.count)
     }
 
     var averageThinkingTime: TimeInterval {
         guard !thinkingTimes.isEmpty else { return 0 }
         return thinkingTimes.reduce(0, +) / Double(thinkingTimes.count)
     }
+
+    /// When the top card would come back after each rating: Wrong brings it back this session.
+    func nextReview(_ result: FlashcardReviewResult) -> String {
+        guard result != .again, let top = queue.first else {
+            return String(localized: "Soon", bundle: .module)
+        }
+        let days = flashcardService.spacedRepetitionData(for: top.id).updated(with: result).interval
+        return FlashcardInterval.short(days: days)
+    }
 }
 
-// MARK: - Swipe Feedback
-public enum SwipeFeedback {
-    case correct
-    case wrong
-    case knewIt
-
-    var reviewResult: FlashcardReviewResult {
-        switch self {
-        case .correct: .good
-        case .wrong: .again
-        case .knewIt: .easy
+// MARK: - Interval
+enum FlashcardInterval {
+    /// A review interval as a few characters: "1d", "3w", "2mo".
+    static func short(days: Double) -> String {
+        let days = max(1, Int(days.rounded()))
+        switch days {
+        case ..<14: return String(localized: "\(days)d", bundle: .module)
+        case ..<60: return String(localized: "\(days / 7)w", bundle: .module)
+        default: return String(localized: "\(days / 30)mo", bundle: .module)
         }
     }
 }

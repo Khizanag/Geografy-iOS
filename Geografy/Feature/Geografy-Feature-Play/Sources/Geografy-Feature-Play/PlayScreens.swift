@@ -46,7 +46,7 @@ private extension RouteRegistry {
             case .quizSession(let configuration): QuizSessionScreen(configuration: configuration)
             case .quizSetup: QuizSetupScreen()
             case .speedRunSetup: SpeedRunSetupScreen()
-            case .srsStudy: SRSStudyScreen()
+            case .srsStudy: FlashcardSetupScreen()
             case .wordSearch: WordSearchScreen()
             }
         }

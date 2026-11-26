@@ -22,12 +22,12 @@ public enum FlashcardGuide {
                 GuideStep(
                     icon: "hand.tap.fill",
                     title: "Tap the Card",
-                    description: "See a country name or flag, then tap to reveal the answer"
+                    description: "Think of the answer, then tap the card or Show Answer to turn it over"
                 ),
                 GuideStep(
                     icon: "arrow.triangle.2.circlepath",
                     title: "Card Flips Over",
-                    description: "The answer appears with a smooth flip animation"
+                    description: "The answer is on the back, with its pronunciation and the country's details"
                 ),
             ]
         ),
@@ -38,39 +38,39 @@ public enum FlashcardGuide {
             steps: [
                 GuideStep(
                     icon: "arrow.right",
-                    title: "Swipe Right — Correct",
-                    description: "You knew the answer. Swipe right even before flipping to mark as known"
+                    title: "Swipe Right — Got It",
+                    description: "Before turning it over, it counts as Knew It; after, as Correct"
                 ),
                 GuideStep(
                     icon: "arrow.left",
                     title: "Swipe Left — Wrong",
-                    description: "You didn't know it — card comes back for review"
+                    description: "You didn't know it. It comes back once at the end of the session"
                 ),
             ]
         ),
         GuidePage(
             title: "Rate Your Answer",
-            subtitle: "Use the rating buttons for precise control over when you'll see the card again.",
+            subtitle: "Each button shows when the card comes back after it.",
             steps: [
                 GuideStep(
                     icon: "xmark.circle.fill",
                     title: "Wrong",
-                    description: "Didn't know it — shows again this session"
+                    description: "Didn't know it. Shows again at the end of this session"
                 ),
                 GuideStep(
                     icon: "exclamationmark.triangle.fill",
                     title: "Struggled",
-                    description: "Barely remembered — review tomorrow"
+                    description: "Barely remembered. Comes back soonest"
                 ),
                 GuideStep(
                     icon: "checkmark.circle.fill",
                     title: "Correct",
-                    description: "Recalled with effort — review in 2 days"
+                    description: "Recalled with some effort. Comes back later"
                 ),
                 GuideStep(
                     icon: "bolt.circle.fill",
                     title: "Knew It",
-                    description: "Knew it instantly — review in 4 days"
+                    description: "Knew it at once. Comes back latest"
                 ),
             ]
         ),
@@ -83,7 +83,7 @@ public enum FlashcardGuide {
                 GuideStep(
                     icon: "clock.arrow.circlepath",
                     title: "Review Due Cards Daily",
-                    description: "Check the 'Due for Review' section for cards ready to study"
+                    description: "Open Flashcards each day; Up Next shows the cards ready to study"
                 ),
                 GuideStep(
                     icon: "chart.line.uptrend.xyaxis",
