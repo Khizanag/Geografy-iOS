@@ -21,22 +21,22 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            speedRunPlainField,
+            namedTinyCountries,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var speedRunPlainField: BuildNote {
+    var namedTinyCountries: BuildNote {
         BuildNote(
-            commit: "2e031794",
-            title: "Speed Run field without the keyboard glyph",
+            commit: "b5cbf3c6",
+            title: "Named tiny countries lose their ring",
             howToTest: """
-                Start a Speed Run: the field reads Name a country with no keyboard icon before it, like the other \
-                games' answer fields.
+                In a Speed Run of Europe with Show Map on, name Monaco: its ring disappears and only the country \
+                itself fills green. The rings left are the countries still to find.
                 """,
-            systemImage: "character.cursor.ibeam",
+            systemImage: "circle.dashed",
             color: DesignSystem.Color.pink
         ) {
             go.open(.speedRun)
