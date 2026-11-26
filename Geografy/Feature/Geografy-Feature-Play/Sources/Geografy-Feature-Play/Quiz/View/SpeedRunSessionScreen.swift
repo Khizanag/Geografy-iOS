@@ -30,6 +30,8 @@ public struct SpeedRunSessionScreen: View {
     @State var completedCodes: Set<String> = []
     @State private var completedCountries: [Country] = []
     @State private var flashingCode: String?
+    /// The named country tapped in the list, picked out on the map.
+    @State private var highlightedCode: String?
     @State private var inputFeedback: AnswerField.Feedback = .none
     @State private var inputMessage: String?
     @State private var rejectedInput: String?
@@ -76,6 +78,7 @@ public struct SpeedRunSessionScreen: View {
                 newCount > oldCount ? .success : nil
             }
             .haptic(.error, trigger: rejectionCount)
+            .haptic(.selection, trigger: highlightedCode)
     }
 }
 
@@ -103,8 +106,13 @@ private extension SpeedRunSessionScreen {
                 progressSection
 
                 if showsMap {
-                    SpeedRunMap(region: region, countries: targetCountries, namedCodes: completedCodes)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
+                    SpeedRunMap(
+                        region: region,
+                        countries: targetCountries,
+                        namedCodes: completedCodes,
+                        highlightedCode: highlightedCode
+                    )
+                    .padding(.horizontal, DesignSystem.Spacing.md)
                 }
 
                 completedList
@@ -203,21 +211,48 @@ private extension SpeedRunSessionScreen {
         }
     }
 
+    /// A glass capsule. With the map showing, a tap picks its country out there, and again lets it go; a country
+    /// just named flashes green, and the one picked out takes the map's colour.
+    @ViewBuilder
     func completedRow(country: Country) -> some View {
+        let isHighlighted = highlightedCode == country.code
+        if showsMap {
+            Button {
+                withAnimation(reduceMotion ? nil : .snappy) {
+                    highlightedCode = isHighlighted ? nil : country.code
+                }
+            } label: {
+                completedRowLabel(country: country, isHighlighted: isHighlighted)
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("Shows it on the map", bundle: .module))
+            .accessibilityAddTraits(isHighlighted ? .isSelected : [])
+        } else {
+            completedRowLabel(country: country, isHighlighted: false)
+        }
+    }
+
+    func completedRowLabel(country: Country, isHighlighted: Bool) -> some View {
         let isFlashing = flashingCode == country.code
+        let tint: Color? = if isFlashing {
+            DesignSystem.Color.success
+        } else if isHighlighted {
+            SpeedRunMap.highlightColor
+        } else {
+            nil
+        }
         return CountryListRow(country: country) {
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.success)
                 .accessibilityHidden(true)
         }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(
-            isFlashing
-                ? DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint)
-                : DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
+        .contentShape(.capsule)
+        .glassEffect(
+            .regular.tint(tint?.opacity(DesignSystem.Opacity.soft)).interactive(showsMap),
+            in: .capsule
         )
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: isFlashing)
         .accessibilityElement(children: .combine)

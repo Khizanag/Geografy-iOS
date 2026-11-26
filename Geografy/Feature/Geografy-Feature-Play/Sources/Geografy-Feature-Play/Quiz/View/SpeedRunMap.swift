@@ -19,6 +19,8 @@ struct SpeedRunMap: View {
     /// Every country the run asks for, so the small ones can be marked.
     let countries: [Country]
     let namedCodes: Set<String>
+    /// A country picked out in Speed Run's colour, such as one tapped in the named list.
+    var highlightedCode: String?
 
     @State private var outline: ContinentOutline?
 
@@ -29,10 +31,12 @@ struct SpeedRunMap: View {
                 ContinentOutlineView(
                     outline: outline,
                     fill: DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.half),
+                    highlight: highlight,
                     countryColors: namedColors,
                     markers: markers
                 )
                 .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: namedCodes)
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: highlightedCode)
             } else {
                 Color.clear
             }
@@ -47,7 +51,16 @@ struct SpeedRunMap: View {
 }
 
 // MARK: - Helpers
+extension SpeedRunMap {
+    /// Speed Run's own colour, so a tapped row and its country read as one.
+    static let highlightColor = DesignSystem.Color.pink
+}
+
 private extension SpeedRunMap {
+    var highlight: ContinentOutlineView.Highlight? {
+        highlightedCode.map { ContinentOutlineView.Highlight(countryCode: $0, color: Self.highlightColor) }
+    }
+
     /// Named countries in green, the colour of a right answer (Geografy article 101).
     var namedColors: [String: Color] {
         Dictionary(uniqueKeysWithValues: namedCodes.map { ($0, DesignSystem.Color.success) })
@@ -56,7 +69,8 @@ private extension SpeedRunMap {
     /// A country too small to see shows as a ring while it's missing and a green dot once named, so a tiny one
     /// such as Monaco can't hide.
     var markers: [String: ContinentOutlineView.Marker] {
-        Dictionary(uniqueKeysWithValues: countries.map { country in
+        // The highlighted country draws its own mark, in the highlight's colour.
+        Dictionary(uniqueKeysWithValues: countries.filter { $0.code != highlightedCode }.map { country in
             let isNamed = namedCodes.contains(country.code)
             let marker = ContinentOutlineView.Marker(
                 style: isNamed ? .dot : .ring,

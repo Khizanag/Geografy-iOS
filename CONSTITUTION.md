@@ -64,6 +64,10 @@ The pronounce button beside a name and the swap button between two picked items 
 
 The app ships in English only until launch preparation begins, at the owner's word on 2026-11-16. Every string still goes through the String Catalog, so adding a language is translation, not code.
 
+### Article 2: Speed Run's named countries are glass
+
+At the owner's word, the countries named during a Speed Run are glass capsules, though article 2 keeps the rows of a list off glass. Each acts: a tap picks its country out on the run's map, and that row takes the map's colour. The list is a game's running feedback under its field, not reading.
+
 ### Parked platforms
 
 The tvOS and Mac Catalyst targets are parked at the owner's word and are not held to the constitution until they are reopened.
