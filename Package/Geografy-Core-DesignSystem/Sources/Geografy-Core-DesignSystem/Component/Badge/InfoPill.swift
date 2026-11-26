@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// A small capsule with an icon and a short fact, such as "12 questions" or "Hard".
+/// A small capsule with an icon and a short fact, such as "12 questions" or "Hard". It only informs; a fact the
+/// player can tap is an `ActionChip`.
 public struct InfoPill: View {
     // MARK: - Style
     public enum Style {
@@ -18,20 +19,16 @@ public struct InfoPill: View {
     private let title: String
     private let systemImage: String?
     private let style: Style
-    private let trailingSystemImage: String?
 
     // MARK: - Init
-    /// - Parameter trailingSystemImage: A small symbol after the title, such as a chevron on a pill that's a button.
     public init(
         _ title: String,
         systemImage: String? = nil,
-        style: Style = .neutral,
-        trailingSystemImage: String? = nil
+        style: Style = .neutral
     ) {
         self.title = title
         self.systemImage = systemImage
         self.style = style
-        self.trailingSystemImage = trailingSystemImage
     }
 
     // MARK: - Body
@@ -42,11 +39,6 @@ public struct InfoPill: View {
                     .accessibilityHidden(true)
             }
             Text(title)
-            if let trailingSystemImage {
-                Image(systemName: trailingSystemImage)
-                    .imageScale(.small)
-                    .accessibilityHidden(true)
-            }
         }
         .font(DesignSystem.Font.caption2)
         .fontWeight(.semibold)

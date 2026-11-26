@@ -3,7 +3,8 @@ import SwiftUI
 /// A capsule filter chip: plain glass at rest, prominent glass in its tint once chosen, with an optional count of
 /// what the choice holds. The one chip every filter row uses, so chips look and answer alike on every screen.
 ///
-/// Lay several out with `ChipScrollRow`; a chip that opens a menu of values is a `MenuChip`.
+/// Lay several out with `ChipScrollRow`; a chip that opens a menu of values is a `MenuChip`, and one that does a
+/// single thing is an `ActionChip`.
 public struct SelectableChip<Icon: View>: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -162,6 +163,53 @@ public struct MenuChip<Content: View>: View {
         .menuStyle(.button)
         .chipGlass(isSelected: isActive, tint: tint)
         .haptic(.selection, trigger: title)
+    }
+}
+
+// MARK: - Action Chip
+/// A chip that does one thing when tapped, such as a setup fact that scrolls to its setting: the same plain glass
+/// and label as the other chips, its glyph in `tint`, with a chevron when it leads somewhere.
+public struct ActionChip: View {
+    // MARK: - Properties
+    @State private var pressCount = 0
+
+    private let title: String
+    private let systemImage: String
+    private let tint: Color
+    private let showsIndicator: Bool
+    private let action: () -> Void
+
+    // MARK: - Init
+    /// - Parameters:
+    ///   - tint: The glyph's color, such as a game's own color.
+    ///   - showsIndicator: Whether a chevron says the chip leads to more.
+    public init(
+        _ title: String,
+        systemImage: String,
+        tint: Color = DesignSystem.Color.accent,
+        showsIndicator: Bool = true,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
+        self.tint = tint
+        self.showsIndicator = showsIndicator
+        self.action = action
+    }
+
+    // MARK: - Body
+    public var body: some View {
+        Button {
+            pressCount += 1
+            action()
+        } label: {
+            ChipLabel(title: Text(title), isSelected: false, count: nil, showsMenuIndicator: showsIndicator) {
+                Image(systemName: systemImage)
+                    .foregroundStyle(tint)
+            }
+        }
+        .chipGlass(isSelected: false, tint: tint)
+        .haptic(.impact(weight: .light), trigger: pressCount)
     }
 }
 

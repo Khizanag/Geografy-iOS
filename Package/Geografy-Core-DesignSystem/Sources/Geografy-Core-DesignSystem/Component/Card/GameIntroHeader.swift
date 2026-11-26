@@ -81,9 +81,11 @@ public struct GameIntroHeader: View {
                 titleBlock
             }
             if !facts.isEmpty {
-                FlowLayout(spacing: DesignSystem.Spacing.xs) {
-                    ForEach(facts) { fact in
-                        factPill(fact)
+                GlassEffectContainer(spacing: DesignSystem.Spacing.xs) {
+                    FlowLayout(spacing: DesignSystem.Spacing.xs) {
+                        ForEach(facts) { fact in
+                            factPill(fact)
+                        }
                     }
                 }
             }
@@ -97,18 +99,9 @@ private extension GameIntroHeader {
     @ViewBuilder
     func factPill(_ fact: Fact) -> some View {
         if let section = fact.section, let showSection {
-            Button {
+            ActionChip(fact.title, systemImage: fact.systemImage, tint: color) {
                 showSection(section)
-            } label: {
-                InfoPill(
-                    fact.title,
-                    systemImage: fact.systemImage,
-                    style: .tinted(color),
-                    trailingSystemImage: "chevron.down"
-                )
-                .contentShape(.capsule)
             }
-            .buttonStyle(.plain)
             .accessibilityHint("Shows this setting")
         } else {
             InfoPill(fact.title, systemImage: fact.systemImage, style: .tinted(color))
