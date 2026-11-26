@@ -163,7 +163,6 @@ private extension SpeedRunSessionScreen {
             String(localized: "Name a country", bundle: .module, in: locale),
             text: $inputText,
             isFocused: $isInputFocused,
-            systemImage: "keyboard",
             color: DesignSystem.Color.pink,
             feedback: inputFeedback,
             message: inputMessage,
