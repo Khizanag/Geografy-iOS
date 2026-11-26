@@ -7,6 +7,8 @@ import SwiftUI
 
 /// A flashcard session: the cards as a stack to flip and rate, by swipe or by the bar under it, then the result.
 /// A card rated Wrong comes back once at the end of the session, so it's seen again while it's fresh.
+/// The answer is two-way, Wrong or Got It, and how sure it was comes from timing: a card known before it's turned is
+/// Knew It, one turned after a long think is Struggled.
 public struct FlashcardSessionScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
@@ -26,8 +28,6 @@ public struct FlashcardSessionScreen: View {
     /// The card on its way off: the bar under it already asks about the next one.
     @State private var releasedCardID: String?
     @State private var pendingThrow: FlashcardThrow?
-    /// The rating a button chose, used when its card has flown off; a swipe rates by its direction instead.
-    @State private var pendingResult: FlashcardReviewResult?
     @State private var firstAnswers: [String: Bool] = [:]
     @State private var requeuedIDs: Set<String> = []
     @State private var checkedAnswer: CheckedAnswer?
@@ -102,9 +102,8 @@ private extension FlashcardSessionScreen {
             .padding(.bottom, DesignSystem.Spacing.sm)
             FlashcardRatingBar(
                 isFlipped: isTopFlipped && queue.first?.id != releasedCardID,
-                nextReview: nextReview,
                 onShowAnswer: flipTopCard,
-                onRate: rateWithButton
+                onAnswer: answerWithButton
             )
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.sm)
@@ -134,15 +133,14 @@ private extension FlashcardSessionScreen {
         }
     }
 
-    func rateWithButton(_ result: FlashcardReviewResult) {
-        pendingResult = result
-        pendingThrow = result == .again ? .left : .right
+    func answerWithButton(knewIt: Bool) {
+        pendingThrow = knewIt ? .right : .left
     }
 
     /// The card has been let go: the right-or-wrong sound and haptic play now, as it leaves.
     func release(_ direction: FlashcardThrow) {
         releasedCardID = queue.first?.id
-        let knewIt = (pendingResult ?? result(for: direction)) != .again
+        let knewIt = direction == .right
         checkedAnswer = AnswerFeedback(soundService: soundService).play(
             isCorrect: knewIt,
             announcement: knewIt
@@ -154,8 +152,7 @@ private extension FlashcardSessionScreen {
     /// The card has flown off: record its rating, and bring the next one forward.
     func finishThrow(_ direction: FlashcardThrow) {
         guard let card = queue.first else { return }
-        let result = pendingResult ?? result(for: direction)
-        pendingResult = nil
+        let result = result(for: direction)
         flashcardService.recordReview(cardID: card.id, result: result)
         if firstAnswers[card.id] == nil {
             firstAnswers[card.id] = result != .again
@@ -173,10 +170,12 @@ private extension FlashcardSessionScreen {
         if queue.isEmpty { finishSession() }
     }
 
-    /// A swipe right before the answer shows means it was known at once; after, it was recalled.
     func result(for direction: FlashcardThrow) -> FlashcardReviewResult {
-        guard direction == .right else { return .again }
-        return isTopFlipped ? .good : .easy
+        FlashcardRecall.result(
+            knewIt: direction == .right,
+            isFlipped: isTopFlipped,
+            thinkingTime: isTopFlipped ? thinkingTimes.last : nil
+        )
     }
 
     func finishSession() {
@@ -195,7 +194,6 @@ private extension FlashcardSessionScreen {
     func restart() {
         queue = cards
         flippedCardID = nil
-        pendingResult = nil
         firstAnswers = [:]
         requeuedIDs = []
         thinkingTimes = []
@@ -230,27 +228,20 @@ private extension FlashcardSessionScreen {
         guard !thinkingTimes.isEmpty else { return 0 }
         return thinkingTimes.reduce(0, +) / Double(thinkingTimes.count)
     }
-
-    /// When the top card would come back after each rating: Wrong brings it back this session.
-    func nextReview(_ result: FlashcardReviewResult) -> String {
-        guard result != .again, let top = queue.first else {
-            return String(localized: "Soon", bundle: .module)
-        }
-        let days = flashcardService.spacedRepetitionData(for: top.id).updated(with: result).interval
-        return FlashcardInterval.short(days: days)
-    }
 }
 
-// MARK: - Interval
-enum FlashcardInterval {
-    /// A review interval as a few characters: "1d", "3w", "2mo".
-    static func short(days: Double) -> String {
-        let days = max(1, Int(days.rounded()))
-        switch days {
-        case ..<14: return String(localized: "\(days)d", bundle: .module)
-        case ..<60: return String(localized: "\(days / 7)w", bundle: .module)
-        default: return String(localized: "\(days / 30)mo", bundle: .module)
-        }
+// MARK: - Recall
+/// How well a card was known, read from what was done rather than asked: the direction it went, and how long the
+/// answer took to come.
+enum FlashcardRecall {
+    /// A think this long before turning the card means the answer was a struggle.
+    static let struggleThreshold: TimeInterval = 10
+
+    static func result(knewIt: Bool, isFlipped: Bool, thinkingTime: TimeInterval?) -> FlashcardReviewResult {
+        guard knewIt else { return .again }
+        guard isFlipped else { return .easy }
+        guard let thinkingTime, thinkingTime >= struggleThreshold else { return .good }
+        return .hard
     }
 }
 #endif

@@ -4,20 +4,29 @@ import Testing
 
 @Suite("Flashcard session model")
 struct FlashcardSessionModelTests {
+    @Test("Wrong is Wrong, however fast it came")
+    func wrongIsAgain() {
+        #expect(FlashcardRecall.result(knewIt: false, isFlipped: false, thinkingTime: nil) == .again)
+        #expect(FlashcardRecall.result(knewIt: false, isFlipped: true, thinkingTime: 1) == .again)
+    }
+
+    @Test("Got It before turning the card means it was known at once")
+    func knownBeforeFlipIsEasy() {
+        #expect(FlashcardRecall.result(knewIt: true, isFlipped: false, thinkingTime: nil) == .easy)
+    }
+
     @Test(
-        "An interval reads as days, then weeks, then months",
+        "Got It after turning reads the think time",
         arguments: [
-            (0.2, "1d"),
-            (1.0, "1d"),
-            (13.0, "13d"),
-            (14.0, "2w"),
-            (59.0, "8w"),
-            (60.0, "2mo"),
-            (365.0, "12mo"),
+            (1.0, false),
+            (9.9, false),
+            (10.0, true),
+            (30.0, true),
         ]
     )
-    func intervalLabel(days: Double, expected: String) {
-        #expect(FlashcardInterval.short(days: days) == expected)
+    func thinkTimeSetsRecall(seconds: Double, isStruggle: Bool) {
+        let result = FlashcardRecall.result(knewIt: true, isFlipped: true, thinkingTime: seconds)
+        #expect(result == (isStruggle ? .hard : .good))
     }
 
     @Test("A session size caps the cards, and All Due takes every one")

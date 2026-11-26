@@ -39,7 +39,7 @@ public enum FlashcardGuide {
                 GuideStep(
                     icon: "arrow.right",
                     title: "Swipe Right — Got It",
-                    description: "Before turning it over, it counts as Knew It; after, as Correct"
+                    description: "Before turning it over, it counts as known at once"
                 ),
                 GuideStep(
                     icon: "arrow.left",
@@ -49,8 +49,8 @@ public enum FlashcardGuide {
             ]
         ),
         GuidePage(
-            title: "Rate Your Answer",
-            subtitle: "Each button shows when the card comes back after it.",
+            title: "Wrong or Got It",
+            subtitle: "Two buttons, on the sides a swipe sends the card. Your timing does the rest.",
             steps: [
                 GuideStep(
                     icon: "xmark.circle.fill",
@@ -58,19 +58,14 @@ public enum FlashcardGuide {
                     description: "Didn't know it. Shows again at the end of this session"
                 ),
                 GuideStep(
-                    icon: "exclamationmark.triangle.fill",
-                    title: "Struggled",
-                    description: "Barely remembered. Comes back soonest"
-                ),
-                GuideStep(
                     icon: "checkmark.circle.fill",
-                    title: "Correct",
-                    description: "Recalled with some effort. Comes back later"
+                    title: "Got It",
+                    description: "Knew it. The longer you thought before turning it, the sooner it comes back"
                 ),
                 GuideStep(
                     icon: "bolt.circle.fill",
-                    title: "Knew It",
-                    description: "Knew it at once. Comes back latest"
+                    title: "Knew It at Once",
+                    description: "Swipe right without turning the card: it comes back latest"
                 ),
             ]
         ),

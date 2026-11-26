@@ -13,7 +13,8 @@ public struct GlassButton: View {
     public enum Role {
         case primary
         case secondary
-        /// Deletes, resets, or signs out: the label is red. Confirm before acting.
+        /// The label is red: deleting, resetting, or signing out (confirm those before acting), or saying an
+        /// answer was wrong.
         case destructive
     }
 

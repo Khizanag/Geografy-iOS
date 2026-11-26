@@ -81,8 +81,13 @@ private extension FlashcardStack {
             .accessibilityElement(children: .contain)
             .accessibilityHidden(!isTop)
             .accessibilityAction(named: Text("Flip card", bundle: .module)) { flip() }
-            .accessibilityAction(named: Text("Knew it", bundle: .module)) { throwTopCard(.right) }
+            .accessibilityAction(named: Text("Got it", bundle: .module)) { throwTopCard(.right) }
             .accessibilityAction(named: Text("Wrong", bundle: .module)) { throwTopCard(.left) }
+    }
+
+    /// Before the card is turned, a right swipe says it was known at once.
+    var rightStamp: Text {
+        cards.first?.id == flippedCardID ? Text("Got It", bundle: .module) : Text("Knew It", bundle: .module)
     }
 
     /// A word stamped on the top card as it's dragged, saying how letting go will rate it.
@@ -96,7 +101,7 @@ private extension FlashcardStack {
             RoundedRectangle(cornerRadius: FlashcardStyle.cornerRadius, style: .continuous)
                 .strokeBorder(color.opacity(progress), lineWidth: 3)
             Label {
-                isRight ? Text("Knew It", bundle: .module) : Text("Wrong", bundle: .module)
+                isRight ? rightStamp : Text("Wrong", bundle: .module)
             } icon: {
                 Image(systemName: isRight ? "checkmark.circle.fill" : "arrow.counterclockwise.circle.fill")
             }
