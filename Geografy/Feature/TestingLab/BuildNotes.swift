@@ -21,25 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            namedTinyCountries,
+            answersStayInPlace,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var namedTinyCountries: BuildNote {
+    var answersStayInPlace: BuildNote {
         BuildNote(
-            commit: "b5cbf3c6",
-            title: "Named tiny countries lose their ring",
+            commit: "69ae0ecc",
+            title: "Answers stay put between questions",
             howToTest: """
-                In a Speed Run of Europe with Show Map on, name Monaco: its ring disappears and only the country \
-                itself fills green. The rings left are the countries still to find.
+                Play Map Puzzle, then a Quiz, and answer a few questions: the question or map slides to the next, \
+                and the four answers stay where they are, fading and rising in with the new names. Nothing slides \
+                sideways and back. Check the daily Capital Chain and Flag Sequence too.
                 """,
-            systemImage: "circle.dashed",
-            color: DesignSystem.Color.pink
+            systemImage: "list.bullet.rectangle",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.speedRun)
+            go.open(.mapPuzzle)
         }
     }
 }
