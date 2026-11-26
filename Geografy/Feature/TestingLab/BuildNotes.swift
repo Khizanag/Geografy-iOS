@@ -21,22 +21,22 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            speedRunGlassRows,
+            speedRunPlainField,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var speedRunGlassRows: BuildNote {
+    var speedRunPlainField: BuildNote {
         BuildNote(
-            commit: "fb1ce5cc",
-            title: "Named countries point at the map",
+            commit: "2e031794",
+            title: "Speed Run field without the keyboard glyph",
             howToTest: """
-                In a Speed Run with Show Map on, name a few countries: each is a glass capsule. Tap one: it turns \
-                pink and its country fills pink on the map. Tap it again to let it go.
+                Start a Speed Run: the field reads Name a country with no keyboard icon before it, like the other \
+                games' answer fields.
                 """,
-            systemImage: "hand.tap",
+            systemImage: "character.cursor.ibeam",
             color: DesignSystem.Color.pink
         ) {
             go.open(.speedRun)
