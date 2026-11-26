@@ -316,8 +316,6 @@ private extension QuizSessionScreen {
                     showFlagPreview: $showFlagPreview,
                     onSelectOption: { optionID in selectOption(optionID) }
                 )
-                .id(question.id)
-                .transition(questionTransition)
             case .typing:
                 QuizTypingInputView(
                     question: question,
@@ -332,7 +330,7 @@ private extension QuizSessionScreen {
                     onSubmit: { submitTypingAnswer() }
                 )
                 .id(question.id)
-                .transition(questionTransition)
+                .transition(.nextQuestion(reduceMotion: reduceMotion))
 
             case .spellingBee:
                 QuizSpellingBeeView(
@@ -347,7 +345,7 @@ private extension QuizSessionScreen {
                     onSkip: { skipSpellingBee() }
                 )
                 .id(question.id)
-                .transition(questionTransition)
+                .transition(.nextQuestion(reduceMotion: reduceMotion))
             }
         } else if session.hasLoaded, session.questions.isEmpty {
             EmptyStateView(
@@ -359,14 +357,6 @@ private extension QuizSessionScreen {
                 dismiss()
             }
         }
-    }
-
-    var questionTransition: AnyTransition {
-        guard !reduceMotion else { return .opacity }
-        return .asymmetric(
-            insertion: .move(edge: .trailing).combined(with: .opacity),
-            removal: .move(edge: .leading).combined(with: .opacity)
-        )
     }
 }
 

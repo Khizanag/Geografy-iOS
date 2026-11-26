@@ -24,7 +24,6 @@ public struct QuizQuestionView: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.md)
             .onAppear { triggerEntrance() }
-            .onChange(of: question.id) { triggerEntrance() }
     }
 }
 
@@ -34,11 +33,14 @@ private extension QuizQuestionView {
     /// at the bottom; a longer question or its explanation grows down, never moving where it starts.
     var mainContent: some View {
         VStack(spacing: 0) {
+            // Only the prompt slides to the next question; the answers stay put and rise in anew.
             promptSection
                 .padding(.top, DesignSystem.Spacing.md)
                 .opacity(promptVisible ? 1 : 0)
                 .scaleEffect(promptVisible || reduceMotion ? 1 : 0.94)
                 .animation(reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.8), value: promptVisible)
+                .id(question.id)
+                .transition(.nextQuestion(reduceMotion: reduceMotion))
             Spacer(minLength: DesignSystem.Spacing.lg)
             optionsSection
         }

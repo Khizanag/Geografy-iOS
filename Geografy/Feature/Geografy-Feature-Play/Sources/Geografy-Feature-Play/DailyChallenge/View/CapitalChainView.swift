@@ -45,8 +45,6 @@ public struct CapitalChainView: View {
                     showFlagPreview: $showFlagPreview,
                     onSelectOption: select
                 )
-                .id(question.id)
-                .transition(questionTransition)
             }
 
             Spacer(minLength: 0)
@@ -67,14 +65,6 @@ private extension CapitalChainView {
     var progressFraction: CGFloat {
         guard !content.chainSteps.isEmpty else { return 0 }
         return CGFloat(currentStep) / CGFloat(content.chainSteps.count)
-    }
-
-    var questionTransition: AnyTransition {
-        guard !reduceMotion else { return .opacity }
-        return .asymmetric(
-            insertion: .move(edge: .trailing).combined(with: .opacity),
-            removal: .move(edge: .leading).combined(with: .opacity)
-        )
     }
 }
 

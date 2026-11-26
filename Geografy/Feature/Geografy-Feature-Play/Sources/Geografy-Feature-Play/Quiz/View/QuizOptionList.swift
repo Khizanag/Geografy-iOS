@@ -41,7 +41,7 @@ private extension QuizOptionList {
         switch layout {
         case .list:
             VStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(Array(options.enumerated()), id: \.element.id) { index, option in
+                ForEach(Array(options.enumerated()), id: \.offset) { index, option in
                     button(for: option, index: index)
                         .offset(y: isVisible || reduceMotion ? 0 : 18)
                         .animation(entrance(index: index), value: isVisible)
@@ -55,7 +55,7 @@ private extension QuizOptionList {
                 ],
                 spacing: DesignSystem.Spacing.sm
             ) {
-                ForEach(Array(options.enumerated()), id: \.element.id) { index, option in
+                ForEach(Array(options.enumerated()), id: \.offset) { index, option in
                     button(for: option, index: index)
                         .scaleEffect(isVisible || reduceMotion ? 1 : 0.88)
                         .animation(entrance(index: index), value: isVisible)
@@ -80,12 +80,16 @@ private extension QuizOptionList {
 
 // MARK: - Helpers
 private extension QuizOptionList {
+    /// Each answer keeps its place from one question to the next, so a new question hides the old answers at
+    /// once and the new ones rise into the same places; nothing moves sideways.
     func triggerEntrance() {
         guard !reduceMotion else {
             isVisible = true
             return
         }
-        isVisible = false
+        var hide = Transaction()
+        hide.disablesAnimations = true
+        withTransaction(hide) { isVisible = false }
         withAnimation(.spring(response: 0.35, dampingFraction: 0.85).delay(0.12)) {
             isVisible = true
         }

@@ -45,8 +45,6 @@ public struct FlagSequenceView: View {
                     showFlagPreview: $showFlagPreview,
                     onSelectOption: select
                 )
-                .id(question.id)
-                .transition(questionTransition)
             }
 
             Spacer(minLength: 0)
@@ -72,14 +70,6 @@ private extension FlagSequenceView {
     var progressFraction: CGFloat {
         guard !content.countries.isEmpty else { return 0 }
         return CGFloat(currentIndex) / CGFloat(content.countries.count)
-    }
-
-    var questionTransition: AnyTransition {
-        guard !reduceMotion else { return .opacity }
-        return .asymmetric(
-            insertion: .move(edge: .trailing).combined(with: .opacity),
-            removal: .move(edge: .leading).combined(with: .opacity)
-        )
     }
 }
 

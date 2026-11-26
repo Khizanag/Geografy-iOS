@@ -123,7 +123,11 @@ private extension MapPuzzleScreen {
             progressHeader
             VStack(spacing: 0) {
                 Spacer(minLength: DesignSystem.Spacing.md)
+                // Only the prompt slides to the next question; the answers stay put and rise in anew, so their
+                // glass never travels across the screen.
                 mapPrompt(question)
+                    .id(question.id)
+                    .transition(.nextQuestion(reduceMotion: reduceMotion))
                 if let match {
                     opponentChip(match)
                         .padding(.top, DesignSystem.Spacing.sm)
@@ -139,8 +143,6 @@ private extension MapPuzzleScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.md)
-            .id(question.id)
-            .transition(questionTransition)
         }
         .padding(.top, DesignSystem.Spacing.sm)
         .readableContentWidth()
@@ -206,14 +208,6 @@ private extension MapPuzzleScreen {
                 ? String(localized: "Answered", bundle: .module)
                 : String(localized: "Thinking", bundle: .module),
             systemImage: hasAnswered ? "checkmark.circle.fill" : "ellipsis.circle"
-        )
-    }
-
-    var questionTransition: AnyTransition {
-        guard !reduceMotion else { return .opacity }
-        return .asymmetric(
-            insertion: .move(edge: .trailing).combined(with: .opacity),
-            removal: .move(edge: .leading).combined(with: .opacity)
         )
     }
 }
