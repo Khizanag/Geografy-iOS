@@ -21,25 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            multiplayerNameOnce,
+            glassFactChips,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var multiplayerNameOnce: BuildNote {
+    var glassFactChips: BuildNote {
         BuildNote(
-            commit: "f2aab70e",
-            title: "Multiplayer: Name Asked Once",
+            commit: "fb4a2e17",
+            title: "Glass Setting Chips",
             howToTest: """
-                Open Multiplayer. With a name already on your profile there's no name field, just a "Playing as" \
-                pill under the title. Change the name in Profile, then come back: the pill shows the new name.
+                Open any game's setup, such as a quiz or Flashcards. The chips under the title, like region, lives, \
+                and time, are now glass like the filter chips. Tap one: it presses like glass and scrolls to that \
+                setting.
                 """,
-            systemImage: "person.2.fill",
-            color: DesignSystem.Color.teal
+            systemImage: "capsule.fill",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.multiplayer)
+            go.open(.srsStudy)
         }
     }
 }
