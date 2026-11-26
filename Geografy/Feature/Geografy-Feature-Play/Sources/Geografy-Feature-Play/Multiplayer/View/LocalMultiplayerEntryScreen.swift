@@ -16,6 +16,8 @@ public struct LocalMultiplayerEntryScreen: View {
     @State private var coordinator: LocalMultiplayerCoordinator?
     @State private var appeared = false
     @State private var playerName = ""
+    /// Decided once per visit, so the field doesn't vanish mid-visit after the first game saves the name.
+    @State private var asksForName = false
 
     // MARK: - Init
     public init() {}
@@ -25,6 +27,7 @@ public struct LocalMultiplayerEntryScreen: View {
         extractedContent
             .animation(.easeInOut(duration: 0.3), value: coordinator?.state)
             .onAppear {
+                if !appeared { asksForName = savedName.isEmpty }
                 appeared = true
                 if playerName.isEmpty { playerName = savedName }
             }
@@ -47,7 +50,9 @@ private extension LocalMultiplayerEntryScreen {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 heroSection
-                nameField
+                if asksForName {
+                    nameField
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.lg)
@@ -87,10 +92,22 @@ private extension LocalMultiplayerEntryScreen {
                     .multilineTextAlignment(.center)
             }
 
-            InfoPill("Same Wi-Fi or Bluetooth", systemImage: "wifi", style: .neutral)
+            ViewThatFits {
+                HStack(spacing: DesignSystem.Spacing.xs) { pills }
+                VStack(spacing: DesignSystem.Spacing.xs) { pills }
+            }
         }
         .frame(maxWidth: .infinity)
         .phaseEntrance()
+    }
+
+    @ViewBuilder
+    var pills: some View {
+        InfoPill("Same Wi-Fi or Bluetooth", systemImage: "wifi", style: .neutral)
+        if !asksForName {
+            InfoPill("Playing as \(trimmedName)", systemImage: "person.fill", style: .neutral)
+                .accessibilityHint("Change your name in Profile")
+        }
     }
 
     var nameField: some View {
@@ -103,7 +120,7 @@ private extension LocalMultiplayerEntryScreen {
                 .textInputAutocapitalization(.words)
                 .submitLabel(.done)
                 .accessibilityLabel("Your name")
-            Text("The other player sees this name.")
+            Text("The other player sees this name. You can change it later in Profile.")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
