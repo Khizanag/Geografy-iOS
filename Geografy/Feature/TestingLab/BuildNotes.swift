@@ -21,22 +21,21 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            flashcardsRedesign,
+            flashcardsTwoAnswers,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var flashcardsRedesign: BuildNote {
+    var flashcardsTwoAnswers: BuildNote {
         BuildNote(
-            commit: "58bffc7f",
-            title: "Flashcards, redesigned",
+            commit: "36d6f339",
+            title: "Flashcards: Wrong or Got It",
             howToTest: """
-                Open Flashcards: pick a card type, region and session size, then Study. Tap a card or Show Answer \
-                and watch it turn over in 3D; nothing under it moves. Drag a card: it tilts, a stamp shows the \
-                rating, and the card behind grows forward. Throw it, or let go early to see it spring back. Rate \
-                one Wrong and it comes back at the end.
+                Open Flashcards and Study. Turn a card over: under it are just Wrong and Got It, on the sides a \
+                swipe sends the card. Swipe right before turning a card to mark it known at once. Wrong cards come \
+                back at the end.
                 """,
             systemImage: "rectangle.on.rectangle.angled",
             color: DesignSystem.Color.purple
