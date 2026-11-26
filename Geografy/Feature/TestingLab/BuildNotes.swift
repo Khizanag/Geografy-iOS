@@ -21,6 +21,7 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
+            speedRunGlassRows,
             speedRunFieldBar,
         ]
     }
@@ -28,13 +29,28 @@ struct BuildNotes {
 
 // MARK: - Notes
 private extension BuildNotes {
+    var speedRunGlassRows: BuildNote {
+        BuildNote(
+            commit: "fb1ce5cc",
+            title: "Named countries point at the map",
+            howToTest: """
+                In a Speed Run with Show Map on, name a few countries: each is a glass capsule. Tap one: it turns \
+                pink and its country fills pink on the map. Tap it again to let it go.
+                """,
+            systemImage: "hand.tap",
+            color: DesignSystem.Color.pink
+        ) {
+            go.open(.speedRun)
+        }
+    }
+
     var speedRunFieldBar: BuildNote {
         BuildNote(
             commit: "d214c367",
             title: "Speed Run field floats over the list",
             howToTest: """
-                Start a Speed Run and name enough countries to fill the list: the rows scroll under the field, \
-                softly blurred at the edge as under any bar, with no solid band behind the field.
+                Name enough countries to fill the list: the rows scroll under the field, softly blurred at the \
+                edge as under any bar, with no solid band behind the field.
                 """,
             systemImage: "keyboard",
             color: DesignSystem.Color.pink
