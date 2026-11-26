@@ -66,19 +66,20 @@ private extension SpeedRunMap {
         Dictionary(uniqueKeysWithValues: namedCodes.map { ($0, DesignSystem.Color.success) })
     }
 
-    /// A country too small to see shows as a ring while it's missing and a green dot once named, so a tiny one
-    /// such as Monaco can't hide.
+    /// A missing country too small to see shows as a ring, so a tiny one such as Monaco can't hide; once named,
+    /// its ring goes and only its own outline fills in.
     var markers: [String: ContinentOutlineView.Marker] {
         // The highlighted country draws its own mark, in the highlight's colour.
-        Dictionary(uniqueKeysWithValues: countries.filter { $0.code != highlightedCode }.map { country in
-            let isNamed = namedCodes.contains(country.code)
-            let marker = ContinentOutlineView.Marker(
-                style: isNamed ? .dot : .ring,
-                color: isNamed ? DesignSystem.Color.success : DesignSystem.Color.textPrimary,
-                fallbackPoint: country.capitalCoordinate.map(MapProjection.project)
-            )
-            return (country.code, marker)
-        })
+        Dictionary(uniqueKeysWithValues: countries
+            .filter { !namedCodes.contains($0.code) && $0.code != highlightedCode }
+            .map { country in
+                let marker = ContinentOutlineView.Marker(
+                    style: .ring,
+                    color: DesignSystem.Color.textPrimary,
+                    fallbackPoint: country.capitalCoordinate.map(MapProjection.project)
+                )
+                return (country.code, marker)
+            })
     }
 
     func loadOutline() async {
