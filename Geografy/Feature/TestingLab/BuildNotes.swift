@@ -21,26 +21,27 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            answersStayInPlace,
+            flashcardsRedesign,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var answersStayInPlace: BuildNote {
+    var flashcardsRedesign: BuildNote {
         BuildNote(
-            commit: "69ae0ecc",
-            title: "Answers stay put between questions",
+            commit: "58bffc7f",
+            title: "Flashcards, redesigned",
             howToTest: """
-                Play Map Puzzle, then a Quiz, and answer a few questions: the question or map slides to the next, \
-                and the four answers stay where they are, fading and rising in with the new names. Nothing slides \
-                sideways and back. Check the daily Capital Chain and Flag Sequence too.
+                Open Flashcards: pick a card type, region and session size, then Study. Tap a card or Show Answer \
+                and watch it turn over in 3D; nothing under it moves. Drag a card: it tilts, a stamp shows the \
+                rating, and the card behind grows forward. Throw it, or let go early to see it spring back. Rate \
+                one Wrong and it comes back at the end.
                 """,
-            systemImage: "list.bullet.rectangle",
-            color: DesignSystem.Color.blue
+            systemImage: "rectangle.on.rectangle.angled",
+            color: DesignSystem.Color.purple
         ) {
-            go.open(.mapPuzzle)
+            go.open(.srsStudy)
         }
     }
 }
