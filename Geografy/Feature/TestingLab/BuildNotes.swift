@@ -21,26 +21,25 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            flashcardsTwoAnswers,
+            multiplayerNameOnce,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var flashcardsTwoAnswers: BuildNote {
+    var multiplayerNameOnce: BuildNote {
         BuildNote(
-            commit: "36d6f339",
-            title: "Flashcards: Wrong or Got It",
+            commit: "f2aab70e",
+            title: "Multiplayer: Name Asked Once",
             howToTest: """
-                Open Flashcards and Study. Turn a card over: under it are just Wrong and Got It, on the sides a \
-                swipe sends the card. Swipe right before turning a card to mark it known at once. Wrong cards come \
-                back at the end.
+                Open Multiplayer. With a name already on your profile there's no name field, just a "Playing as" \
+                pill under the title. Change the name in Profile, then come back: the pill shows the new name.
                 """,
-            systemImage: "rectangle.on.rectangle.angled",
-            color: DesignSystem.Color.purple
+            systemImage: "person.2.fill",
+            color: DesignSystem.Color.teal
         ) {
-            go.open(.srsStudy)
+            go.open(.multiplayer)
         }
     }
 }
