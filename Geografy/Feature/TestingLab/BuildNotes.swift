@@ -21,26 +21,26 @@ struct BuildNotes {
 
     var current: [BuildNote] {
         [
-            glassFactChips,
+            quizGiveUpResults,
         ]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var glassFactChips: BuildNote {
+    var quizGiveUpResults: BuildNote {
         BuildNote(
-            commit: "fb4a2e17",
-            title: "Glass Setting Chips",
+            commit: "4a644595",
+            title: "Quiz: Give Up Shows Results",
             howToTest: """
-                Open any game's setup, such as a quiz or Flashcards. The chips under the title, like region, lives, \
-                and time, are now glass like the filter chips. Tap one: it presses like glass and scrolls to that \
-                setting.
+                Start a quiz, answer a question or two, then tap the close button and Give Up. You land on the \
+                results: the questions you didn't reach count as missed, and XP comes only from right answers. \
+                Give Up before answering anything still just closes.
                 """,
-            systemImage: "capsule.fill",
+            systemImage: "flag.checkered",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.srsStudy)
+            go.open(.quiz)
         }
     }
 }
