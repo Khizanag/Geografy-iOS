@@ -13,6 +13,13 @@ struct XPRulesTests {
         #expect(XPRules.quiz(difficulty: difficulty, accuracy: accuracy, isTyping: isTyping) == expected)
     }
 
+    @Test("A quiz given up earns only for its right answers")
+    func quizGivenUp() {
+        #expect(XPRules.quiz(difficulty: .easy, accuracy: 0, isTyping: false, finished: false) == 0)
+        #expect(XPRules.quiz(difficulty: .easy, accuracy: 0.5, isTyping: false, finished: false) == 5)
+        #expect(XPRules.quiz(difficulty: .hard, accuracy: 0.5, isTyping: true, finished: false) == 15)
+    }
+
     @Test("Speed Run pays for countries named, and the bonuses only for finishing")
     func speedRun() {
         #expect(XPRules.speedRun(completionRate: 1, elapsedSeconds: 50) == 250)

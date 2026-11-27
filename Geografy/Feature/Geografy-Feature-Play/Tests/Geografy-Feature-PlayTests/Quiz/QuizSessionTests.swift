@@ -104,6 +104,48 @@ struct QuizSessionTests {
         #expect(result.correctCount == 5)
     }
 
+    @Test("Giving up counts every question not answered yet as missed")
+    func giveUp() throws {
+        let session = Self.makeSession()
+        session.load(countries: Self.countries)
+        #expect(try answerRight(session))
+        _ = session.moveToNext()
+        #expect(try answerRight(session))
+
+        session.giveUp()
+        let result = session.result()
+
+        #expect(result.gaveUp)
+        #expect(result.answers.count == 5)
+        #expect(result.correctCount == 2)
+        #expect(result.answers.suffix(3).allSatisfy { $0.selectedOptionID == nil })
+        #expect(result.answers.map(\.question.id) == session.questions.map(\.id))
+    }
+
+    @Test("Giving up while an answer shows keeps that answer and misses only the rest")
+    func giveUpAfterAnswer() throws {
+        let session = Self.makeSession()
+        session.load(countries: Self.countries)
+        #expect(try answerRight(session))
+
+        session.giveUp()
+
+        #expect(session.answers.count == 5)
+        #expect(session.answers.first?.isCorrect == true)
+    }
+
+    @Test("Giving up on an arcade game stops it where it is")
+    func giveUpArcade() throws {
+        let session = Self.makeSession(gameMode: .arcade)
+        session.load(countries: Self.countries)
+        #expect(try answerRight(session))
+
+        session.giveUp()
+
+        #expect(session.answers.count == 1)
+        #expect(session.result().accuracy == 1)
+    }
+
     @Test("A timed arcade game counts the time it used")
     func arcadeTime() {
         let session = Self.makeSession(gameMode: .arcade)

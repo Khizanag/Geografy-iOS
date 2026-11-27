@@ -9,6 +9,8 @@ public struct QuizResult: Identifiable, Hashable {
     public let configuration: QuizConfiguration
     public let answers: [QuizAnswer]
     public let totalTime: TimeInterval
+    /// Ended with Give Up rather than played to the end.
+    public var gaveUp = false
 }
 
 // MARK: - Computed Properties

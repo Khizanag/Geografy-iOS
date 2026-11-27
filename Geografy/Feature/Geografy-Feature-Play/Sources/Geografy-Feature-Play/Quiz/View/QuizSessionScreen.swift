@@ -6,7 +6,7 @@ import SwiftUI
 
 public struct QuizSessionScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) var dismiss
     @Environment(SoundService.self) var soundService
     @Environment(CountryDataService.self) var countryDataService
     @Environment(Navigator.self) var coordinator
@@ -64,10 +64,10 @@ public struct QuizSessionScreen: View {
                 transition.cancel()
             }
             .alert("Give Up?", isPresented: $showQuitAlert) {
-                Button("Give Up", role: .destructive) { dismiss() }
+                Button("Give Up", role: .destructive) { giveUp() }
                 Button("Continue", role: .cancel) {}
             } message: {
-                Text("Your answers so far won't be saved.")
+                Text(giveUpMessage)
             }
             .zoomableViewer(isPresented: $showFlagPreview, title: nil) {
                 if let flagCode = session.currentQuestion?.promptFlag {
@@ -362,6 +362,13 @@ private extension QuizSessionScreen {
 
 // MARK: - Helpers
 extension QuizSessionScreen {
+    var giveUpMessage: LocalizedStringKey {
+        if session.answers.isEmpty { return "The quiz ends without a result." }
+        return session.isArcade
+            ? "The game ends here, and you'll see your results."
+            : "Questions you haven't answered count as missed, and you'll see your results."
+    }
+
     var title: String {
         finishedResult == nil ? configuration.type.displayName : String(localized: "Results", bundle: .module)
     }

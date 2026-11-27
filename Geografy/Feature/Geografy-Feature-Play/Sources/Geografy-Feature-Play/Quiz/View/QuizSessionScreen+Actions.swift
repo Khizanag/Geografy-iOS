@@ -104,6 +104,23 @@ extension QuizSessionScreen {
         arcadeTimerTask = nil
     }
 
+    /// Ends the quiz on the results so far; with nothing answered there's nothing to show, so the quiz closes.
+    func giveUp() {
+        transition.cancel()
+        stopTimer()
+        stopArcadeTimer()
+        isPaused = false
+        isAwaitingNext = false
+        guard !session.answers.isEmpty else {
+            dismiss()
+            return
+        }
+        session.giveUp()
+        let result = session.result(arcadeTimeRemaining: arcadeTimeRemaining)
+        configuration.announceFinished(accuracy: result.accuracy)
+        finishedResult = result
+    }
+
     func finishQuiz() {
         let result = session.result()
         configuration.announceFinished(accuracy: result.accuracy)

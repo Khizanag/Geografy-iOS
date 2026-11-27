@@ -4,14 +4,20 @@ import Foundation
 /// little for taking part and more for doing well, on the scale of a quiz: 15 to 60 XP a round.
 public enum XPRules {
     // MARK: - Quizzes
-    public static func quiz(difficulty: QuizDifficulty, accuracy: Double, isTyping: Bool) -> Int {
+    /// - Parameter finished: Whether the quiz was played to its end; one given up earns only for its right answers.
+    public static func quiz(
+        difficulty: QuizDifficulty,
+        accuracy: Double,
+        isTyping: Bool,
+        finished: Bool = true
+    ) -> Int {
         let (base, maxBonus) = switch difficulty {
         case .easy: (15, 10)
         case .medium: (25, 15)
         case .hard: (40, 20)
         }
         let multiplier = isTyping ? 1.5 : 1.0
-        return Int(Double(base + Int(clamped(accuracy) * Double(maxBonus))) * multiplier)
+        return Int(Double((finished ? base : 0) + Int(clamped(accuracy) * Double(maxBonus))) * multiplier)
     }
 
     public static func quizSource(for difficulty: QuizDifficulty) -> XPSource {

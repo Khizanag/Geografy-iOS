@@ -167,7 +167,8 @@ private extension QuizResultsScreen {
         let earnedXP = XPRules.quiz(
             difficulty: difficulty,
             accuracy: result.accuracy,
-            isTyping: result.configuration.answerMode == .typing
+            isTyping: result.configuration.answerMode == .typing,
+            finished: !result.gaveUp
         )
 
         let record = QuizHistoryRecord(

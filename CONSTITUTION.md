@@ -50,6 +50,10 @@ At the owner's word, every game the app has can be played in multiplayer, agains
 
 Every card and callout has the one card corner, `DesignSystem.CornerRadius.card` (24 pt), so cards side by side on a page always match: `CardView` has no corner of its own to pass. A callout or banner is the shared `Callout`, system glass tinted in its tone, never a fill and a border drawn on the spot. A panel inside a card takes `CornerRadius.nested(inset:)`, so its curve runs parallel to the card's. From the Profile screen, whose banner, cards, and statistics tiles had three different corners.
 
+### Article 109: Give Up ends on the results
+
+At the owner's word, Give Up ends a game on its results, never back at the start of the app: the same results screen a finished game shows, with Play Again and Done. What the player hadn't reached counts as missed, and a game given up earns only for what was got right, never the reward for finishing, so giving up never scores better than playing on. A game given up before any answer has nothing to show, so it just closes. From the quiz, whose Give Up dropped the player back to the setup screen.
+
 ## Exceptions
 
 ### Articles 2 and 4: the zoom viewer covers the screen with a blur
@@ -79,4 +83,5 @@ Open work from the adoption audit on 2026-11-24, each with what it takes. Remove
 - **Article 5, tokens.** About 140 raw colours in about 60 files, some of them data palettes. Each goes to a token or to the one palette file.
 - **Article 19, in-app language.** About 85 `String(localized:)` calls read the launch language. Needed once a second language ships; until then the exception above holds.
 - **Article 12, item actions.** Card rows have the shared long press and swipe in `RowListMenu`: a preview, Open, Copy, Share, and Remove, with a swipe to remove. The recents of Distance Calculator, Compare, and Currency Converter use it, and country lists through `CountryRowListCard`: Speed Run results and a collection's page. Other lists, such as countries, favorites, and the journal, still offer long presses and swipes screen by screen, or none.
+- **Article 109, Give Up.** The quiz and Speed Run end on their results. Flashcards, Map Puzzle, Pin Drop, Word Search, and the Daily Challenge still close on Give Up.
 - **Article 18, the audit.** No UI test runs `performAccessibilityAudit()`. The test lands with the fixes, so it never sits in the suite failing.

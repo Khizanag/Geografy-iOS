@@ -25,6 +25,7 @@ final class QuizSession {
     private(set) var streak = 0
     private(set) var lives = QuizSession.arcadeLives
     private(set) var arcadeScore = 0
+    private(set) var gaveUp = false
     private(set) var startTime = Date.now
     private(set) var questionStartTime = Date.now
 
@@ -84,6 +85,7 @@ extension QuizSession {
         streak = 0
         lives = Self.arcadeLives
         arcadeScore = 0
+        gaveUp = false
         startTime = now
         questionStartTime = now
     }
@@ -124,6 +126,16 @@ extension QuizSession {
         record(question, selectedOptionID: nil, isCorrect: false, timeSpent: configuration.difficulty.timerDuration)
     }
 
+    /// Ends the quiz early: every question not answered yet counts as missed, so giving up never scores better
+    /// than playing on. An endless arcade game just stops where it is.
+    func giveUp() {
+        gaveUp = true
+        guard !isArcade, answers.count < questions.count else { return }
+        for question in questions[answers.count...] {
+            record(question, selectedOptionID: nil, isCorrect: false, timeSpent: 0)
+        }
+    }
+
     /// Moves to the next question, or says there's none left.
     func moveToNext(now: Date = .now) -> Bool {
         guard currentIndex + 1 < questions.count else { return false }
@@ -137,7 +149,7 @@ extension QuizSession {
         let totalTime = isArcade
             ? configuration.arcadeTimer.duration.map { $0 - arcadeTimeRemaining } ?? now.timeIntervalSince(startTime)
             : now.timeIntervalSince(startTime)
-        return QuizResult(configuration: configuration, answers: answers, totalTime: totalTime)
+        return QuizResult(configuration: configuration, answers: answers, totalTime: totalTime, gaveUp: gaveUp)
     }
 }
 
